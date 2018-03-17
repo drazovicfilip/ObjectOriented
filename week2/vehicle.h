@@ -15,23 +15,36 @@ namespace week02 {
         Vehicle(int numberOfPassengers,
             int topSpeed,
             int numberOfWheels,
-            std::string color = "red");
+            std::string color = "red")
+            : m_numberOfPassengers(numberOfPassengers)
+            , m_topSpeed(topSpeed)
+            , m_numberOfWheels(numberOfWheels)
+            , m_color(color)
+        {}
 
         // Virtual is good practice. Makes sure that inheritance works correctly
 
-        // Destructor
-        virtual ~Vehicle();
+        // Destructor - deleted when out of scope
+        virtual ~Vehicle() {}
 
         virtual std::string getColor(){
             return m_color;
         }
 
-        virtual int getTopSpeed();
+        virtual int getTopSpeed(){
+            return m_topSpeed;
+        }
 
-        virtual int getNumberOfWheels();
+        virtual int getNumberOfWheels(){
+            return m_numberOfWheels;
+        }
 
-        virtual int getNumberOfPassengers();
+        virtual int getNumberOfPassengers(){
+            return m_numberOfPassengers;
+        }
 
+        // If virtual method = 0, this MUST be overwritten
+        // This makes vehicle an ABSTRACT CLASS - specicially used as a base class
         virtual int getSafetyRating() = 0;
 
     // This class and derived classes can access this
