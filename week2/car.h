@@ -6,6 +6,7 @@ using namespace week02;
 
 class Car : public MotorVehicle {
     public:
+
     Car(int numberOfPassengers,
         int topSpeed,
         double kilometresPerLitre,
@@ -17,7 +18,7 @@ class Car : public MotorVehicle {
         int topSpeed,
         double kilometresPerLitre,
         std::string color,
-        int numberOfAirBags = 2,
+        int numberOfAirBags = 3,
         bool abs = true,
         int numberOfWheels = 4);
 
@@ -27,8 +28,13 @@ class Car : public MotorVehicle {
         return m_numberOfAirBags;
     }
 
+    virtual bool getAbs() {
+        return m_abs;
+    }
+
     virtual ~Car() {}
 
+    // New variables
     private:
         bool m_abs;
         int m_numberOfAirBags;
