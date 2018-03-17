@@ -1,8 +1,6 @@
 #ifndef VEHICLE_H
 #define VEHICLE_H
 
-#endif // VEHICLE_H
-
 #include <string>
 
 namespace week02 {
@@ -55,3 +53,5 @@ namespace week02 {
         std::string m_color;
     };
 }
+
+#endif // VEHICLE_H

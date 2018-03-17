@@ -1,8 +1,6 @@
 #ifndef MOTORVEHICLE_H
 #define MOTORVEHICLE_H
 
-#endif // MOTORVEHICLE_H
-
 #include "vehicle.h"
 
 namespace week02 {
@@ -40,3 +38,5 @@ namespace week02 {
         double m_kmpl;
     };
 }
+
+#endif // MOTORVEHICLE_H
