@@ -4,14 +4,20 @@
 dialog::dialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::dialog)
-    , m_ball(Ball(Coordinate(20, 20, 600), 20, -9.8, 2.7, 17))
+
+    // Ball starting at (20,20) with frameHeight 600
+    // Radius = 20
+    // Gravity = -9.8
+    // x velocity = 2.7
+    // y velocity = 17
+    , m_ball(Ball(Coordinate(20, 20, 600, 1000), 20, -9.8, 5, 17))
     , m_counter(0)
 {
     ui->setupUi(this);
-    this->resize(1000,600);
+    this->resize(1000, 600);
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
-    timer->start(32);
+    timer->start(16);
 }
 
 dialog::~dialog()

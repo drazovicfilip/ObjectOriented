@@ -23,15 +23,14 @@ public:
 
     void render(QPainter &painter, unsigned int time);
 
-    bool isCollision();
+    bool isCollisionBot();
+    bool isCollisionSide();
 
     unsigned int getRadius(){
         return m_radius;
     }
 
 private:
-    Ball();
-
     Coordinate m_coordinate;
     unsigned int m_radius;
     double m_gravity;

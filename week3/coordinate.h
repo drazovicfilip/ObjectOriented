@@ -6,13 +6,14 @@
 class Coordinate
 {
 public:
-    Coordinate(unsigned
-        int xCoordinate,
+    Coordinate(unsigned int xCoordinate,
         unsigned int yCoordinate,
-        unsigned int frameHeight)
+        unsigned int frameHeight,
+        unsigned int frameWidth)
         : m_xCoordinate(xCoordinate)
         , m_yCoordinate(yCoordinate)
         , m_frameHeight(frameHeight)
+        , m_frameWidth(frameWidth)
     {}
 
     int getQtRenderingXCoordinate(){
@@ -39,10 +40,15 @@ public:
         return m_frameHeight;
     }
 
+    unsigned int getFrameWidth(){
+        return m_frameWidth;
+    }
+
 private:
     unsigned int m_xCoordinate;
     unsigned int m_yCoordinate;
     unsigned int m_frameHeight;
+    unsigned int m_frameWidth;
 };
 
 #endif // COORDINATE_H

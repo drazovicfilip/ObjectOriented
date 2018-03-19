@@ -1,5 +1,7 @@
 #include "ball.h"
 
+#include <cmath>
+
 Ball::Ball(Coordinate coordinate)
     : m_coordinate(coordinate)
     , m_radius(10)
@@ -30,19 +32,26 @@ Ball::Ball(Coordinate coordinate,
 {}
 
 void Ball::render(QPainter &painter, unsigned int time){
-    if (isCollision()) {
+    if (isCollisionBot()) {
         m_coordinate.setYCoordinateToZero(this->getRadius());
         // velocity decreases after hitting the ground
         m_yVelocity *= -0.8;
 
         // friction on the ground
         if (m_xVelocity > 0) {
-            m_xVelocity -= 0.1;
+
+            // if it is very slow, just stop it
+            if (abs(m_xVelocity) <= 0.1){
+                m_xVelocity = 0;
+            }
+            else{
+                m_xVelocity = m_xVelocity * 0.8;
+            }
         }
-        else {
-           // need to make sure the ball doesn't go backwards
-           m_xVelocity = 0;
-        }
+    }
+
+    if (isCollisionSide()){
+        m_xVelocity = -1 * m_xVelocity;
     }
 
     painter.setPen ( Qt::black );
@@ -54,9 +63,21 @@ void Ball::render(QPainter &painter, unsigned int time){
     m_yVelocity += m_gravity / 32.0;
     m_coordinate.changeInXCoordinate(m_xVelocity);
     m_coordinate.changeInYCoordinate(m_yVelocity);
+
+    m_radius += 1;
+    if (m_radius > 60){
+        m_radius -= 1;
+    }
+
+
 }
 
-bool Ball::isCollision(){
+bool Ball::isCollisionBot(){
     return m_coordinate.getQtRenderingYCoordinate() >
             (signed int) (m_coordinate.getFrameHeight() - (signed int) m_radius);
+}
+
+bool Ball::isCollisionSide(){
+    return (m_coordinate.getQtRenderingXCoordinate() >
+            (signed int) (m_coordinate.getFrameWidth() - (signed int) m_radius)) || (m_coordinate.getQtRenderingXCoordinate() < (signed int) m_radius);
 }
