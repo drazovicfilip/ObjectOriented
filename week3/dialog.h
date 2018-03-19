@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QPainter>
+#include <QPen>
+#include <QBrush>
 
 namespace Ui {
 class dialog;
