@@ -7,6 +7,7 @@ dialog::dialog(QWidget *parent)
 {
     ui->setupUi(this);
     this->update();
+    this->setStyleSheet("background-color: #82CAFF;");
 }
 
 dialog::~dialog()
@@ -29,4 +30,19 @@ void dialog::paintEvent(QPaintEvent *event)
 
     // x, y, sizeX, sizeY
     painter.drawEllipse(30, 30, 100, 100);
+
+    brush.setColor("#C36241");
+    painter.setBrush(brush);
+    pen.setWidth(1);
+
+    QPolygon roof;
+    roof.putPoints(0, 3, 250, 260, 290, 220, 330, 260);
+    painter.drawPolygon(roof);
+
+    brush.setColor("#835C3B");
+    painter.setBrush(brush);
+
+    QPolygon house;
+    house.putPoints(0, 4, 260, 260, 260, 299, 320, 299, 320, 260);
+    painter.drawPolygon(house);
 }

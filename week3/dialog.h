@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QPen>
 #include <QBrush>
+#include <QPolygon>
 
 namespace Ui {
 class dialog;
