@@ -27,11 +27,11 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event);
-    Ball m_ball;
-    int m_counter;
 
 private:
     Ui::dialog *ui;
+    Ball m_ball;
+    int m_counter;
 };
 
 #endif // DIALOG_H
