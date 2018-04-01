@@ -10,6 +10,7 @@ class Student : public Person
 public:
     Student(const std::string &givenName, const std::string &surname,
             const Date &date, const std::string &degree);
+
     virtual ~Student();
 
     virtual std::string getRecord() const;

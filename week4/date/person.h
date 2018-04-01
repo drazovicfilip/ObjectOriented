@@ -9,9 +9,9 @@ namespace Week4
 class Person
 {
 public:
-    Person(std::string firstName,
-        std::string surname,
-        Date dateOfBirth)
+    Person(const std::string firstName,
+        const std::string surname,
+        const Date dateOfBirth)
 
         : m_firstName(firstName)
         , m_surname(surname)
