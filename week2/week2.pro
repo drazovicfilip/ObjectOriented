@@ -17,11 +17,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     car.cpp \
     bus.cpp \
-    bicycle.cpp
+    bicycle.cpp \
+    vehiclefactory.cpp
 
 HEADERS += \
     car.h \
     bus.h \
     bicycle.h \
     vehicle.h \
-    motorvehicle.h
+    motorvehicle.h \
+    vehiclefactory.h

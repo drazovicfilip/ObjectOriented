@@ -2,6 +2,7 @@
 #include "car.h"
 #include "bus.h"
 #include "bicycle.h"
+#include "vehiclefactory.h"
 
 using namespace week02;
 
@@ -61,6 +62,13 @@ using namespace week02;
         std::cout << car3.getSafetyRating() << std::endl;
         std::cout << car4.getSafetyRating() << std::endl;
         std::cout << car5.getSafetyRating() << std::endl;
+
+
+        // Test the factory out
+        std::cout << VehicleFactory::getVehicle(VehicleFactory::FastCar)->getTopSpeed() << std::endl;
+        std::cout << VehicleFactory::getVehicle(VehicleFactory::SlowCar)->getTopSpeed() << std::endl;
+        std::cout << VehicleFactory::getVehicle(VehicleFactory::BusType)->getTopSpeed() << std::endl;
+        std::cout << VehicleFactory::getVehicle(VehicleFactory::BicycleType)->getTopSpeed() << std::endl;
 
         return 0;
     }
