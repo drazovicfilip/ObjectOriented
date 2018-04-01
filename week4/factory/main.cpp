@@ -54,15 +54,21 @@ class ImageEditor: public Application { // Application two
 };
 
 int main() {
+
+    // Create 2 new applications. These will call the default constructor from the Application class.
     Application * myFirstTextDocument = new TextDocument();
     Application * paintDotNet = new ImageEditor();
 
+    // Store these two in a list. push_back will append to the list
     std::vector<Application *> applications;
     applications.push_back(myFirstTextDocument);
     applications.push_back(paintDotNet);
 
+    // For each application in the list of applications we just made
     for(Application * app : applications)
     {
+
+        // Print out information about it
         Content* content = app->getContent();
         std::cout <<app->getAppType() << "'s content has " << content->getEncoding() << " encoding" << std::endl;
         delete content;
