@@ -9,7 +9,6 @@
 #define outsidedist 50
 #define tablethickness 20
 
-enum BallType{ stripe, solid, cue, black };
 enum collisionLocation{vertical, horizontal, none};
 
 class Ball
@@ -17,8 +16,8 @@ class Ball
 
 public:
     Ball(Coordinate coordinate);
-    Ball(Coordinate coordinate, int xVelocity, int yVelocity);
-    Ball(Coordinate coordinate, std::string color, BallType type);
+    Ball(Coordinate coordinate, std::string color, unsigned int mass, unsigned int radius, int xVelocity, int yVelocity);
+
     virtual ~Ball();
     void render(QPainter &painter, unsigned int time);
 
@@ -28,13 +27,29 @@ public:
         return m_radius;
     }
 
+    unsigned int getMass(){
+        return m_mass;
+    }
+
+    std::string getColor(){
+        return *m_color;
+    }
+
+    unsigned int getXVelocity(){
+        return m_xVelocity;
+    }
+
+    unsigned int getYVelocity(){
+        return m_yVelocity;
+    }
+
 private:
     Coordinate m_coordinate;
     unsigned int m_radius;
+    unsigned int m_mass;
     double m_xVelocity;
     double m_yVelocity;
     std::string* m_color;
-    BallType m_type;
 };
 
 #endif // BALL_H

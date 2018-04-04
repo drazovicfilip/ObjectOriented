@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QPen>
 #include <QBrush>
+#include <QString>
 #include <QPolygon>
 #include <QTimer>
 #include <vector>

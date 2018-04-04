@@ -8,10 +8,10 @@ Dialog::Dialog(QWidget *parent)
 {
 
     // Create 4 balls
-    balls.push_back(new Ball(Coordinate(fwidth/2, fheight/2, fheight, fwidth), 1, 1));
-    balls.push_back(new Ball(Coordinate(fwidth/3, fheight/3, fheight, fwidth), -2, 3));
-    balls.push_back(new Ball(Coordinate(fwidth/4, fheight/4, fheight, fwidth), 3, 4));
-    balls.push_back(new Ball(Coordinate(fwidth/5, fheight/5, fheight, fwidth), -4, 5));
+    balls.push_back(new Ball(Coordinate(fwidth/2, fheight/2, fheight, fwidth), "blue", 1, 20, 1, 1));
+    balls.push_back(new Ball(Coordinate(fwidth/3, fheight/3, fheight, fwidth), "green", 1, 20, -2, 3));
+    balls.push_back(new Ball(Coordinate(fwidth/4, fheight/4, fheight, fwidth), "#ff1234", 1, 20, 3, 4));
+    balls.push_back(new Ball(Coordinate(fwidth/5, fheight/5, fheight, fwidth), "#yellow", 1, 20, -4, 5));
 
     ui->setupUi(this);
     this->resize(fwidth,fheight);
