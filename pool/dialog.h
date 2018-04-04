@@ -7,6 +7,7 @@
 #include <QBrush>
 #include <QPolygon>
 #include <QTimer>
+#include <vector>
 
 #include "ball.h"
 
@@ -30,7 +31,7 @@ protected:
 
 private:
     Ui::Dialog *ui;
-    Ball m_ball;
+    std::vector<Ball *> balls;
     int m_counter;
 };
 

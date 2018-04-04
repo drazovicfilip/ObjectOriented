@@ -2,21 +2,22 @@
 #include "ui_dialog.h"
 #include <QRect>
 
-#define fwidth 1000
-#define fheight 600
-#define outsidedist 50
-#define tablethickness 20
-
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Dialog)
-    , m_ball(Ball(Coordinate(outsidedist+tablethickness, fheight/2, fheight, fwidth)))
 {
+
+    // Create 4 balls
+    balls.push_back(new Ball(Coordinate(fwidth/2, fheight/2, fheight, fwidth), 1, 1));
+    balls.push_back(new Ball(Coordinate(fwidth/3, fheight/3, fheight, fwidth), -2, 3));
+    balls.push_back(new Ball(Coordinate(fwidth/4, fheight/4, fheight, fwidth), 3, 4));
+    balls.push_back(new Ball(Coordinate(fwidth/5, fheight/5, fheight, fwidth), -4, 5));
+
     ui->setupUi(this);
     this->resize(fwidth,fheight);
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
-    timer->start(16);
+    timer->start(8);
 }
 
 Dialog::~Dialog(){
@@ -39,7 +40,10 @@ void Dialog::paintEvent(QPaintEvent *event){
     QRect rect(outsidedist,outsidedist,(fwidth-2*outsidedist),(fheight-2*outsidedist));
     painter.drawRect(rect);
 
-    m_ball.render(painter, m_counter);
+    for(Ball * currentball : balls){
+        currentball->render(painter,m_counter);
+        //delete currentball;
+    }
 }
 
 void Dialog::nextFrame(){
