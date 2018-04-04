@@ -41,31 +41,31 @@ void Ball::render(QPainter &painter, unsigned int time){
             break;
     }
 
-    // Draw the ball for the current frame
-    painter.setPen ( Qt::black );
-    painter.setBrush(QBrush(QColor(QString::fromStdString(*m_color))));
-    painter.drawEllipse(m_coordinate.getQtRenderingXCoordinate() - (int) m_radius,
-        m_coordinate.getQtRenderingYCoordinate() -(int) m_radius,
-        m_radius * 2,
-        m_radius * 2);
-
     // Account for friction (very approximated calculations)
     //m_xVelocity = 0.98*m_xVelocity;
     //m_yVelocity = 0.98*m_yVelocity;
     m_coordinate.changeInXCoordinate(m_xVelocity);
     m_coordinate.changeInYCoordinate(m_yVelocity);
 
+    // Draw the ball for the current frame
+    painter.setPen (Qt::black);
+    painter.setBrush(QBrush(QColor(QString::fromStdString(*m_color))));
+    painter.drawEllipse(m_coordinate.getQtRenderingXCoordinate() - (int) m_radius,
+        m_coordinate.getQtRenderingYCoordinate() -(int) m_radius,
+        m_radius * 2,
+        m_radius * 2);
+
 }
 
 collisionLocation Ball::isCollision(){
 
-    if ((m_coordinate.getQtRenderingXCoordinate() >
-         (signed int) (m_coordinate.getFrameWidth() - outsidedist - tablethickness - (signed int) m_radius)) || (m_coordinate.getQtRenderingXCoordinate() < (signed int) m_radius + tablethickness + outsidedist)){
+    if ((m_coordinate.getQtRenderingXCoordinate() >=
+         (signed int) (m_coordinate.getFrameWidth() - outsidedist - tablethickness/2 - (signed int) m_radius)) || (m_coordinate.getQtRenderingXCoordinate() <= (signed int) m_radius + tablethickness/2 + outsidedist)){
         return horizontal;
     }
 
-    if ((m_coordinate.getQtRenderingYCoordinate() >
-         (signed int) (m_coordinate.getFrameHeight() - outsidedist - tablethickness - (signed int) m_radius)) || (m_coordinate.getQtRenderingYCoordinate() < (signed int) m_radius + tablethickness + outsidedist)){
+    if ((m_coordinate.getQtRenderingYCoordinate() >=
+         (signed int) (m_coordinate.getFrameHeight() - outsidedist - tablethickness/2 - (signed int) m_radius)) || (m_coordinate.getQtRenderingYCoordinate() <= (signed int) m_radius + tablethickness/2 + outsidedist)){
         return vertical;
     }
 

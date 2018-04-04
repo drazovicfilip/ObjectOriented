@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "ball.h"
+#include "table.h"
 
 namespace Ui {
 class Dialog;
@@ -33,6 +34,7 @@ protected:
 private:
     Ui::Dialog *ui;
     std::vector<Ball *> balls;
+    Table table;
     int m_counter;
 };
 
