@@ -16,8 +16,8 @@ Ball::Ball(Coordinate coordinate)
 // Standard constructor
 Ball::Ball(Coordinate coordinate, std::string color, unsigned int mass, unsigned int radius, int xVelocity, int yVelocity)
     : m_coordinate(coordinate)
-    , m_color(new std::string(color))
     , m_mass(mass)
+    , m_color(new std::string(color))
     , m_radius(radius)
     , m_xVelocity(xVelocity)
     , m_yVelocity(yVelocity)
@@ -31,6 +31,7 @@ Ball::~Ball(){
 void Ball::render(QPainter &painter, unsigned int time){
 
     // Check for collision with the sides of the table
+    /*
     collisionLocation collision = Ball::isCollision();
     switch(collision){
         case(vertical):
@@ -40,6 +41,7 @@ void Ball::render(QPainter &painter, unsigned int time){
             m_xVelocity *= -1;
             break;
     }
+    */
 
     // Account for friction (very approximated calculations)
     //m_xVelocity = 0.98*m_xVelocity;

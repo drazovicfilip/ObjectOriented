@@ -23,6 +23,18 @@ public:
 
     collisionLocation isCollision();
 
+    Coordinate getCoordinate(){
+        return m_coordinate;
+    }
+
+    void flipXVelocity(){
+        m_xVelocity *= -1;
+    }
+
+    void flipYVelocity(){
+        m_yVelocity *= -1;
+    }
+
     unsigned int getRadius(){
         return m_radius;
     }

@@ -33,6 +33,7 @@ void Dialog::paintEvent(QPaintEvent *event){
     table.render(painter, m_counter);
 
     for(Ball * currentball : balls){
+        isCollisionBallTable(currentball);
         currentball->render(painter,m_counter);
         //delete currentball;
     }
@@ -42,5 +43,20 @@ void Dialog::nextFrame(){
     update();
 }
 
+void Dialog::isCollisionBallTable(Ball* currentball){
 
+        // Bouncing off either side
+        if ((currentball->getCoordinate().getQtRenderingXCoordinate() >=
+             (signed int) (currentball->getCoordinate().getFrameWidth() - table.getSpace() - table.getThickness()/2 - (signed int) currentball->getRadius())) || (currentball->getCoordinate().getQtRenderingXCoordinate() <= (signed int) currentball->getRadius() + table.getThickness()/2 + table.getSpace())){
+            currentball->flipXVelocity();
+        }
+
+        // Bouncing off top or bottom
+        if ((currentball->getCoordinate().getQtRenderingYCoordinate() >=
+             (signed int) (currentball->getCoordinate().getFrameHeight() - table.getSpace() - table.getThickness()/2 - (signed int) currentball->getRadius())) || (currentball->getCoordinate().getQtRenderingYCoordinate() <= (signed int) currentball->getRadius() + table.getThickness()/2 + table.getSpace())){
+            currentball->flipYVelocity();
+        }
+
+
+}
 

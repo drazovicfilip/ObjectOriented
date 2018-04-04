@@ -30,6 +30,7 @@ public slots:
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void isCollisionBallTable(Ball* currentball);
 
 private:
     Ui::Dialog *ui;
