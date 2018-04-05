@@ -8,7 +8,10 @@
 #include <QString>
 #include <QPolygon>
 #include <QTimer>
+#include <QVector2D>
 #include <vector>
+
+#include <cmath>
 
 #include "ball.h"
 #include "table.h"
@@ -31,6 +34,7 @@ public slots:
 protected:
     void paintEvent(QPaintEvent *event);
     void isCollisionBallTable(Ball* currentball);
+    void isCollisionBallBall(Ball * currentball1, std::vector<Ball *> balls);
 
 private:
     Ui::Dialog *ui;

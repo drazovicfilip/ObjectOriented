@@ -14,7 +14,7 @@ Ball::Ball(Coordinate coordinate)
 {}
 
 // Standard constructor
-Ball::Ball(Coordinate coordinate, std::string color, unsigned int mass, unsigned int radius, int xVelocity, int yVelocity)
+Ball::Ball(Coordinate coordinate, std::string color, int mass, int radius, int xVelocity, int yVelocity)
     : m_coordinate(coordinate)
     , m_mass(mass)
     , m_color(new std::string(color))
@@ -28,20 +28,8 @@ Ball::~Ball(){
     delete m_color;
 }
 
-void Ball::render(QPainter &painter, unsigned int time){
 
-    // Check for collision with the sides of the table
-    /*
-    collisionLocation collision = Ball::isCollision();
-    switch(collision){
-        case(vertical):
-            m_yVelocity *= -1;
-            break;
-        case(horizontal):
-            m_xVelocity *= -1;
-            break;
-    }
-    */
+void Ball::render(QPainter &painter, unsigned int time){
 
     // Account for friction (very approximated calculations)
     //m_xVelocity = 0.98*m_xVelocity;
@@ -57,19 +45,4 @@ void Ball::render(QPainter &painter, unsigned int time){
         m_radius * 2,
         m_radius * 2);
 
-}
-
-collisionLocation Ball::isCollision(){
-
-    if ((m_coordinate.getQtRenderingXCoordinate() >=
-         (signed int) (m_coordinate.getFrameWidth() - outsidedist - tablethickness/2 - (signed int) m_radius)) || (m_coordinate.getQtRenderingXCoordinate() <= (signed int) m_radius + tablethickness/2 + outsidedist)){
-        return horizontal;
-    }
-
-    if ((m_coordinate.getQtRenderingYCoordinate() >=
-         (signed int) (m_coordinate.getFrameHeight() - outsidedist - tablethickness/2 - (signed int) m_radius)) || (m_coordinate.getQtRenderingYCoordinate() <= (signed int) m_radius + tablethickness/2 + outsidedist)){
-        return vertical;
-    }
-
-    return none;
 }
