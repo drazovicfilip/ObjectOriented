@@ -14,7 +14,7 @@ Ball::Ball(Coordinate coordinate)
 {}
 
 // Standard constructor
-Ball::Ball(Coordinate coordinate, std::string color, int mass, int radius, int xVelocity, int yVelocity)
+Ball::Ball(Coordinate coordinate, std::string color, int mass, int radius, double xVelocity, double yVelocity)
     : m_coordinate(coordinate)
     , m_mass(mass)
     , m_color(new std::string(color))
@@ -40,8 +40,8 @@ void Ball::render(QPainter &painter, unsigned int time){
     // Draw the ball for the current frame
     painter.setPen (Qt::black);
     painter.setBrush(QBrush(QColor(QString::fromStdString(*m_color))));
-    painter.drawEllipse(m_coordinate.getQtRenderingXCoordinate() - (int) m_radius,
-        m_coordinate.getQtRenderingYCoordinate() -(int) m_radius,
+    painter.drawEllipse(m_coordinate.getQtRenderingXCoordinate() - m_radius,
+        m_coordinate.getQtRenderingYCoordinate() - m_radius,
         m_radius * 2,
         m_radius * 2);
 

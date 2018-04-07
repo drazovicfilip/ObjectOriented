@@ -6,8 +6,8 @@
 class Coordinate
 {
 public:
-    Coordinate(double xCoordinate,
-        double yCoordinate,
+    Coordinate(int xCoordinate,
+        int yCoordinate,
         unsigned int frameHeight,
         unsigned int frameWidth)
         : m_xCoordinate(xCoordinate)
@@ -16,28 +16,28 @@ public:
         , m_frameWidth(frameWidth)
     {}
 
-    double getQtRenderingXCoordinate(){
+    int getQtRenderingXCoordinate(){
         return m_xCoordinate;
     }
 
-    double getQtRenderingYCoordinate(){
+    int getQtRenderingYCoordinate(){
         return m_frameHeight - m_yCoordinate;
     }
 
-    double getYCoordinate(){
+    int getYCoordinate(){
         return m_yCoordinate;
     }
 
     void changeInXCoordinate(double change){
-        m_xCoordinate += change;
+        m_xCoordinate += (int)change;
     }
 
     void changeInYCoordinate(double change){
-        m_yCoordinate += change;
+        m_yCoordinate += (int)change;
     }
 
     void setYCoordinateToZero(double offset){
-        m_yCoordinate = offset;
+        m_yCoordinate = (int)offset;
     }
 
     unsigned int getFrameHeight(){
@@ -49,8 +49,8 @@ public:
     }
 
 private:
-    double m_xCoordinate;
-    double m_yCoordinate;
+    int m_xCoordinate;
+    int m_yCoordinate;
     unsigned int m_frameHeight;
     unsigned int m_frameWidth;
 };
