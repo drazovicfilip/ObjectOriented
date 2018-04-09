@@ -15,6 +15,8 @@
 
 #include "ball.h"
 #include "table.h"
+#include "pool.h"
+#include "director.h"
 
 namespace Ui {
 class Dialog;
@@ -33,13 +35,14 @@ public slots:
 
 protected:
     void paintEvent(QPaintEvent *event);
-    void isCollisionBallTable(Ball* currentball);
+    void isCollisionBallTable(Ball* currentball, Table* table);
     void isCollisionBallBall(Ball * currentball1, std::vector<Ball *> balls);
 
 private:
     Ui::Dialog *ui;
-    std::vector<Ball *> balls;
-    Table table;
+    //std::vector<Ball *> balls;
+    //Table table;
+    Pool pool;
     int m_counter;
 };
 

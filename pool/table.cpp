@@ -5,13 +5,15 @@ Table::Table()
     , m_height(600)
     , m_thickness(20)
     , m_space(50)
+    , m_friction(1)
 {}
 
-Table::Table(unsigned int length, unsigned int height, unsigned int thickness, unsigned int space)
+Table::Table(unsigned int length, unsigned int height, unsigned int thickness, unsigned int space, unsigned int friction)
     : m_length(length)
     , m_height(height)
     , m_thickness(thickness)
     , m_space(space)
+    , m_friction(friction)
 {}
 
 Table::~Table(){}

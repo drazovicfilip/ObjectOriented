@@ -26,11 +26,11 @@ public:
     }
 
     void flipXVelocity(){
-        m_xVelocity *= -1;
+        m_xVelocity = m_xVelocity * -1.0;
     }
 
     void flipYVelocity(){
-        m_yVelocity *= -1;
+        m_yVelocity = m_yVelocity * -1.0;
     }
 
     void changeXVelocity(double change){

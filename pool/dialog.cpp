@@ -6,22 +6,21 @@
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Dialog)
-    , table(1000, 600, 20, 50)
 {
 
+    PoolBuilder builder;
+    Director director(&builder);
+    pool = director.construct();
+
     // Create 6 balls
-    balls.push_back(new Ball(Coordinate(fwidth/3, fheight/2, fheight, fwidth), "blue", 1, 20, 3, 0));
-    balls.push_back(new Ball(Coordinate(fwidth/5, fheight-140, fheight, fwidth), "green", 2, 20, 5, 3));
-    balls.push_back(new Ball(Coordinate(fwidth/3, fheight-200, fheight, fwidth), "red", 3, 20, 5, 1));
-    balls.push_back(new Ball(Coordinate(fwidth/7, fheight/3, fheight, fwidth), "white", 4, 20, -1, 2));
-    balls.push_back(new Ball(Coordinate(fwidth/5, fheight/4, fheight, fwidth), "black", 5, 20, -4, 3));
-    balls.push_back(new Ball(Coordinate(fwidth/2, fheight/6, fheight, fwidth), "pink", 6, 20, 1, -5));
+    //balls.push_back(new Ball(Coordinate(fwidth/5, fheight/2, fheight, fwidth), "green", 1, 20, -3, -3));
+    //balls.push_back(new Ball(Coordinate(fwidth/5, fheight/4, fheight, fwidth), "green", 1, 20, 3, 3));
 
     ui->setupUi(this);
     this->resize(fwidth,fheight);
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
-    timer->start(8);
+    timer->start(50);
 }
 
 Dialog::~Dialog(){
@@ -33,35 +32,60 @@ void Dialog::paintEvent(QPaintEvent *event){
     // Draw a simple table
     QPainter painter(this);
 
-    table.render(painter, m_counter);
+    pool.getTable()->render(painter, m_counter);
+
+    std::vector<Ball *> balls = pool.getBalls();
+
 
     for(Ball * currentball : balls){
 
         isCollisionBallBall(currentball, balls);
-
-        isCollisionBallTable(currentball);
-        currentball->render(painter,m_counter);
+        isCollisionBallTable(currentball, pool.getTable());
+        currentball->render(painter, m_counter);
 
         //delete currentball;
     }
+
 }
 
 void Dialog::nextFrame(){
     update();
 }
 
-void Dialog::isCollisionBallTable(Ball* currentball){
+
+
+void Dialog::isCollisionBallTable(Ball* currentball, Table* table){
 
         // Bouncing off either side
         if ((currentball->getCoordinate().getQtRenderingXCoordinate() >=
-             (currentball->getCoordinate().getFrameWidth() - table.getSpace() - table.getThickness()/2 - currentball->getRadius())) || (currentball->getCoordinate().getQtRenderingXCoordinate() <= currentball->getRadius() + table.getThickness()/2 + table.getSpace())){
+             (currentball->getCoordinate().getFrameWidth() - table->getSpace() - table->getThickness()/2 - currentball->getRadius())) || (currentball->getCoordinate().getQtRenderingXCoordinate() <= currentball->getRadius() + table->getThickness()/2 + table->getSpace())){
+
+            // If the ball is still not in the table
+            //if (currentball->getCoordinate().getQtRenderingXCoordinate() > currentball->getCoordinate().getFrameWidth() - table->getThickness() - table->getSpace() || currentball->getCoordinate().getQtRenderingXCoordinate() > table->getSpace() + table->getThickness()/2){
+            //    currentball->flipXVelocity();
+            //}
+
             currentball->flipXVelocity();
+            QTextStream out(stdout);
+            out << "Velocity is now " << currentball->getXVelocity() << ", " << currentball->getYVelocity() << endl;
+            out << "Velocity is now " << currentball->getXVelocity() << ", " << currentball->getYVelocity() << endl;
+
+
         }
 
         // Bouncing off top or bottom
         if ((currentball->getCoordinate().getQtRenderingYCoordinate() >=
-             (currentball->getCoordinate().getFrameHeight() - table.getSpace() - table.getThickness()/2 - currentball->getRadius())) || (currentball->getCoordinate().getQtRenderingYCoordinate() <= currentball->getRadius() + table.getThickness()/2 + table.getSpace())){
+             (currentball->getCoordinate().getFrameHeight() - table->getSpace() - table->getThickness()/2 - currentball->getRadius())) || (currentball->getCoordinate().getQtRenderingYCoordinate() <= currentball->getRadius() + table->getThickness()/2 + table->getSpace())){
+
+            // If the ball is still not in the table
+            //if (currentball->getCoordinate().getYCoordinate() > currentball->getCoordinate().getFrameHeight() - table->getThickness() - table->getSpace() || currentball->getCoordinate().getYCoordinate() > table->getSpace() + table->getThickness()/2){
+            //    currentball->flipYVelocity();
+            //}
+
             currentball->flipYVelocity();
+            QTextStream out(stdout);
+            out << "Velocity is now " << currentball->getXVelocity() << ", " << currentball->getYVelocity() << endl;
+
         }
 }
 
@@ -108,6 +132,8 @@ void Dialog::isCollisionBallBall(Ball* currentball, std::vector<Ball *> ballsarr
             //the proportion of each balls velocity along the axis of collision
             double vA = QVector2D::dotProduct(collisionVector, velA);
             double vB = QVector2D::dotProduct(collisionVector, velB);
+
+
             //the balls are moving away from each other so do nothing
             if ((vA <= 0 && vB >= 0)) {
                 return;
@@ -133,7 +159,7 @@ void Dialog::isCollisionBallBall(Ball* currentball, std::vector<Ball *> ballsarr
             QVector2D deltaVA = mR * (vB - root) * collisionVector;
             QVector2D deltaVB = (root - vB) * collisionVector;
 
-            /*
+
             out << "Centre A: " << centreAx << ", " << centreAy << endl;
             out << "Centre B: " << centreBx << ", " << centreBy << endl;
             out << "Velocity A: " << currentball->getXVelocity() << ", " << currentball->getYVelocity() << endl;
@@ -141,27 +167,26 @@ void Dialog::isCollisionBallBall(Ball* currentball, std::vector<Ball *> ballsarr
             out << "Mass A: " << massA << endl;
             out << "Mass B: " << massB << endl;
 
-            */
+
 
             out << "Delta A: " << deltaVA[0] << ", " << deltaVA[1] << endl;
-            out << "Delta B: " << deltaVA[0] << ", " << deltaVA[1] << endl;
+            out << "Delta B: " << deltaVB[0] << ", " << deltaVB[1] << endl;
+            out << "V A: " << vA << endl;
+            out << "V B: " << vB << endl;
             out << "- - - - -" << endl;
 
-            currentball->changeXVelocity((int)deltaVA[0]);
-            currentball->changeYVelocity((int)deltaVA[1]);
+            currentball->changeXVelocity(deltaVA[0]);
+            currentball->changeYVelocity(deltaVA[1]);
 
-            otherball->changeXVelocity((int)deltaVB[0]);
-            otherball->changeYVelocity((int)deltaVB[1]);
-
+            otherball->changeXVelocity(deltaVB[0]);
+            otherball->changeYVelocity(deltaVB[1]);
 
         }
     }
 
+}
 
 
-
-
-    }
 
 
 

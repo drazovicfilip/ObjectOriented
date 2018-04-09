@@ -2,12 +2,13 @@
 #define COORDINATE_H
 
 #include <stdlib.h>
+#include <math.h>
 
 class Coordinate
 {
 public:
-    Coordinate(int xCoordinate,
-        int yCoordinate,
+    Coordinate(double xCoordinate,
+        double yCoordinate,
         unsigned int frameHeight,
         unsigned int frameWidth)
         : m_xCoordinate(xCoordinate)
@@ -29,15 +30,15 @@ public:
     }
 
     void changeInXCoordinate(double change){
-        m_xCoordinate += (int)change;
+        m_xCoordinate += change;
     }
 
     void changeInYCoordinate(double change){
-        m_yCoordinate += (int)change;
+        m_yCoordinate += change;
     }
 
     void setYCoordinateToZero(double offset){
-        m_yCoordinate = (int)offset;
+        m_yCoordinate = ceil(offset);
     }
 
     unsigned int getFrameHeight(){
@@ -49,8 +50,8 @@ public:
     }
 
 private:
-    int m_xCoordinate;
-    int m_yCoordinate;
+    double m_xCoordinate;
+    double m_yCoordinate;
     unsigned int m_frameHeight;
     unsigned int m_frameWidth;
 };

@@ -28,7 +28,6 @@ Ball::~Ball(){
     delete m_color;
 }
 
-
 void Ball::render(QPainter &painter, unsigned int time){
 
     // Account for friction (very approximated calculations)

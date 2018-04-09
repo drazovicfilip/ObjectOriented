@@ -27,13 +27,22 @@ SOURCES += \
         main.cpp \
         dialog.cpp \
     ball.cpp \
-    table.cpp
+    table.cpp \
+    pool.cpp \
+    poolbuilder.cpp \
+    director.cpp
 
 HEADERS += \
         dialog.h \
     coordinate.h \
     ball.h \
-    table.h
+    table.h \
+    abstractfactory.h \
+    poolfactory.h \
+    abstractbuilder.h \
+    poolbuilder.h \
+    pool.h \
+    director.h
 
 FORMS += \
         dialog.ui
