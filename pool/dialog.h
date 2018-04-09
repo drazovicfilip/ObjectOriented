@@ -43,7 +43,6 @@ private:
     //std::vector<Ball *> balls;
     //Table table;
     Pool pool;
-    int m_counter;
 };
 
 #endif // DIALOG_H

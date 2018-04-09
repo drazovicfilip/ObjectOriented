@@ -7,10 +7,10 @@ class PoolBuilder : public AbstractBuilder
 {
 public:
     using AbstractBuilder::buildBall;
-    virtual Ball* buildBall(Coordinate coordinate, std::string color, int mass, int radius, double xVelocity, double yVelocity);
+    virtual Ball* buildBall(Coordinate coordinate, std::string color, float mass, float radius, float xVelocity, float yVelocity);
 
     using AbstractBuilder::buildTable;
-    virtual Table* buildTable(unsigned int length, unsigned int height, unsigned int thickness, unsigned int space, unsigned int friction);
+    virtual Table* buildTable(float length, float height, float thickness, float space, float friction);
 
     virtual Pool getPool();
 };

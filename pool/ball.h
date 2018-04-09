@@ -16,10 +16,10 @@ class Ball
 
 public:
     Ball(Coordinate coordinate);
-    Ball(Coordinate coordinate, std::string color, int mass, int radius, double xVelocity, double yVelocity);
+    Ball(Coordinate coordinate, std::string color, float mass, float radius, float xVelocity, float yVelocity);
 
     virtual ~Ball();
-    void render(QPainter &painter, unsigned int time);
+    void render(QPainter &painter);
 
     Coordinate getCoordinate(){
         return m_coordinate;
@@ -33,19 +33,19 @@ public:
         m_yVelocity = m_yVelocity * -1.0;
     }
 
-    void changeXVelocity(double change){
+    void changeXVelocity(float change){
         m_xVelocity += change;
     }
 
-    void changeYVelocity(double change){
+    void changeYVelocity(float change){
         m_yVelocity += change;
     }
 
-    int getRadius(){
+    float getRadius(){
         return m_radius;
     }
 
-    int getMass(){
+    float getMass(){
         return m_mass;
     }
 
@@ -53,20 +53,20 @@ public:
         return *m_color;
     }
 
-    double getXVelocity(){
+    float getXVelocity(){
         return m_xVelocity;
     }
 
-    double getYVelocity(){
+    float getYVelocity(){
         return m_yVelocity;
     }
 
 private:
     Coordinate m_coordinate;
-    int m_radius;
-    int m_mass;
-    double m_xVelocity;
-    double m_yVelocity;
+    float m_radius;
+    float m_mass;
+    float m_xVelocity;
+    float m_yVelocity;
     std::string* m_color;
 };
 

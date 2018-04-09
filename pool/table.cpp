@@ -8,7 +8,7 @@ Table::Table()
     , m_friction(1)
 {}
 
-Table::Table(unsigned int length, unsigned int height, unsigned int thickness, unsigned int space, unsigned int friction)
+Table::Table(float length, float height, float thickness, float space, float friction)
     : m_length(length)
     , m_height(height)
     , m_thickness(thickness)
@@ -18,7 +18,7 @@ Table::Table(unsigned int length, unsigned int height, unsigned int thickness, u
 
 Table::~Table(){}
 
-void Table::render(QPainter &painter, unsigned int time){
+void Table::render(QPainter &painter){
 
     QPen pen;
     pen.setWidth(m_thickness);

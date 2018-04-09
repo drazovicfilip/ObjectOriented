@@ -9,34 +9,34 @@ class Table
 {
 public:
     Table();
-    Table(unsigned int length, unsigned int height, unsigned int thickness, unsigned int space, unsigned int friction);
+    Table(float length, float height, float thickness, float space, float friction);
 
     virtual ~Table();
 
-    unsigned int getLength(){
+    float getLength(){
         return m_length;
     }
-    unsigned int getHeight(){
+    float getHeight(){
         return m_height;
     }
-    unsigned int getThickness(){
+    float getThickness(){
         return m_thickness;
     }
-    unsigned int getSpace(){
+    float getSpace(){
         return m_space;
     }
-    unsigned int getFriction(){
+    float getFriction(){
         return m_friction;
     }
 
-    void render(QPainter &painter, unsigned int time);
+    void render(QPainter &painter);
 
 private:
-    unsigned int m_length;
-    unsigned int m_height;
-    unsigned int m_thickness;
-    unsigned int m_space;
-    unsigned int m_friction;
+    float m_length;
+    float m_height;
+    float m_thickness;
+    float m_space;
+    float m_friction;
 };
 
 #endif // TABLE_H

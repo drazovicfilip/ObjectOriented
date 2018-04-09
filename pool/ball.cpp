@@ -14,13 +14,13 @@ Ball::Ball(Coordinate coordinate)
 {}
 
 // Standard constructor
-Ball::Ball(Coordinate coordinate, std::string color, int mass, int radius, double xVelocity, double yVelocity)
+Ball::Ball(Coordinate coordinate, std::string color, float mass, float radius, float xVelocity, float yVelocity)
     : m_coordinate(coordinate)
-    , m_mass(mass)
-    , m_color(new std::string(color))
     , m_radius(radius)
+    , m_mass(mass)
     , m_xVelocity(xVelocity)
     , m_yVelocity(yVelocity)
+    , m_color(new std::string(color))
 {}
 
 
@@ -28,7 +28,7 @@ Ball::~Ball(){
     delete m_color;
 }
 
-void Ball::render(QPainter &painter, unsigned int time){
+void Ball::render(QPainter &painter){
 
     // Account for friction (very approximated calculations)
     //m_xVelocity = 0.98*m_xVelocity;

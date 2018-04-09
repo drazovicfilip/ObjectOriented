@@ -8,8 +8,8 @@
 class AbstractFactory
 {
 public:
-    virtual Ball* createBall(Coordinate coordinate, std::string color, int mass, int radius, double xVelocity, double yVelocity) = 0;
-    virtual Table* createTable(unsigned int length, unsigned int height, unsigned int thickness, unsigned int space, unsigned int friction) = 0;
+    virtual Ball* createBall(Coordinate coordinate, std::string color, float mass, float radius, float xVelocity, float yVelocity) = 0;
+    virtual Table* createTable( float length, float height, float thickness, float space, float friction) = 0;
 };
 
 #endif // FACTORY_H

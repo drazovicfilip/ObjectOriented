@@ -29,19 +29,21 @@ Dialog::~Dialog(){
 
 void Dialog::paintEvent(QPaintEvent *event){
 
+    // To make the compiler shush about event not being used
+    event = 0;
+
     // Draw a simple table
     QPainter painter(this);
 
-    pool.getTable()->render(painter, m_counter);
+    pool.getTable()->render(painter);
 
     std::vector<Ball *> balls = pool.getBalls();
-
 
     for(Ball * currentball : balls){
 
         isCollisionBallBall(currentball, balls);
         isCollisionBallTable(currentball, pool.getTable());
-        currentball->render(painter, m_counter);
+        currentball->render(painter);
 
         //delete currentball;
     }
@@ -91,17 +93,17 @@ void Dialog::isCollisionBallTable(Ball* currentball, Table* table){
 
 void Dialog::isCollisionBallBall(Ball* currentball, std::vector<Ball *> ballsarray){
 
-    for (int i = distance(ballsarray.begin(), std::find(ballsarray.begin(), ballsarray.end(), currentball)) + 1; i < ballsarray.size(); i++){
+    for (int i = distance(ballsarray.begin(), std::find(ballsarray.begin(), ballsarray.end(), currentball)) + 1; i < (int)ballsarray.size(); i++){
     //for (int i = 0; i < ballsarray.size(); i++){
 
         Ball* otherball = ballsarray[i];
 
-        int centreAx = currentball->getCoordinate().getQtRenderingXCoordinate();
-        int centreAy = currentball->getCoordinate().getYCoordinate();
-        int centreBx = otherball->getCoordinate().getQtRenderingXCoordinate();
-        int centreBy = otherball->getCoordinate().getYCoordinate();
-        int radA = currentball->getRadius();
-        int radB = otherball->getRadius();
+        float centreAx = currentball->getCoordinate().getQtRenderingXCoordinate();
+        float centreAy = currentball->getCoordinate().getYCoordinate();
+        float centreBx = otherball->getCoordinate().getQtRenderingXCoordinate();
+        float centreBy = otherball->getCoordinate().getYCoordinate();
+        float radA = currentball->getRadius();
+        float radB = otherball->getRadius();
 
         // If the distance between the ball's centres is less than the sum of their radii
 
@@ -130,8 +132,8 @@ void Dialog::isCollisionBallBall(Ball* currentball, std::vector<Ball *> ballsarr
             collisionVector.normalize();
 
             //the proportion of each balls velocity along the axis of collision
-            double vA = QVector2D::dotProduct(collisionVector, velA);
-            double vB = QVector2D::dotProduct(collisionVector, velB);
+            float vA = QVector2D::dotProduct(collisionVector, velA);
+            float vB = QVector2D::dotProduct(collisionVector, velB);
 
 
             //the balls are moving away from each other so do nothing
@@ -144,11 +146,11 @@ void Dialog::isCollisionBallBall(Ball* currentball, std::vector<Ball *> ballsarr
             //that satisfy this
             //-(mR+1)x^2 2*(mR*vB+vA)x -((mR-1)*vB^2+2*vA*vB)=0
             //first we find the discriminant
-            double a = -(mR + 1);
-            double b = 2 * (mR * vB + vA);
-            double c = -((mR - 1) * vB * vB + 2 * vA * vB);
-            double discriminant = sqrt(b * b - 4 * a * c);
-            double root = (-b + discriminant)/(2 * a);
+            float a = -(mR + 1);
+            float b = 2 * (mR * vB + vA);
+            float c = -((mR - 1) * vB * vB + 2 * vA * vB);
+            float discriminant = sqrt(b * b - 4 * a * c);
+            float root = (-b + discriminant)/(2 * a);
             //only one of the roots is the solution, the other pertains to the current velocities
             if (root - vB < 0.01) {
                 root = (-b - discriminant)/(2 * a);

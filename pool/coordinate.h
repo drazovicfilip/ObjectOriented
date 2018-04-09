@@ -7,53 +7,53 @@
 class Coordinate
 {
 public:
-    Coordinate(double xCoordinate,
-        double yCoordinate,
-        unsigned int frameHeight,
-        unsigned int frameWidth)
+    Coordinate(float xCoordinate,
+        float yCoordinate,
+        float frameHeight,
+        float frameWidth)
         : m_xCoordinate(xCoordinate)
         , m_yCoordinate(yCoordinate)
         , m_frameHeight(frameHeight)
         , m_frameWidth(frameWidth)
     {}
 
-    int getQtRenderingXCoordinate(){
+    float getQtRenderingXCoordinate(){
         return m_xCoordinate;
     }
 
-    int getQtRenderingYCoordinate(){
+    float getQtRenderingYCoordinate(){
         return m_frameHeight - m_yCoordinate;
     }
 
-    int getYCoordinate(){
+    float getYCoordinate(){
         return m_yCoordinate;
     }
 
-    void changeInXCoordinate(double change){
+    void changeInXCoordinate(float change){
         m_xCoordinate += change;
     }
 
-    void changeInYCoordinate(double change){
+    void changeInYCoordinate(float change){
         m_yCoordinate += change;
     }
 
-    void setYCoordinateToZero(double offset){
+    void setYCoordinateToZero(float offset){
         m_yCoordinate = ceil(offset);
     }
 
-    unsigned int getFrameHeight(){
+    float getFrameHeight(){
         return m_frameHeight;
     }
 
-    unsigned int getFrameWidth(){
+    float getFrameWidth(){
         return m_frameWidth;
     }
 
 private:
-    double m_xCoordinate;
-    double m_yCoordinate;
-    unsigned int m_frameHeight;
-    unsigned int m_frameWidth;
+    float m_xCoordinate;
+    float m_yCoordinate;
+    float m_frameHeight;
+    float m_frameWidth;
 };
 
 #endif // COORDINATE_H

@@ -8,12 +8,12 @@ class PoolFactory : public AbstractFactory
 public:
 
     using AbstractFactory::createBall;
-    Ball* createBall(Coordinate coordinate, std::string color, int mass, int radius, double xVelocity, double yVelocity) override{
+    Ball* createBall(Coordinate coordinate, std::string color, float mass, float radius, float xVelocity, float yVelocity) override{
         return new Ball(coordinate, color, mass, radius, xVelocity, yVelocity);
     }
 
     using AbstractFactory::createTable;
-    Table* createTable(unsigned int length, unsigned int height, unsigned int thickness, unsigned int space, unsigned int friction) override{
+    Table* createTable(float length, float height, float thickness, float space, float friction) override{
         return new Table(length, height, thickness, space, friction);
     }
 };
