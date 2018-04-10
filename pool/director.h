@@ -2,6 +2,7 @@
 #define DIRECTOR_H
 
 #include "poolbuilder.h"
+#include <string>
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -16,10 +17,10 @@ public:
 
     float tablewidthJSON();
     float tableheightJSON();
-    float tablecolourJSON();
+    std::string tablecolourJSON();
     float frictionJSON();
 
-    float ballcolourJSON(int index);
+    std::string ballcolourJSON(int index);
     float ballxPositionJSON(int index);
     float ballyPositionJSON(int index);
     float ballxVelocityJSON(int index);

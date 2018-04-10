@@ -12,7 +12,7 @@ public:
     virtual Ball* buildBall(Coordinate coordinate, std::string color, float mass, float radius, float xVelocity, float yVelocity);
 
     using AbstractBuilder::buildTable;
-    virtual Table* buildTable(float length, float height, float thickness, float space, float friction);
+    virtual Table* buildTable(float length, float height, float thickness, float space, float friction, std::string color);
 
     virtual Pool getPool();
 

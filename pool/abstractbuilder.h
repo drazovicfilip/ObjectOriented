@@ -9,7 +9,7 @@ class AbstractBuilder
 {
 public:
     virtual Ball* buildBall(Coordinate coordinate, std::string color, float mass, float radius, float xVelocity, float yVelocity) = 0;
-    virtual Table* buildTable(float length, float height, float thickness, float space, float friction) = 0;
+    virtual Table* buildTable(float length, float height, float thickness, float space, float friction, std::string color) = 0;
     virtual Pool getPool() = 0;
 };
 

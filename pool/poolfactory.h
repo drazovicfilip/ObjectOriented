@@ -13,8 +13,8 @@ public:
     }
 
     using AbstractFactory::createTable;
-    Table* createTable(float length, float height, float thickness, float space, float friction) override{
-        return new Table(length, height, thickness, space, friction);
+    Table* createTable(float length, float height, float thickness, float space, float friction, std::string color) override{
+        return new Table(length, height, thickness, space, friction, color);
     }
 };
 

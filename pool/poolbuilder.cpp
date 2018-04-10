@@ -4,8 +4,8 @@ Ball* PoolBuilder::buildBall(Coordinate coordinate, std::string color, float mas
     return m_factory.createBall(coordinate, color, mass, radius, xVelocity, yVelocity);
 }
 
-Table* PoolBuilder::buildTable(float length, float height, float thickness, float space, float friction) { 
-    return m_factory.createTable(length, height, thickness, space, friction);
+Table* PoolBuilder::buildTable(float length, float height, float thickness, float space, float friction, std::string color) {
+    return m_factory.createTable(length, height, thickness, space, friction, color);
 }
 
 Pool PoolBuilder::getPool(){

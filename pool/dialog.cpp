@@ -20,6 +20,7 @@ Dialog::Dialog(QWidget *parent)
 
     QTimer *timer2 = new QTimer(this);
     connect(timer2, SIGNAL(timeout()), this, SLOT(simulate()));
+    timer2->start(8);
 }
 
 Dialog::~Dialog(){

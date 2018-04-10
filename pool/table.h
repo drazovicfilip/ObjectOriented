@@ -8,8 +8,7 @@
 class Table
 {
 public:
-    Table();
-    Table(float length, float height, float thickness, float space, float friction);
+    Table(float length, float height, float thickness, float space, float friction, std::string color);
 
     virtual ~Table();
 
@@ -28,6 +27,9 @@ public:
     float getFriction(){
         return m_friction;
     }
+    std::string getColour(){
+        return *m_color;
+    }
 
     void render(QPainter &painter);
 
@@ -37,6 +39,7 @@ private:
     float m_thickness;
     float m_space;
     float m_friction;
+    std::string* m_color;
 };
 
 #endif // TABLE_H
