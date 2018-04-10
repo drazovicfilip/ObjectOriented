@@ -12,15 +12,14 @@ Dialog::Dialog(QWidget *parent)
     Director director(&builder);
     pool = director.construct();
 
-    // Create 6 balls
-    //balls.push_back(new Ball(Coordinate(fwidth/5, fheight/2, fheight, fwidth), "green", 1, 20, -3, -3));
-    //balls.push_back(new Ball(Coordinate(fwidth/5, fheight/4, fheight, fwidth), "green", 1, 20, 3, 3));
-
     ui->setupUi(this);
-    this->resize(fwidth,fheight);
+    this->resize(director.tablewidthJSON(), director.tableheightJSON());
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
-    timer->start(50);
+    timer->start(32);
+
+    QTimer *timer2 = new QTimer(this);
+    connect(timer2, SIGNAL(timeout()), this, SLOT(simulate()));
 }
 
 Dialog::~Dialog(){
@@ -62,16 +61,7 @@ void Dialog::isCollisionBallTable(Ball* currentball, Table* table){
         if ((currentball->getCoordinate().getQtRenderingXCoordinate() >=
              (currentball->getCoordinate().getFrameWidth() - table->getSpace() - table->getThickness()/2 - currentball->getRadius())) || (currentball->getCoordinate().getQtRenderingXCoordinate() <= currentball->getRadius() + table->getThickness()/2 + table->getSpace())){
 
-            // If the ball is still not in the table
-            //if (currentball->getCoordinate().getQtRenderingXCoordinate() > currentball->getCoordinate().getFrameWidth() - table->getThickness() - table->getSpace() || currentball->getCoordinate().getQtRenderingXCoordinate() > table->getSpace() + table->getThickness()/2){
-            //    currentball->flipXVelocity();
-            //}
-
             currentball->flipXVelocity();
-            QTextStream out(stdout);
-            out << "Velocity is now " << currentball->getXVelocity() << ", " << currentball->getYVelocity() << endl;
-            out << "Velocity is now " << currentball->getXVelocity() << ", " << currentball->getYVelocity() << endl;
-
 
         }
 
@@ -79,14 +69,7 @@ void Dialog::isCollisionBallTable(Ball* currentball, Table* table){
         if ((currentball->getCoordinate().getQtRenderingYCoordinate() >=
              (currentball->getCoordinate().getFrameHeight() - table->getSpace() - table->getThickness()/2 - currentball->getRadius())) || (currentball->getCoordinate().getQtRenderingYCoordinate() <= currentball->getRadius() + table->getThickness()/2 + table->getSpace())){
 
-            // If the ball is still not in the table
-            //if (currentball->getCoordinate().getYCoordinate() > currentball->getCoordinate().getFrameHeight() - table->getThickness() - table->getSpace() || currentball->getCoordinate().getYCoordinate() > table->getSpace() + table->getThickness()/2){
-            //    currentball->flipYVelocity();
-            //}
-
             currentball->flipYVelocity();
-            QTextStream out(stdout);
-            out << "Velocity is now " << currentball->getXVelocity() << ", " << currentball->getYVelocity() << endl;
 
         }
 }
@@ -119,10 +102,6 @@ void Dialog::isCollisionBallBall(Ball* currentball, std::vector<Ball *> ballsarr
             QVector2D velB(otherball->getXVelocity(), otherball->getYVelocity());
 
             float massB = otherball->getMass();
-
-            QTextStream out(stdout);
-            out << "Ball " << currentball->getMass() << " | C: "<< centreAx << ", " << centreAy << " | V: "<< velA[0] << ", " << velA[1] << endl;
-            out << "Ball " << otherball->getMass() << " | C: "<< centreBx << ", " << centreBy << " | V: "<< velB[0] << ", " << velB[1] << endl;
 
             //calculate their mass ratio
             float mR = massB / massA;
@@ -160,22 +139,6 @@ void Dialog::isCollisionBallBall(Ball* currentball, std::vector<Ball *> ballsarr
             //The resulting changes in velocity for ball A and B
             QVector2D deltaVA = mR * (vB - root) * collisionVector;
             QVector2D deltaVB = (root - vB) * collisionVector;
-
-
-            out << "Centre A: " << centreAx << ", " << centreAy << endl;
-            out << "Centre B: " << centreBx << ", " << centreBy << endl;
-            out << "Velocity A: " << currentball->getXVelocity() << ", " << currentball->getYVelocity() << endl;
-            out << "Velocity B: " << otherball->getXVelocity() << ", " << otherball->getYVelocity() << endl;
-            out << "Mass A: " << massA << endl;
-            out << "Mass B: " << massB << endl;
-
-
-
-            out << "Delta A: " << deltaVA[0] << ", " << deltaVA[1] << endl;
-            out << "Delta B: " << deltaVB[0] << ", " << deltaVB[1] << endl;
-            out << "V A: " << vA << endl;
-            out << "V B: " << vB << endl;
-            out << "- - - - -" << endl;
 
             currentball->changeXVelocity(deltaVA[0]);
             currentball->changeYVelocity(deltaVA[1]);

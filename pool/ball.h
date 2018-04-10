@@ -9,8 +9,6 @@
 #define outsidedist 50
 #define tablethickness 20
 
-enum collisionLocation{vertical, horizontal, none};
-
 class Ball
 {
 

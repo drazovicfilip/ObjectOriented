@@ -3,6 +3,8 @@
 
 #include "abstractbuilder.h"
 
+#include "poolfactory.h"
+
 class PoolBuilder : public AbstractBuilder
 {
 public:
@@ -13,6 +15,10 @@ public:
     virtual Table* buildTable(float length, float height, float thickness, float space, float friction);
 
     virtual Pool getPool();
+
+private:
+    PoolFactory m_factory;
+
 };
 
 #endif // POOLBUILDER_H
