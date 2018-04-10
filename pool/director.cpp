@@ -15,14 +15,19 @@ Pool Director::construct(){
     Pool pool = m_builder->getPool();
     pool.setTable(m_builder->buildTable(tablewidthJSON(), tableheightJSON(), tablethickness, tablespace, frictionJSON(), tablecolourJSON()));
 
+    for (int i = 0; i < ballsjson.size(); i++){
+        pool.addBall(m_builder->buildBall(Coordinate(ballxPositionJSON(i) + tablethickness + tablespace, ballyPositionJSON(i) + tablethickness + tablespace, tableheightJSON(), tablewidthJSON()), ballcolourJSON(i), ballmassJSON(i), ballradiusJSON(i), ballxVelocityJSON(i), ballyVelocityJSON(i)));
+    }
 
-    pool.addBall(m_builder->buildBall(Coordinate(ballxPositionJSON(0) + tablethickness + tablespace, ballyPositionJSON(0) + tablethickness + tablespace, tableheightJSON(), tablewidthJSON()), ballcolourJSON(0), ballmassJSON(0), ballradiusJSON(0), ballxVelocityJSON(0), ballyVelocityJSON(0)));
+    /*
+
     pool.addBall(m_builder->buildBall(Coordinate(fwidth/5, fheight/3, tableheightJSON(), tablewidthJSON()), "green", 1, 20, 3, 1));
     pool.addBall(m_builder->buildBall(Coordinate(fwidth/5, fheight/4, tableheightJSON(), tablewidthJSON()), "green", 1, 20, -5, -3));
 
     pool.addBall(m_builder->buildBall(Coordinate(fwidth/4, fheight/2, tableheightJSON(), tablewidthJSON()), "red", 1, 20, 3, 1));
     pool.addBall(m_builder->buildBall(Coordinate(fwidth/4, fheight/4, tableheightJSON(), tablewidthJSON()), "red", 1, 20, 3, 2));
 
+    */
     //pool.addBall(m_builder->buildBall(Coordinate(fwidth/4, fheight/4, fheight, fwidth), "red", 1, 20, -3.25, 1.23));
     return pool;
 }
@@ -120,6 +125,14 @@ float Director::ballxPositionJSON(int index){
     if (ballsjson[index].toObject().contains("position") && ballsjson[index].toObject()["position"].isObject()){
         QJsonObject object = ballsjson[index].toObject()["position"].toObject();
         if (object.contains("x") && object["x"].isDouble()){
+
+            if (object["x"].toDouble() >= tablewidthJSON()){
+                return tablewidthJSON() - ballradiusJSON(index);
+            }
+            if (object["x"].toDouble() <= 0){
+                return ballradiusJSON(index);
+            }
+
             return object["x"].toDouble();
         }
         else{
@@ -135,6 +148,14 @@ float Director::ballyPositionJSON(int index){
     if (ballsjson[index].toObject().contains("position") && ballsjson[index].toObject()["position"].isObject()){
         QJsonObject object = ballsjson[index].toObject()["position"].toObject();
         if (object.contains("y") && object["y"].isDouble()){
+
+            if (object["y"].toDouble() >= tableheightJSON()){
+                return tableheightJSON() - ballradiusJSON(index);
+            }
+            if (object["y"].toDouble() <= 0){
+                return ballradiusJSON(index);
+            }
+
             return object["y"].toDouble();
         }
         else{
@@ -178,6 +199,11 @@ float Director::ballyVelocityJSON(int index){
 }
 float Director::ballmassJSON(int index){
     if (ballsjson[index].toObject().contains("mass") && ballsjson[index].toObject()["mass"].isDouble()){
+
+        if (ballsjson[index].toObject()["mass"].toDouble() <= 0){
+            return 1;
+        }
+
         return ballsjson[index].toObject()["mass"].toDouble();
     }
     else{
@@ -186,6 +212,11 @@ float Director::ballmassJSON(int index){
 }
 float Director::ballradiusJSON(int index){
     if (ballsjson[index].toObject().contains("radius") && ballsjson[index].toObject()["radius"].isDouble()){
+
+        if (ballsjson[index].toObject()["radius"].toDouble() <= 0){
+            return 10;
+        }
+
         return ballsjson[index].toObject()["radius"].toDouble();
     }
     else{

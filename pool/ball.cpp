@@ -33,8 +33,9 @@ void Ball::render(QPainter &painter){
     // Account for friction (very approximated calculations)
     //m_xVelocity = 0.98*m_xVelocity;
     //m_yVelocity = 0.98*m_yVelocity;
-    m_coordinate.changeInXCoordinate(m_xVelocity);
-    m_coordinate.changeInYCoordinate(m_yVelocity);
+
+    //m_coordinate.changeInXCoordinate(m_xVelocity);
+    //m_coordinate.changeInYCoordinate(m_yVelocity);
 
     // Draw the ball for the current frame
     painter.setPen (Qt::black);

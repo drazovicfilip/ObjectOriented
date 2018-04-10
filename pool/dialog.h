@@ -32,6 +32,7 @@ public:
 
 public slots:
     void nextFrame();
+    void simulate();
 
 protected:
     void paintEvent(QPaintEvent *event);

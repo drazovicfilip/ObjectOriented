@@ -14,23 +14,31 @@ Dialog::Dialog(QWidget *parent)
 
     ui->setupUi(this);
     this->resize(director.tablewidthJSON(), director.tableheightJSON());
+
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
-    timer->start(32);
+    timer->start(8);
 
-    QTimer *timer2 = new QTimer(this);
-    connect(timer2, SIGNAL(timeout()), this, SLOT(simulate()));
-    timer2->start(8);
+    QTimer *timersim = new QTimer(this);
+    connect(timersim, SIGNAL(timeout()), this, SLOT(simulate()));
+    timersim->start(10);
 }
 
 Dialog::~Dialog(){
     delete ui;
 }
 
-void Dialog::paintEvent(QPaintEvent *event){
+void Dialog::simulate(){
+    std::vector<Ball *> balls = pool.getBalls();
+    for(Ball * currentball : balls){
+        isCollisionBallBall(currentball, balls);
+        isCollisionBallTable(currentball, pool.getTable());
+        currentball->changeinXCoordinate(currentball->getXVelocity()*0.01);
+        currentball->changeinYCoordinate(currentball->getYVelocity()*0.01);
+    }
+}
 
-    // To make the compiler shush about event not being used
-    event = 0;
+void Dialog::paintEvent(QPaintEvent *event){
 
     // Draw a simple table
     QPainter painter(this);
@@ -38,11 +46,10 @@ void Dialog::paintEvent(QPaintEvent *event){
     pool.getTable()->render(painter);
 
     std::vector<Ball *> balls = pool.getBalls();
-
     for(Ball * currentball : balls){
 
-        isCollisionBallBall(currentball, balls);
-        isCollisionBallTable(currentball, pool.getTable());
+        //isCollisionBallBall(currentball, balls);
+        //isCollisionBallTable(currentball, pool.getTable());
         currentball->render(painter);
 
         //delete currentball;
@@ -53,8 +60,6 @@ void Dialog::paintEvent(QPaintEvent *event){
 void Dialog::nextFrame(){
     update();
 }
-
-
 
 void Dialog::isCollisionBallTable(Ball* currentball, Table* table){
 

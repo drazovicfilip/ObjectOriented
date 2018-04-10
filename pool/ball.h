@@ -23,6 +23,13 @@ public:
         return m_coordinate;
     }
 
+    void changeinXCoordinate(float value){
+        m_coordinate.changeInXCoordinate(value);
+    }
+    void changeinYCoordinate(float value){
+        m_coordinate.changeInYCoordinate(value);
+    }
+
     void flipXVelocity(){
         m_xVelocity = m_xVelocity * -1.0;
     }
