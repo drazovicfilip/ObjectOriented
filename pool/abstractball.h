@@ -11,11 +11,11 @@ public:
 
     AbstractBall(Coordinate coordinate, std::string color, float mass, float radius, float xVelocity, float yVelocity)
         : m_coordinate(coordinate)
-        , m_radius(radius)
+        , m_color(new std::string(color))
         , m_mass(mass)
+        , m_radius(radius)
         , m_xVelocity(xVelocity)
         , m_yVelocity(yVelocity)
-        , m_color(new std::string(color))
     {}
 
     virtual ~AbstractBall(){
@@ -81,11 +81,11 @@ public:
 
 private:
     Coordinate m_coordinate;
-    float m_radius;
+    std::string* m_color;
     float m_mass;
+    float m_radius;
     float m_xVelocity;
     float m_yVelocity;
-    std::string* m_color;
 };
 
 #endif // ABSTRACTBALL_H
