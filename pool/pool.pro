@@ -42,7 +42,9 @@ HEADERS += \
     abstractbuilder.h \
     poolbuilder.h \
     pool.h \
-    director.h
+    director.h \
+    abstractball.h \
+    abstracttable.h
 
 FORMS += \
         dialog.ui

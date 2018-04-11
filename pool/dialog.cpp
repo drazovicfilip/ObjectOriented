@@ -3,6 +3,9 @@
 #include <QTextStream>
 #include <QRect>
 
+#define simtime 2
+#define frametime 8
+
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::Dialog)
@@ -17,11 +20,11 @@ Dialog::Dialog(QWidget *parent)
 
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(nextFrame()));
-    timer->start(8);
+    timer->start(frametime);
 
     QTimer *timersim = new QTimer(this);
     connect(timersim, SIGNAL(timeout()), this, SLOT(simulate()));
-    timersim->start(10);
+    timersim->start(simtime);
 }
 
 Dialog::~Dialog(){
@@ -33,8 +36,10 @@ void Dialog::simulate(){
     for(Ball * currentball : balls){
         isCollisionBallBall(currentball, balls);
         isCollisionBallTable(currentball, pool.getTable());
-        currentball->changeinXCoordinate(currentball->getXVelocity()*0.01);
-        currentball->changeinYCoordinate(currentball->getYVelocity()*0.01);
+        currentball->changeXVelocity(-9.81*pool.getTable()->getFriction()*(double(simtime)/double(1000))*currentball->getXVelocity());
+        currentball->changeYVelocity(-9.81*pool.getTable()->getFriction()*(double(simtime)/double(1000))*currentball->getYVelocity());
+        currentball->changeinXCoordinate(currentball->getXVelocity()*(double(simtime)/double(1000)));
+        currentball->changeinYCoordinate(currentball->getYVelocity()*(double(simtime)/double(1000)));
     }
 }
 
