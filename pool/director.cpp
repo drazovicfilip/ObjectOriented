@@ -19,16 +19,6 @@ Pool Director::construct(){
         pool.addBall(m_builder->buildBall(Coordinate(ballxPositionJSON(i) + tablethickness + tablespace, ballyPositionJSON(i) + tablethickness + tablespace, tableheightJSON(), tablewidthJSON()), ballcolourJSON(i), ballmassJSON(i), ballradiusJSON(i), ballxVelocityJSON(i), ballyVelocityJSON(i)));
     }
 
-    /*
-
-    pool.addBall(m_builder->buildBall(Coordinate(fwidth/5, fheight/3, tableheightJSON(), tablewidthJSON()), "green", 1, 20, 3, 1));
-    pool.addBall(m_builder->buildBall(Coordinate(fwidth/5, fheight/4, tableheightJSON(), tablewidthJSON()), "green", 1, 20, -5, -3));
-
-    pool.addBall(m_builder->buildBall(Coordinate(fwidth/4, fheight/2, tableheightJSON(), tablewidthJSON()), "red", 1, 20, 3, 1));
-    pool.addBall(m_builder->buildBall(Coordinate(fwidth/4, fheight/4, tableheightJSON(), tablewidthJSON()), "red", 1, 20, 3, 2));
-
-    */
-    //pool.addBall(m_builder->buildBall(Coordinate(fwidth/4, fheight/4, fheight, fwidth), "red", 1, 20, -3.25, 1.23));
     return pool;
 }
 

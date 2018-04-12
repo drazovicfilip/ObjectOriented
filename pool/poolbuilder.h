@@ -2,12 +2,12 @@
 #define POOLBUILDER_H
 
 #include "abstractbuilder.h"
-
 #include "poolfactory.h"
 
 class PoolBuilder : public AbstractBuilder
 {
 public:
+
     using AbstractBuilder::buildBall;
     virtual Ball* buildBall(Coordinate coordinate, std::string color, float mass, float radius, float xVelocity, float yVelocity);
 

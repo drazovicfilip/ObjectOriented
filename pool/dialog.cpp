@@ -44,11 +44,8 @@ void Dialog::simulate(){
 }
 
 void Dialog::paintEvent(QPaintEvent *event){
-
     QPainter painter(this);
-
     pool.render(painter);
-
 }
 
 void Dialog::nextFrame(){
@@ -77,7 +74,6 @@ void Dialog::isCollisionBallTable(Ball* currentball, Table* table){
 void Dialog::isCollisionBallBall(Ball* currentball, std::vector<Ball *> ballsarray){
 
     for (int i = distance(ballsarray.begin(), std::find(ballsarray.begin(), ballsarray.end(), currentball)) + 1; i < (int)ballsarray.size(); i++){
-    //for (int i = 0; i < ballsarray.size(); i++){
 
         Ball* otherball = ballsarray[i];
 
@@ -142,7 +138,6 @@ void Dialog::isCollisionBallBall(Ball* currentball, std::vector<Ball *> ballsarr
 
             currentball->changeXVelocity(deltaVA[0]);
             currentball->changeYVelocity(deltaVA[1]);
-
             otherball->changeXVelocity(deltaVB[0]);
             otherball->changeYVelocity(deltaVB[1]);
 
