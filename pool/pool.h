@@ -4,9 +4,11 @@
 #include "table.h"
 #include "ball.h"
 #include <vector>
+#include <QPainter>
 
 class Pool{
 public:
+    void render(QPainter &painter);
     void setTable(Table* table);
     void addBall(Ball* ball);
     Table* getTable();

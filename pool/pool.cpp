@@ -1,5 +1,12 @@
 #include "pool.h"
 
+void Pool::render(QPainter &painter){
+    m_table->render(painter);
+    for (Ball * currentball : m_balls){
+        currentball->render(painter);
+    }
+}
+
 void Pool::setTable(Table* table){
     m_table = table;
 }

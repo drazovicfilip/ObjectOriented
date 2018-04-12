@@ -45,20 +45,9 @@ void Dialog::simulate(){
 
 void Dialog::paintEvent(QPaintEvent *event){
 
-    // Draw a simple table
     QPainter painter(this);
 
-    pool.getTable()->render(painter);
-
-    std::vector<Ball *> balls = pool.getBalls();
-    for(Ball * currentball : balls){
-
-        //isCollisionBallBall(currentball, balls);
-        //isCollisionBallTable(currentball, pool.getTable());
-        currentball->render(painter);
-
-        //delete currentball;
-    }
+    pool.render(painter);
 
 }
 
