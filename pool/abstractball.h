@@ -4,11 +4,22 @@
 #include "coordinate.h"
 #include <QPainter>
 
+/**
+ * @brief An abstract ball class.
+ *
+ * @author Filip Drazovic
+ * @date April 2018
+ *
+ * Each ball will have a given coordinate, velocity, mass, radius and colour.
+ * Balls will render themselves.
+ */
+
 
 class AbstractBall
 {
 public:
 
+    // Constructor. The only way a ball is made is if all parameters are known
     AbstractBall(Coordinate coordinate, std::string color, float mass, float radius, float xVelocity, float yVelocity)
         : m_coordinate(coordinate)
         , m_color(new std::string(color))
@@ -18,10 +29,15 @@ public:
         , m_yVelocity(yVelocity)
     {}
 
+    // Destructor. Must delete the dynamically allocated color string
     virtual ~AbstractBall(){
         delete m_color;
     }
 
+    /**
+     * @brief render - Each ball will render itself. This draws a at the given (x,y) coordinate in the given colour
+     * @param painter
+     */
     void render(QPainter &painter){
         painter.setPen (Qt::black);
         painter.setBrush(QBrush(QColor(QString::fromStdString(*m_color))));
@@ -31,10 +47,32 @@ public:
             m_radius * 2);
     }
 
+    // Get methods
     Coordinate getCoordinate(){
         return m_coordinate;
     }
 
+    float getRadius(){
+        return m_radius;
+    }
+
+    float getMass(){
+        return m_mass;
+    }
+
+    std::string getColor(){
+        return *m_color;
+    }
+
+    float getXVelocity(){
+        return m_xVelocity;
+    }
+
+    float getYVelocity(){
+        return m_yVelocity;
+    }
+
+    // Set methods
     void changeinXCoordinate(float value){
         m_coordinate.changeInXCoordinate(value);
     }
@@ -56,26 +94,6 @@ public:
 
     void changeYVelocity(float change){
         m_yVelocity += change;
-    }
-
-    float getRadius(){
-        return m_radius;
-    }
-
-    float getMass(){
-        return m_mass;
-    }
-
-    std::string getColor(){
-        return *m_color;
-    }
-
-    float getXVelocity(){
-        return m_xVelocity;
-    }
-
-    float getYVelocity(){
-        return m_yVelocity;
     }
 
 

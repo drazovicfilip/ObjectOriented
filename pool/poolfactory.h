@@ -3,6 +3,16 @@
 
 #include "abstractfactory.h"
 
+/**
+ * @brief The PoolFactory is a concrete implementation of the abstract factory.
+ *
+ * @author Filip Drazovic
+ * @date April 2018
+ *
+ * It will make balls and a table.
+ * It will be called upon by the builder (and thus by the director) when creating the pool game.
+ */
+
 class PoolFactory : public AbstractFactory
 {
 public:

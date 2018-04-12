@@ -5,6 +5,16 @@
 #include "table.h"
 #include "pool.h"
 
+/**
+ * @brief The Builder is responsible for building each object for the pool game.
+ *
+ * @author Filip Drazovic
+ * @date April 2018
+ *
+ * In this case, it will build the ball(s), table and the pool game itself.
+ * The director will put them all together.
+ */
+
 class AbstractBuilder
 {
 public:

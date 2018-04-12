@@ -5,9 +5,21 @@
 #include <QPen>
 #include <QBrush>
 
+/**
+ * @brief The Table is a static, drawn object that doesn't move during runtime.
+ *
+ * @author Filip Drazovic
+ * @date April 2018
+ *
+ * It holds the boundaries of the pool game which are used for colision calculations.
+ * These parameters should not change during runtime.
+ */
+
 class AbstractTable
 {
 public:
+
+    // Constructor. The only way a table is made is if all parameters are known
     AbstractTable(float length, float height, float thickness, float space, float friction, std::string color)
         : m_length(length)
         , m_height(height)
@@ -17,8 +29,12 @@ public:
         , m_color(new std::string(color))
     {}
 
-    virtual ~AbstractTable(){}
+    // Destructor. Must delete the dynamically allocated color string
+    virtual ~AbstractTable(){
+        delete m_color;
+    }
 
+    // The table will render itself. This draws a rectangle using the given length, height, thickness and space
     void render(QPainter &painter){
 
         QPen pen;
@@ -31,6 +47,7 @@ public:
         painter.drawRect(m_space,m_space,(m_length-2*m_space),(m_height-2*m_space));
     }
 
+    // Get methods
     float getLength(){
         return m_length;
     }

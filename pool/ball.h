@@ -5,6 +5,17 @@
 #include <QPainter>
 #include "abstractball.h"
 
+/**
+ * @brief The ball class is an implementation of the abstract ball class. Nothing has changed.
+ *
+ * @author Filip Drazovic
+ * @date April 2018
+ *
+ * Each ball will have a given coordinate, velocity, mass, radius and colour.
+ * Balls will render themselves.
+ */
+
+
 class Ball : public AbstractBall
 {
 

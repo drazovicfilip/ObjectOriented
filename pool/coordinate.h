@@ -4,9 +4,22 @@
 #include <stdlib.h>
 #include <math.h>
 
+/**
+ * @brief The Coordinate class is used for any balls in the program
+ *
+ * @author Filip Drazovic
+ * @date April 2018
+ *
+ * Balls are given a coordinate when they are initialised, and this coordinate is
+ * updated as the program runs. Every ball also stores the table dimensions, which
+ * can be useful for calculating collisions.
+ */
+
 class Coordinate
 {
 public:
+
+    // Constructor. The only way a coordinate is made is if all parameters are known
     Coordinate(float xCoordinate,
         float yCoordinate,
         float frameHeight,
@@ -17,6 +30,7 @@ public:
         , m_frameWidth(frameWidth)
     {}
 
+    // Get methods
     float getQtRenderingXCoordinate(){
         return m_xCoordinate;
     }
@@ -28,6 +42,16 @@ public:
     float getYCoordinate(){
         return m_yCoordinate;
     }
+
+    float getFrameHeight(){
+        return m_frameHeight;
+    }
+
+    float getFrameWidth(){
+        return m_frameWidth;
+    }
+
+    // Set methods
 
     void changeInXCoordinate(float change){
         m_xCoordinate += change;
@@ -41,13 +65,7 @@ public:
         m_yCoordinate = ceil(offset);
     }
 
-    float getFrameHeight(){
-        return m_frameHeight;
-    }
 
-    float getFrameWidth(){
-        return m_frameWidth;
-    }
 
 private:
     float m_xCoordinate;

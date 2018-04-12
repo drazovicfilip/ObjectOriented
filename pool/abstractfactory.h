@@ -5,6 +5,16 @@
 #include "ball.h"
 #include "table.h"
 
+/**
+ * @brief The Factory is responsible for creating each object.
+ *
+ * @author Filip Drazovic
+ * @date April 2018
+ *
+ * This separates object creation from the client.
+ * The client will only call the factory, not worrying about the concrete class implementation.
+ */
+
 class AbstractFactory
 {
 public:
