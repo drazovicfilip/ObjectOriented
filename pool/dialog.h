@@ -18,8 +18,8 @@
 #include "director.h"
 
 // Variables in milliseconds
-#define simtime 2
-#define frametime 8
+#define simtime 16
+#define frametime 32
 
 /**
  * @brief The dialog class is the coordinator of the whole program.
