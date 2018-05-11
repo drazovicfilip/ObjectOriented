@@ -46,8 +46,21 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
     //to provide different behavior for different stages, additional design patterns amirite?
     //don't need any logic yet to decide which factory to use
 
-    StageOneFactory *factory = new StageOneFactory();
-    //AbstractFactory *factory2 = new StageTwoFactory();
+    AbstractFactory *factory;
+
+    if (config.contains("stage2"))
+    {
+        if (config["stage2"].toBool())
+        {
+            factory = new StageTwoFactory();
+        }
+        else{
+            factory = new StageOneFactory();
+        }
+    }
+    else{
+        factory = new StageOneFactory();
+    }
 
     GameBuilder builder(factory);
 
