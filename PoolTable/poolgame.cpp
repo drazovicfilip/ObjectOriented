@@ -1,6 +1,8 @@
 #include "poolgame.h"
 #include <math.h>
 
+#include <iostream>
+
 void PoolGame::simulateTimeStep(float timeStep)
 {
     //collisions of balls with the edge of the table
@@ -33,11 +35,19 @@ void PoolGame::simulateTimeStep(float timeStep)
 
 void PoolGame::draw(QPainter &p)
 {
+
     m_table->draw(p);
+
+    for(Pocket * pocket: m_pockets)
+    {
+        pocket->draw(p);
+    }
+
     for(Ball * b: m_balls)
     {
         b->draw(p);
     }
+
 }
 
 void PoolGame::collision(Ball &b1, Ball &b2)

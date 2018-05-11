@@ -7,6 +7,7 @@
 
 #include "table.h"
 #include "ball.h"
+#include "pocket.h"
 
 /**
  * @brief The PoolGame class runs the pool game, it is in charge of the physics of the pool game as well as
@@ -22,6 +23,9 @@ public:
      */
     PoolGame(Table * m_table,std::vector<Ball*> balls)
         :m_table(m_table),m_balls(balls)
+    {}
+    PoolGame(Table * m_table, std::vector<Ball*> balls, std::vector<Pocket*> pockets)
+        :m_table(m_table),m_balls(balls),m_pockets(pockets)
     {}
 
     /**
@@ -59,6 +63,7 @@ private:
 
     Table * m_table;
     std::vector<Ball*> m_balls;
+    std::vector<Pocket*> m_pockets;
 };
 
 #endif // POOLGAME_H

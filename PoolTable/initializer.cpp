@@ -67,6 +67,14 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
     if(config.contains("table"))
     {
         builder.buildTable(config["table"].toObject());
+        if (config["table"].toObject().contains("pockets"))
+        {
+            QJsonArray pockets = (config["table"].toObject()["pockets"].toArray());
+            for (int i = 0; i < pockets.size(); ++i)
+            {
+                builder.addPocket(pockets[i].toObject());
+            }
+        }
     }
     else
     {

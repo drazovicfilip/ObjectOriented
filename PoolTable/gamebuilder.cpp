@@ -41,8 +41,9 @@ void GameBuilder::addPocket(const QJsonObject &pocketJson)
 PoolGame *GameBuilder::getGame()
 {
     //create the game and reset the member variables
-    PoolGame * result = new PoolGame(m_table,m_balls);
+    PoolGame * result = new PoolGame(m_table,m_balls, m_pockets);
     m_table = nullptr;
     m_balls.clear();
+    m_pockets.clear();
     return result;
 }
