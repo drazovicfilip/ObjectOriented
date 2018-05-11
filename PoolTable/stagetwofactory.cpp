@@ -2,6 +2,7 @@
 
 #include "stagetwoball.h"
 #include "stagetwotable.h"
+#include "stagetwopocket.h"
 
 #include <QColor>
 #include <QVector2D>
@@ -45,3 +46,15 @@ Table *StageTwoFactory::makeTable(const QJsonObject &config) const
     return new StageTwoTable(dimensions.x(),dimensions.y(),friction,colour);
 
 }
+
+
+Pocket *StageTwoFactory::makePocket(const QJsonObject &config) const
+{
+    StageTwoPocket * pocket = new StageTwoPocket();
+    pocket->setPosition(QJsonValueToVector2D(config["position"],pocket->radius(),pocket->radius()));
+    pocket->setRadius(config["radius"].toDouble(10));
+
+    return pocket;
+}
+
+

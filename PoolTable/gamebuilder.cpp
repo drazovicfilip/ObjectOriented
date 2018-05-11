@@ -1,4 +1,5 @@
 #include "gamebuilder.h"
+#include "stagetwofactory.h"
 
 GameBuilder::GameBuilder(AbstractFactory *factory)
     :m_balls(),m_table(nullptr),m_factory(factory)
@@ -29,6 +30,13 @@ void GameBuilder::buildTable(const QJsonObject &tableJSon)
     delete m_table;
     m_table = m_factory->makeTable(tableJSon);
 }
+
+
+void GameBuilder::addPocket(const QJsonObject &pocketJson)
+{
+    m_pockets.push_back(((StageTwoFactory*)m_factory)->makePocket(pocketJson));
+}
+
 
 PoolGame *GameBuilder::getGame()
 {

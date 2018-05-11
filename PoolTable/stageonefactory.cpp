@@ -45,3 +45,4 @@ Table *StageOneFactory::makeTable(const QJsonObject &config) const
     return new StageOneTable(dimensions.x(),dimensions.y(),friction,colour);
 
 }
+

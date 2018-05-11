@@ -4,6 +4,7 @@
 #include "abstractfactory.h"
 #include "ball.h"
 #include "table.h"
+#include "pocket.h"
 
 /**
  * @brief The StageTwoFactory class creates concrete objects for stage two
@@ -30,5 +31,7 @@ public:
      * @return a pointer to a valid stageTwoTable
      */
     Table *makeTable(const QJsonObject &config) const;
+
+    Pocket *makePocket(const QJsonObject &config) const;
 };
 #endif // STAGETWOFACTORY_H

@@ -7,6 +7,7 @@
 #include "poolgame.h"
 #include "ball.h"
 #include "table.h"
+#include "pocket.h"
 #include "abstractfactory.h"
 
 /**
@@ -38,10 +39,14 @@ public:
      * @brief getGame creates and returns a pointer to a PoolGame, the caller now has ownership of that pointer
      * @return pointer to the created poolgame
      */
+
     PoolGame* getGame();
+
+    void addPocket(const QJsonObject &pocketJSon);
 
 private:
     std::vector<Ball*> m_balls;
+    std::vector<Pocket*> m_pockets;
     Table *m_table;
     AbstractFactory *m_factory;
 };

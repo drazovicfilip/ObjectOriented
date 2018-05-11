@@ -5,6 +5,7 @@
 
 #include "ball.h"
 #include "table.h"
+#include "pocket.h"
 
 /**
  * @brief The AbstractFactory class creates instances of balls and tables
@@ -28,6 +29,7 @@ public:
      * no matter the provided json
      */
     virtual Table* makeTable(const QJsonObject &config) const = 0;
+
 };
 
 #endif // ABSTRACTFACTORY_H

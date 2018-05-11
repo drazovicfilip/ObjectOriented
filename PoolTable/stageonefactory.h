@@ -6,6 +6,7 @@
 #include "abstractfactory.h"
 #include "ball.h"
 #include "table.h"
+#include "pocket.h"
 
 /**
  * @brief The StageOneFactory class creates concrete objects for stage one
