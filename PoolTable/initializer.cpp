@@ -37,6 +37,8 @@ QJsonObject jsonFromFile(const std::string &configFilePath)
 PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
 {
 
+    bool Stage2 = false;
+
     QJsonObject config = jsonFromFile(configFilePath);
     if(config.isEmpty())
         return nullptr;
@@ -52,6 +54,7 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
     {
         if (config["stage2"].toBool())
         {
+            Stage2 = true;
             factory = new StageTwoFactory();
         }
         else{
@@ -67,12 +70,15 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
     if(config.contains("table"))
     {
         builder.buildTable(config["table"].toObject());
-        if (config["table"].toObject().contains("pockets"))
+        if (Stage2)
         {
-            QJsonArray pockets = (config["table"].toObject()["pockets"].toArray());
-            for (int i = 0; i < pockets.size(); ++i)
+            if (config["table"].toObject().contains("pockets"))
             {
-                builder.addPocket(pockets[i].toObject());
+                QJsonArray pockets = (config["table"].toObject()["pockets"].toArray());
+                for (int i = 0; i < pockets.size(); ++i)
+                {
+                    builder.addPocket(pockets[i].toObject());
+                }
             }
         }
     }
