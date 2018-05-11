@@ -24,7 +24,8 @@ SOURCES += main.cpp \
     initializer.cpp \
     stagetwofactory.cpp \
     stagetwoball.cpp \
-    stagetwotable.cpp
+    stagetwotable.cpp \
+    stagetwopocket.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -38,5 +39,7 @@ HEADERS  += dialog.h \
     initializer.h \
     stagetwofactory.h \
     stagetwoball.h \
-    stagetwotable.h
+    stagetwotable.h \
+    stagetwopocket.h \
+    pocket.h
 
