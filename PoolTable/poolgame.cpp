@@ -18,6 +18,11 @@ void PoolGame::simulateTimeStep(float timeStep)
         {
             collision(*(m_balls[i]),*(m_balls[j]));
         }
+
+        for (int p = 0; p < m_pockets.size(); ++p)
+        {
+            collision(*(m_balls[i]), *(m_pockets[p]));
+        }
     }
 
     for(Ball * b: m_balls)
@@ -48,6 +53,27 @@ void PoolGame::draw(QPainter &p)
         b->draw(p);
     }
 
+}
+
+void PoolGame::collision(Ball &b1, Pocket &p1)
+{
+    // Geometric distance formula
+    float distance = sqrt( pow(b1.position().x() - p1.position().x(), 2) + pow(b1.position().y() - p1.position().y(), 2) );
+
+    // The pocket has fully engulfed the ball
+    if (distance + b1.radius() <= p1.radius()){
+
+        // Find the ball in the array of balls. If we found it, delete it
+        for (int i = 0; i < m_balls.size(); ++i)
+        {
+            if (m_balls[i] == &b1){
+                m_balls.erase(m_balls.begin() + i);
+                delete &b1;
+                return;
+            }
+        }
+
+    }
 }
 
 void PoolGame::collision(Ball &b1, Ball &b2)

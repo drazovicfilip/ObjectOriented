@@ -61,6 +61,8 @@ private:
      */
     void collision(Table &t, Ball &b);
 
+    void collision(Ball &b1, Pocket &p1);
+
     Table * m_table;
     std::vector<Ball*> m_balls;
     std::vector<Pocket*> m_pockets;
