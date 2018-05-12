@@ -12,7 +12,9 @@
 class StageTwoFactory : public AbstractFactory
 {
 public:
-    StageTwoFactory(){}
+    StageTwoFactory()
+        : m_hasCue(false)
+    {}
 
     // AbstractFactory interface
 public:
@@ -23,7 +25,7 @@ public:
      * @param config is the configuration for the ball in json format
      * @return a pointer to a valid stageTwoBall
      */
-    Ball *makeBall(const QJsonObject &config) const;
+    Ball *makeBall(const QJsonObject &config);
 
     /**
      * @brief makes and returns a stageTwoTable
@@ -33,5 +35,11 @@ public:
     Table *makeTable(const QJsonObject &config) const;
 
     Pocket *makePocket(const QJsonObject &config) const;
+
+    bool hasCue() const { return m_hasCue; }
+    void setCue(const bool b) { m_hasCue = b; }
+
+private:
+    bool m_hasCue;
 };
 #endif // STAGETWOFACTORY_H

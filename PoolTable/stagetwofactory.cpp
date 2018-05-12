@@ -20,7 +20,7 @@ QVector2D StageTwoFactory::QJsonValueToVector2D(const QJsonValue &v, float defau
     return QVector2D(v.toObject()["x"].toDouble(defaultX),v.toObject()["y"].toDouble(defaultY));
 }
 
-Ball *StageTwoFactory::makeBall(const QJsonObject &config) const
+Ball *StageTwoFactory::makeBall(const QJsonObject &config)
 {
     //we kind of use a builder style setx, sety, etc, here but just because
     //it is easier than setting all the stuff in the constructor
@@ -33,6 +33,11 @@ Ball *StageTwoFactory::makeBall(const QJsonObject &config) const
     ball->setPosition(QJsonValueToVector2D(config["position"],ball->radius(),ball->radius()));
     ball->setMass(config["mass"].toDouble(1.0));
     ball->setColour(config["colour"].toString());
+    if ((config["colour"].toString() == "white") && (hasCue() == false))
+    {
+        ball->setCue(true);
+        setCue(true);
+    }
 
     return ball;
 }

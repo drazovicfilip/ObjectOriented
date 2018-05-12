@@ -19,7 +19,7 @@ QVector2D StageOneFactory::QJsonValueToVector2D(const QJsonValue &v, float defau
     return QVector2D(v.toObject()["x"].toDouble(defaultX),v.toObject()["y"].toDouble(defaultY));
 }
 
-Ball *StageOneFactory::makeBall(const QJsonObject &config) const
+Ball *StageOneFactory::makeBall(const QJsonObject &config)
 {
     //we kind of use a builder style setx, sety, etc, here but just because
     //it is easier than setting all the stuff in the constructor

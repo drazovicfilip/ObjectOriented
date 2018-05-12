@@ -24,7 +24,7 @@ public:
      * @param config is the configuration for the ball in json format
      * @return a pointer to a valid stageOneBall
      */
-    Ball *makeBall(const QJsonObject &config) const;
+    Ball *makeBall(const QJsonObject &config);
 
     /**
      * @brief makes and returns a stageOneTable

@@ -20,7 +20,7 @@ public:
      * @return the created ball that will always be in a valid state
      * no matter the provided json
      */
-    virtual Ball* makeBall(const QJsonObject &config) const = 0;
+    virtual Ball* makeBall(const QJsonObject &config) = 0;
 
     /**
      * @brief makeBall creates a table from the provided json object

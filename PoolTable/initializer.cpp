@@ -17,7 +17,7 @@ QJsonObject jsonFromFile(const std::string &configFilePath)
     std::ifstream configFile(configFilePath);
     if(!configFile.good())
     {
-        std::cout << "could not open \"" << configFilePath <<"\"" <<std::endl;
+        std::cerr << "could not open \"" << configFilePath <<"\"" <<std::endl;
         return QJsonObject();
     }
 
@@ -28,7 +28,7 @@ QJsonObject jsonFromFile(const std::string &configFilePath)
     QJsonDocument jsonDocConfig = QJsonDocument::fromJson(QByteArray::fromStdString(ss.str()));
     if(jsonDocConfig.isNull())
     {
-        std::cout << configFilePath <<" is not valid Json" << std::endl;
+        std::cerr << configFilePath <<" is not valid Json" << std::endl;
         return QJsonObject();
     }
     return jsonDocConfig.object();
@@ -84,7 +84,7 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
     }
     else
     {
-        std::cout << "no \"table\" key found" <<std::endl;
+        std::cerr << "no \"table\" key found" <<std::endl;
         return nullptr;
     }
 
@@ -98,7 +98,7 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
     }
     else
     {
-        std::cout << "no \"ball\" key found" <<std::endl;
+        std::cerr << "no \"ball\" key found" <<std::endl;
         return nullptr;
     }
     return builder.getGame();
