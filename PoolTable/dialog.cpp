@@ -3,6 +3,8 @@
 #include <QPainter>
 #include <QSize>
 
+#include <iostream>
+
 constexpr float fps = 60;
 constexpr float timeStep = 0.01;
 
@@ -13,7 +15,6 @@ Dialog::Dialog(PoolGame *game, QWidget *parent)
     this->resize(m_game->size());
     connect(m_framerateTimer,SIGNAL(timeout()),this,SLOT(update()));
     connect(m_timestepTimer,SIGNAL(timeout()),this,SLOT(runSimulationStep()));
-
 }
 
 void Dialog::start()

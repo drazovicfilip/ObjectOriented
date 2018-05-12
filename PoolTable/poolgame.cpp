@@ -50,6 +50,7 @@ void PoolGame::draw(QPainter &p)
 
     for(Ball * b: m_balls)
     {
+
         b->draw(p);
     }
 

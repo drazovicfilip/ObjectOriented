@@ -33,10 +33,12 @@ Ball *StageTwoFactory::makeBall(const QJsonObject &config)
     ball->setPosition(QJsonValueToVector2D(config["position"],ball->radius(),ball->radius()));
     ball->setMass(config["mass"].toDouble(1.0));
     ball->setColour(config["colour"].toString());
+
     if ((config["colour"].toString() == "white") && (hasCue() == false))
     {
-        ball->setCue(true);
         setCue(true);
+        CueBallDecorator * decball = new CueBallDecorator(ball);
+        return decball;
     }
 
     return ball;

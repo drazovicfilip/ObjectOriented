@@ -3,6 +3,7 @@
 
 #include "abstractfactory.h"
 #include "ball.h"
+#include "cueballdecorator.h"
 #include "table.h"
 #include "pocket.h"
 

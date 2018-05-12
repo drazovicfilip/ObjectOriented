@@ -3,6 +3,7 @@
 
 #include <QColor>
 #include <QPainter>
+#include <QMouseEvent>
 
 #include "ball.h"
 
@@ -15,11 +16,7 @@ public:
     StageTwoBall();
 
     const QColor & colour(){return m_colour;}
-
     void setColour(const QColor &newColour){m_colour = newColour;}
-
-    bool isCue() const { return m_isCue; }
-    void setCue( bool isCue ) { m_isCue = isCue; }
 
     // Ball interface
 public:
@@ -31,7 +28,6 @@ public:
 
 private:
     QColor m_colour;
-    bool m_isCue;
 };
 
 #endif // STAGETWOBALL_H
