@@ -26,7 +26,7 @@ void GameBuilder::addBall(const QJsonObject &ballJSon)
     float xPos = ballJSon["position"].toObject()["x"].toDouble();
     float yPos = ballJSon["position"].toObject()["y"].toDouble();
     float radius = ballJSon["radius"].toDouble();
-    if (xPos <= radius || xPos - radius >= m_table->width() || yPos <= radius || yPos - radius >= m_table->height())
+    if (xPos <= radius || xPos + radius >= m_table->width() || yPos <= radius || yPos + radius >= m_table->height())
     {
         if (ballJSon["colour"].isString())
         {
