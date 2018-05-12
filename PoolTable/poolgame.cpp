@@ -113,7 +113,6 @@ void PoolGame::collision(Ball &b1, Ball &b2)
            root = (-b - discriminant)/(2 * a);
          }
 
-
          //The resulting changes in velocity for ball A and B
          b1.changeVelocity(mR * (vB - root) * collisionVector);
          b2.changeVelocity((root - vB) * collisionVector);

@@ -29,6 +29,7 @@ Ball *StageTwoFactory::makeBall(const QJsonObject &config) const
 
     ball->setVelocity(QJsonValueToVector2D(config["velocity"]));
     ball->setRadius(config["radius"].toDouble(10));
+
     ball->setPosition(QJsonValueToVector2D(config["position"],ball->radius(),ball->radius()));
     ball->setMass(config["mass"].toDouble(1.0));
     ball->setColour(config["colour"].toString());
@@ -51,6 +52,7 @@ Table *StageTwoFactory::makeTable(const QJsonObject &config) const
 Pocket *StageTwoFactory::makePocket(const QJsonObject &config) const
 {
     StageTwoPocket * pocket = new StageTwoPocket();
+
     pocket->setPosition(QJsonValueToVector2D(config["position"],pocket->radius(),pocket->radius()));
     pocket->setRadius(config["radius"].toDouble(10));
 

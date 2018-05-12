@@ -1,5 +1,6 @@
 #include "gamebuilder.h"
 #include "stagetwofactory.h"
+#include <iostream>
 
 GameBuilder::GameBuilder(AbstractFactory *factory)
     :m_balls(),m_table(nullptr),m_factory(factory)
@@ -20,7 +21,27 @@ GameBuilder::~GameBuilder()
 
 void GameBuilder::addBall(const QJsonObject &ballJSon)
 {
-    m_balls.push_back(m_factory->makeBall(ballJSon));
+
+    // If any part of a ball is placed off the table, print a warning message and ignore that ball
+    float xPos = ballJSon["position"].toObject()["x"].toDouble();
+    float yPos = ballJSon["position"].toObject()["y"].toDouble();
+    float radius = ballJSon["radius"].toDouble();
+    if (xPos <= radius || xPos - radius >= m_table->width() || yPos <= radius || yPos - radius >= m_table->height())
+    {
+        if (ballJSon["colour"].isString())
+        {
+            std::cerr << "Ignoring " << ballJSon["colour"].toString().toStdString() << " ball because it is outside the table." << std::endl;
+        }
+        else
+        {
+            std::cerr << "Ignoring current ball because it is outside the table." << std::endl;
+        }
+
+    }
+    else{
+        m_balls.push_back(m_factory->makeBall(ballJSon));
+    }
+
 }
 
 void GameBuilder::buildTable(const QJsonObject &tableJSon)
