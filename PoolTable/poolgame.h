@@ -28,6 +28,8 @@ public:
         :m_table(m_table),m_balls(balls),m_pockets(pockets)
     {}
 
+    void linkQWidgetParentToCueBall(QWidget* parent);
+
     /**
      * @brief simulate one timestep of the game
      * @param timeStep is the period of time that this timestep is simulating

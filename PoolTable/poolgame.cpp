@@ -2,6 +2,21 @@
 #include <math.h>
 
 #include <iostream>
+#include <balldecorator.h>
+#include <stagetwoball.h>
+
+void PoolGame::linkQWidgetParentToCueBall(QWidget* parent)
+{
+    for (Ball * b: m_balls)
+    {
+        if (b->colour() == QColor(Qt::white))
+        {
+            // Should this be dynamic_cast-ed?
+            (dynamic_cast<BallDecorator*>(b))->setParent(parent);
+            return;
+        }
+    }
+}
 
 void PoolGame::simulateTimeStep(float timeStep)
 {
@@ -12,14 +27,14 @@ void PoolGame::simulateTimeStep(float timeStep)
     }
 
     //a collision between each possible pair of balls
-    for(int i = 0; i < m_balls.size();++i)
+    for(size_t i = 0; i < m_balls.size();++i)
     {
-        for(int j = i+1;j < m_balls.size();++j)
+        for(size_t j = i+1;j < m_balls.size();++j)
         {
             collision(*(m_balls[i]),*(m_balls[j]));
         }
 
-        for (int p = 0; p < m_pockets.size(); ++p)
+        for (size_t p = 0; p < m_pockets.size(); ++p)
         {
             collision(*(m_balls[i]), *(m_pockets[p]));
         }
@@ -50,7 +65,6 @@ void PoolGame::draw(QPainter &p)
 
     for(Ball * b: m_balls)
     {
-
         b->draw(p);
     }
 
@@ -65,7 +79,7 @@ void PoolGame::collision(Ball &b1, Pocket &p1)
     if (distance + b1.radius() <= p1.radius()){
 
         // Find the ball in the array of balls. If we found it, delete it
-        for (int i = 0; i < m_balls.size(); ++i)
+        for (size_t i = 0; i < m_balls.size(); ++i)
         {
             if (m_balls[i] == &b1){
                 m_balls.erase(m_balls.begin() + i);

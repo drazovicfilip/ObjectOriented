@@ -33,6 +33,7 @@ public:
      */
     void paintEvent(QPaintEvent *);
     ~Dialog();
+
 public slots:
     void runSimulationStep();
 private:

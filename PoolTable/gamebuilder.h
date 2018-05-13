@@ -9,6 +9,7 @@
 #include "table.h"
 #include "pocket.h"
 #include "abstractfactory.h"
+#include "balldecorator.h"
 
 /**
  * @brief The GameBuilder class is used to build a PoolGame object, To do this it uses a specific factory to create the components.
@@ -44,7 +45,11 @@ public:
 
     void addPocket(const QJsonObject &pocketJSon);
 
+    bool hasCue() const { return m_hasCue; }
+    void setCue(const bool b) { m_hasCue = b; }
+
 private:
+    bool m_hasCue;
     std::vector<Ball*> m_balls;
     std::vector<Pocket*> m_pockets;
     Table *m_table;

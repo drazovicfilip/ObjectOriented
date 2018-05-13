@@ -14,10 +14,6 @@ class StageOneBall : public Ball
 public:
     StageOneBall();
 
-    const QColor & colour(){return m_colour;}
-
-    void setColour(const QColor &newColour){m_colour = newColour;}
-
     // Ball interface
 public:
     /**
@@ -26,8 +22,6 @@ public:
      */
     void draw(QPainter &p);
 
-private:
-    QColor m_colour;
 };
 
 #endif // STAGEONEBALL_H

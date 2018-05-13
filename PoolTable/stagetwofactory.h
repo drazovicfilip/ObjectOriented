@@ -3,7 +3,6 @@
 
 #include "abstractfactory.h"
 #include "ball.h"
-#include "cueballdecorator.h"
 #include "table.h"
 #include "pocket.h"
 
@@ -14,7 +13,6 @@ class StageTwoFactory : public AbstractFactory
 {
 public:
     StageTwoFactory()
-        : m_hasCue(false)
     {}
 
     // AbstractFactory interface
@@ -37,10 +35,5 @@ public:
 
     Pocket *makePocket(const QJsonObject &config) const;
 
-    bool hasCue() const { return m_hasCue; }
-    void setCue(const bool b) { m_hasCue = b; }
-
-private:
-    bool m_hasCue;
 };
 #endif // STAGETWOFACTORY_H

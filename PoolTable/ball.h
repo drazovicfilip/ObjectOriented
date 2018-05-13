@@ -3,6 +3,7 @@
 
 #include <QPainter>
 #include <QVector2D>
+#include <QColor>
 
 /**
  * @brief The Ball class containes the logic and member variables of a circle representing a ball
@@ -14,21 +15,21 @@ public:
     Ball(){}
     virtual ~Ball(){}
 
-    const QVector2D &position()const{return m_position;}
-    const QVector2D &velocity()const{return m_velocity;}
-    float radius()const{return m_radius;}
-    float mass()const{return m_mass;}
+    virtual const QVector2D &position()const{return m_position;}
+    virtual const QVector2D &velocity()const{return m_velocity;}
+    virtual float radius()const{return m_radius;}
+    virtual float mass()const{return m_mass;}
 
-    void setPosition(const QVector2D &newPosition){m_position = newPosition;}
+    virtual void setPosition(const QVector2D &newPosition){m_position = newPosition;}
     /**
      * @brief setVelocity sets the velocity manually to a value.
      * This should only be used to initialize the balls starting velocity
      * and set it to zero if it is small enough, otherwise use changeVelocity
      * @param newVelocity
      */
-    void setVelocity(const QVector2D &newVelocity){m_velocity = newVelocity;}
-    void setRadius(float newRadius){m_radius = newRadius;}
-    void setMass(float newMass){m_mass = newMass;}
+    virtual void setVelocity(const QVector2D &newVelocity){m_velocity = newVelocity;}
+    virtual void setRadius(float newRadius){m_radius = newRadius;}
+    virtual void setMass(float newMass){m_mass = newMass;}
 
     virtual void changePosition(const QVector2D &deltaX){m_position += deltaX;}
     virtual void changeVelocity(const QVector2D &deltaV){m_velocity += deltaV;}
@@ -45,10 +46,14 @@ public:
      */
     virtual void move(float timestep){changePosition(m_velocity*timestep);}
 
+    virtual QColor & colour(){ return m_colour; }
+    virtual void setColour(const QColor &newColour){m_colour = newColour;}
+
 protected:
     QVector2D m_position;
     QVector2D m_velocity;
     float m_radius;
     float m_mass;
+    QColor m_colour;
 };
 #endif // BALL_H

@@ -3,7 +3,7 @@
 #include <iostream>
 
 GameBuilder::GameBuilder(AbstractFactory *factory)
-    :m_balls(),m_table(nullptr),m_factory(factory)
+    :m_balls(),m_table(nullptr),m_factory(factory),m_hasCue(false)
 {
 
 }
@@ -38,8 +38,18 @@ void GameBuilder::addBall(const QJsonObject &ballJSon)
         }
 
     }
+
     else{
-        m_balls.push_back(m_factory->makeBall(ballJSon));
+        if ((ballJSon["colour"].toString() == "white") && (hasCue() == false))
+        {
+            Ball* cue = new BallDecorator(m_factory->makeBall(ballJSon));
+            m_balls.push_back(std::move(cue));
+        }
+        else
+        {
+            Ball* ball = m_factory->makeBall(ballJSon);
+            m_balls.push_back(ball);
+        }
     }
 
 }
@@ -62,9 +72,10 @@ void GameBuilder::addPocket(const QJsonObject &pocketJson)
 PoolGame *GameBuilder::getGame()
 {
     //create the game and reset the member variables
-    PoolGame * result = new PoolGame(m_table,m_balls, m_pockets);
+    PoolGame * result = new PoolGame(m_table,m_balls,m_pockets);
     m_table = nullptr;
     m_balls.clear();
     m_pockets.clear();
+
     return result;
 }
