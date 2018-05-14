@@ -41,6 +41,11 @@ public:
     void changeVelocity(const QVector2D &deltaV){ m_ball->changeVelocity(deltaV); }
 
     void move(float timestep){ m_ball->move(timestep); }
+
+private:
+    bool mousePressed;
+    bool mouseReleased;
+    QVector2D mousePosition;
 };
 
 #endif // BALLDECORATOR_H
