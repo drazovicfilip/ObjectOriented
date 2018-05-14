@@ -43,6 +43,8 @@ public:
 
     PoolGame* getGame();
 
+    void reverseBalls(){ std::reverse(m_balls.begin(), m_balls.end()); }
+
     void addPocket(const QJsonObject &pocketJSon);
 
     bool hasCue() const { return m_hasCue; }

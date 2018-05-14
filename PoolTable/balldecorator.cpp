@@ -12,8 +12,14 @@ void BallDecorator::draw(QPainter &p)
 {
     if (mousePressed && m_ball->velocity().x() == 0 && m_ball->velocity().y() == 0)
     {
+        const double mouseX = mousePosition.x();
+        const double mouseY = mousePosition.y();
         p.setPen(QPen(Qt::black, 4));
-        p.drawLine(m_ball->position().x(), m_ball->position().y(), mousePosition.x(), mousePosition.y());
+        p.drawLine(m_ball->position().x(), m_ball->position().y(), mouseX, mouseY);
+
+        p.setPen(QPen(Qt::black, 2, Qt::DotLine));
+        p.drawLine(m_ball->position().x(), m_ball->position().y(), m_ball->position().x() - ((mouseX) - m_ball->position().x()), m_ball->position().y() - ((mouseY) - m_ball->position().y()));
+
     }
     m_ball->draw(p);
 }
@@ -22,7 +28,6 @@ void BallDecorator::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
-        std::cout << "decorator press" << std::endl;
         mousePosition = QVector2D(event->x(), event->y());
         mousePressed = true;
     }
@@ -41,7 +46,6 @@ void BallDecorator::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton && mousePressed)
     {
-        std::cout << "decorator release" << std::endl;
         mousePosition = QVector2D(-1, -1);
         mousePressed = false;
 

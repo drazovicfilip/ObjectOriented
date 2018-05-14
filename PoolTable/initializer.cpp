@@ -95,6 +95,9 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
         {
             builder.addBall(balls[i].toObject());
         }
+        // Move cue ball to the end of the list
+        builder.reverseBalls();
+
     }
     else
     {

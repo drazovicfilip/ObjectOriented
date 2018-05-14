@@ -43,7 +43,7 @@ void GameBuilder::addBall(const QJsonObject &ballJSon)
         if ((ballJSon["colour"].toString() == "white") && (hasCue() == false))
         {
             Ball* cue = new BallDecorator(m_factory->makeBall(ballJSon));
-            m_balls.push_back(std::move(cue));
+            m_balls.insert(m_balls.begin(), std::move(cue));
         }
         else
         {

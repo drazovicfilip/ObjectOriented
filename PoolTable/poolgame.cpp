@@ -83,7 +83,6 @@ void PoolGame::collision(Ball &b1, Pocket &p1)
         {
             if (m_balls[i] == &b1){
                 m_balls.erase(m_balls.begin() + i);
-                delete &b1;
                 return;
             }
         }
