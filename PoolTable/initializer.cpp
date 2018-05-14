@@ -36,8 +36,7 @@ QJsonObject jsonFromFile(const std::string &configFilePath)
 
 PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
 {
-
-    bool Stage2 = false;
+    size_t stage = 1;
 
     QJsonObject config = jsonFromFile(configFilePath);
     if(config.isEmpty())
@@ -54,7 +53,7 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
     {
         if (config["stage2"].toBool())
         {
-            Stage2 = true;
+            stage = 2;
             factory = new StageTwoFactory();
         }
         else{
@@ -70,7 +69,7 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
     if(config.contains("table"))
     {
         builder.buildTable(config["table"].toObject());
-        if (Stage2)
+        if (stage == 2)
         {
             if (config["table"].toObject().contains("pockets"))
             {
@@ -93,7 +92,7 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
         QJsonArray balls = config["balls"].toArray();
         for(int i = 0; i < balls.size();++i)
         {
-            builder.addBall(balls[i].toObject());
+            builder.addBall(balls[i].toObject(), stage);
         }
         // Move cue ball to the end of the list
         builder.reverseBalls();
@@ -104,5 +103,5 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
         std::cerr << "no \"ball\" key found" <<std::endl;
         return nullptr;
     }
-    return builder.getGame();
+    return builder.getGame(stage);
 }

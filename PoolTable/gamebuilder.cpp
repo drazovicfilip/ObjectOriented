@@ -19,7 +19,7 @@ GameBuilder::~GameBuilder()
     }
 }
 
-void GameBuilder::addBall(const QJsonObject &ballJSon)
+void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage)
 {
 
     // If any part of a ball is placed off the table, print a warning message and ignore that ball
@@ -40,16 +40,25 @@ void GameBuilder::addBall(const QJsonObject &ballJSon)
     }
 
     else{
-        if ((ballJSon["colour"].toString() == "white") && (hasCue() == false))
-        {
-            Ball* cue = new BallDecorator(m_factory->makeBall(ballJSon));
-            m_balls.insert(m_balls.begin(), std::move(cue));
-        }
-        else
+        if (stage == 1)
         {
             Ball* ball = m_factory->makeBall(ballJSon);
             m_balls.push_back(ball);
         }
+        else{
+            if ((ballJSon["colour"].toString() == "white") && (hasCue() == false))
+            {
+                Ball* cue = new BallDecorator(m_factory->makeBall(ballJSon));
+                m_balls.insert(m_balls.begin(), std::move(cue));
+            }
+            else
+            {
+                Ball* ball = m_factory->makeBall(ballJSon);
+                m_balls.push_back(ball);
+            }
+        }
+
+
     }
 
 }
@@ -62,17 +71,16 @@ void GameBuilder::buildTable(const QJsonObject &tableJSon)
     m_table = m_factory->makeTable(tableJSon);
 }
 
-
 void GameBuilder::addPocket(const QJsonObject &pocketJson)
 {
     m_pockets.push_back(((StageTwoFactory*)m_factory)->makePocket(pocketJson));
 }
 
 
-PoolGame *GameBuilder::getGame()
+PoolGame *GameBuilder::getGame(size_t stage)
 {
     //create the game and reset the member variables
-    PoolGame * result = new PoolGame(m_table,m_balls,m_pockets);
+    PoolGame * result = new PoolGame(m_table,m_balls,m_pockets,stage);
     m_table = nullptr;
     m_balls.clear();
     m_pockets.clear();

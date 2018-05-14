@@ -27,6 +27,9 @@ public:
     PoolGame(Table * m_table, std::vector<Ball*> balls, std::vector<Pocket*> pockets)
         :m_table(m_table),m_balls(balls),m_pockets(pockets)
     {}
+    PoolGame(Table * m_table, std::vector<Ball*> balls, std::vector<Pocket*> pockets, size_t stage)
+        :m_table(m_table),m_balls(balls),m_pockets(pockets),m_stage(stage)
+    {}
 
     void linkQWidgetParentToCueBall(QWidget* parent);
 
@@ -48,6 +51,8 @@ public:
      */
     QSize size(){return QSize(m_table->width(),m_table->height());}
 
+    size_t stage(){ return m_stage; }
+
 private:
     /**
      * @brief collide two balls if they are in contact
@@ -66,6 +71,7 @@ private:
     void collision(Ball &b1, Pocket &p1);
 
     Table * m_table;
+    size_t m_stage;
     std::vector<Ball*> m_balls;
     std::vector<Pocket*> m_pockets;
 };

@@ -14,8 +14,12 @@ Dialog::Dialog(PoolGame *game, QWidget *parent)
     this->setMinimumSize(m_game->size());
     this->resize(m_game->size());
 
-    game->linkQWidgetParentToCueBall(this);
-
+    // Only do this for stage 2
+    if (game->stage() == 2)
+    {
+        std::cout << "linking" << std::endl;
+        game->linkQWidgetParentToCueBall(this);
+    }
     connect(m_framerateTimer,SIGNAL(timeout()),this,SLOT(update()));
     connect(m_timestepTimer,SIGNAL(timeout()),this,SLOT(runSimulationStep()));
 }
