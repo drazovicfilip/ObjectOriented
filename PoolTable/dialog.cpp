@@ -17,7 +17,6 @@ Dialog::Dialog(PoolGame *game, QWidget *parent)
     // Only do this for stage 2
     if (game->stage() == 2)
     {
-        std::cout << "linking" << std::endl;
         game->linkQWidgetParentToCueBall(this);
     }
     connect(m_framerateTimer,SIGNAL(timeout()),this,SLOT(update()));

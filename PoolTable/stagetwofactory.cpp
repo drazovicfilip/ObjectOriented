@@ -3,6 +3,7 @@
 #include "stagetwoball.h"
 #include "stagetwotable.h"
 #include "stagetwopocket.h"
+#include <float.h>
 
 #include <QColor>
 #include <QVector2D>
@@ -34,6 +35,16 @@ Ball *StageTwoFactory::makeBall(const QJsonObject &config)
     ball->setPosition(QJsonValueToVector2D(config["position"],ball->radius(),ball->radius()));
     ball->setMass(config["mass"].toDouble(1.0));
     ball->setColour(config["colour"].toString());
+
+    if (config["strength"].toString() == "infinity")
+    {
+        ball->setStrength(FLT_MAX);
+    }
+    else
+    {
+       ball->setStrength(config["strength"].toDouble(1.0));
+    }
+
 
     return ball;
 }
