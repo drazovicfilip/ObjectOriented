@@ -1,6 +1,8 @@
 #include "simpleball.h"
+#include "float.h"
 
 SimpleBall::SimpleBall()
+    : m_strength(FLT_MAX)
 {}
 
 void SimpleBall::draw(QPainter &p)
