@@ -10,7 +10,6 @@
 
 #include "stageonefactory.h"
 #include "stagetwofactory.h"
-#include "gamebuilder.h"
 
 QJsonObject jsonFromFile(const std::string &configFilePath)
 {
@@ -32,6 +31,31 @@ QJsonObject jsonFromFile(const std::string &configFilePath)
         return QJsonObject();
     }
     return jsonDocConfig.object();
+}
+
+void Initializer::addCompositeBalls(QJsonArray& balls, GameBuilder& builder, size_t stage)
+{
+
+
+
+    /*
+    for(int i = 0; i < balls.size(); ++i)
+    {
+        if (balls[i].isArray())
+        {
+            std::cout << "composite" << std::endl;
+        }
+        else{
+
+            std::cout << "adding" << std::endl;
+            builder.addBall(balls[i].toObject(), stage);
+        }
+
+
+    }
+    */
+
+
 }
 
 PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
@@ -90,10 +114,28 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
     if(config.contains("balls"))
     {
         QJsonArray balls = config["balls"].toArray();
+
+
         for(int i = 0; i < balls.size();++i)
         {
-            builder.addBall(balls[i].toObject(), stage);
+
+            if (stage == 2)
+            {
+                if (balls[i].toObject().contains("balls"))
+                {
+                    builder.addCompositeBall(balls[i].toObject(), stage);
+                }
+                else
+                {
+                    builder.addLeafBall(balls[i].toObject(), stage);
+                }
+            }
+            else
+            {
+                builder.addBall(balls[i].toObject(), stage);
+            }
         }
+
         // Move cue ball to the end of the list
         builder.reverseBalls();
 

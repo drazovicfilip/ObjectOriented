@@ -19,9 +19,18 @@ GameBuilder::~GameBuilder()
     }
 }
 
-void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage)
+void GameBuilder::addCompositeBall(const QJsonObject &ballJSon, size_t stage)
 {
 
+}
+
+void GameBuilder::addLeafBall(const QJsonObject &ballJSon, size_t stage)
+{
+
+}
+
+void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage)
+{
     // If any part of a ball is placed off the table, print a warning message and ignore that ball
     float xPos = ballJSon["position"].toObject()["x"].toDouble();
     float yPos = ballJSon["position"].toObject()["y"].toDouble();
@@ -36,7 +45,6 @@ void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage)
         {
             std::cerr << "Ignoring current ball because it is outside the table." << std::endl;
         }
-
     }
 
     else{

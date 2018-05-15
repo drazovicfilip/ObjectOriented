@@ -149,16 +149,13 @@ void PoolGame::collision(Ball &b1, Ball &b2)
          b1.changeVelocity(mR * (vB - root) * collisionVector);
          b2.changeVelocity((root - vB) * collisionVector);
 
-         float velocityChangeB1 = sqrt(pow((mR * (vB - root) * collisionVector).x(),2) + pow((mR * (vB - root) * collisionVector).y(),2));
-         float velocityChangeB2 = sqrt(pow(((root - vB) * collisionVector).x(),2) + pow(((root - vB) * collisionVector).y(),2));
-
-
-         float kineticEnergyB1 = b1.mass() * pow(velocityChangeB1, 2);
-         float kineticEnergyB2 = b2.mass() * pow(velocityChangeB2,2);
-
          if (m_stage == 2)
          {
-             std::cout << "KE1: " << kineticEnergyB1 << ", KE2: " << kineticEnergyB2 << std::endl;
+
+             float velocityChangeB1 = sqrt(pow((mR * (vB - root) * collisionVector).x(),2) + pow((mR * (vB - root) * collisionVector).y(),2));
+             float velocityChangeB2 = sqrt(pow(((root - vB) * collisionVector).x(),2) + pow(((root - vB) * collisionVector).y(),2));
+             float kineticEnergyB1 = b1.mass() * pow(velocityChangeB1, 2);
+             float kineticEnergyB2 = b2.mass() * pow(velocityChangeB2,2);
              float ballStrengthB1 = ballStrength(b1);
              float ballStrengthB2 = ballStrength(b2);
 
