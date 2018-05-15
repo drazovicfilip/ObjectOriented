@@ -8,7 +8,7 @@
 #include <QColor>
 
 #include "ball.h"
-#include "stagetwoball.h"
+#include "compositeball.h"
 
 class BallDecorator : public Ball, public QWidget
 {
@@ -43,8 +43,8 @@ public:
 
     void move(float timestep){ m_ball->move(timestep); }
 
-    void setStrength(float strength){ (dynamic_cast<StageTwoBall*>(m_ball))->setStrength(strength); }
-    float strength(){ return (dynamic_cast<StageTwoBall*>(m_ball))->strength(); }
+    void setStrength(float strength){ (dynamic_cast<CompositeBall*>(m_ball))->setStrength(strength); }
+    float strength(){ return (dynamic_cast<CompositeBall*>(m_ball))->strength(); }
 
 private:
     bool mousePressed;

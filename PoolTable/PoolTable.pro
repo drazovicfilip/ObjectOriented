@@ -17,30 +17,30 @@ SOURCES += main.cpp \
     dialog.cpp \
     poolgame.cpp \
     stageonetable.cpp \
-    stageoneball.cpp \
     stageonefactory.cpp \
     gamebuilder.cpp \
     initializer.cpp \
     stagetwofactory.cpp \
-    stagetwoball.cpp \
     stagetwotable.cpp \
     stagetwopocket.cpp \
-    balldecorator.cpp
+    balldecorator.cpp \
+    simpleball.cpp \
+    compositeball.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
     table.h \
     ball.h \
     stageonetable.h \
-    stageoneball.h \
     abstractfactory.h \
     stageonefactory.h \
     gamebuilder.h \
     initializer.h \
     stagetwofactory.h \
-    stagetwoball.h \
     stagetwotable.h \
     stagetwopocket.h \
     pocket.h \
-    balldecorator.h
+    balldecorator.h \
+    simpleball.h \
+    compositeball.h
 

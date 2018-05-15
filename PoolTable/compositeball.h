@@ -1,5 +1,5 @@
-#ifndef STAGETWOBALL_H
-#define STAGETWOBALL_H
+#ifndef CompositeBall_H
+#define CompositeBall_H
 
 #include <QColor>
 #include <QPainter>
@@ -8,12 +8,12 @@
 #include "ball.h"
 
 /**
- * @brief The StageTwoBall class is a concrete version of the Ball class specific to stage one of the assignment
+ * @brief The CompositeBall class is a concrete version of the Ball class specific to stage one of the assignment
  */
-class StageTwoBall : public Ball
+class CompositeBall : public Ball
 {
 public:
-    StageTwoBall();
+    CompositeBall();
 
     // Ball interface
 public:
@@ -30,4 +30,4 @@ private:
     float m_strength;
 };
 
-#endif // STAGETWOBALL_H
+#endif // CompositeBall_H

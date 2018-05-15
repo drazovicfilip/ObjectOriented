@@ -1,5 +1,5 @@
-#ifndef STAGEONEBALL_H
-#define STAGEONEBALL_H
+#ifndef SIMPLEBALL_H
+#define SIMPLEBALL_H
 
 #include <QColor>
 #include <QPainter>
@@ -7,12 +7,12 @@
 #include "ball.h"
 
 /**
- * @brief The StageOneBall class is a concrete version of the Ball class specific to stage one of the assignment
+ * @brief The SimpleBall class is a concrete version of the Ball class specific to stage one of the assignment
  */
-class StageOneBall : public Ball
+class SimpleBall : public Ball
 {
 public:
-    StageOneBall();
+    SimpleBall();
 
     // Ball interface
 public:
@@ -21,7 +21,6 @@ public:
      * @param painter to use to draw the ball
      */
     void draw(QPainter &p);
-
 };
 
-#endif // STAGEONEBALL_H
+#endif // SIMPLEBALL_H

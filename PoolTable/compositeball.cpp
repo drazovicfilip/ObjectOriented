@@ -1,12 +1,12 @@
-#include "stagetwoball.h"
+#include "compositeball.h"
 #include <iostream>
 #include "float.h"
 
-StageTwoBall::StageTwoBall()
+CompositeBall::CompositeBall()
     : m_strength(FLT_MAX)
 {}
 
-void StageTwoBall::draw(QPainter &p)
+void CompositeBall::draw(QPainter &p)
 {
     p.setPen(Qt::black);
     p.setBrush(QBrush(m_colour));

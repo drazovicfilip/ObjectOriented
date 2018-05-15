@@ -1,6 +1,6 @@
 #include "stageonefactory.h"
 
-#include "stageoneball.h"
+#include "simpleball.h"
 #include "stageonetable.h"
 
 #include <QColor>
@@ -23,8 +23,8 @@ Ball *StageOneFactory::makeBall(const QJsonObject &config)
 {
     //we kind of use a builder style setx, sety, etc, here but just because
     //it is easier than setting all the stuff in the constructor
-    //this means we don't need any of the common stuff cluttering the stageOneBall class
-    StageOneBall * ball = new StageOneBall();
+    //this means we don't need any of the common stuff cluttering the SimpleBall class
+    SimpleBall * ball = new SimpleBall();
 
     ball->setVelocity(QJsonValueToVector2D(config["velocity"]));
     ball->setRadius(config["radius"].toDouble(10));

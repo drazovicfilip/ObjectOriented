@@ -20,9 +20,9 @@ public:
 
      QVector2D QJsonValueToVector2D(const QJsonValue &v, float defaultX, float defaultY) const;
     /**
-     * @brief makes and returns a stageTwoBall
+     * @brief makes and returns a CompositeBall
      * @param config is the configuration for the ball in json format
-     * @return a pointer to a valid stageTwoBall
+     * @return a pointer to a valid CompositeBall
      */
     Ball *makeBall(const QJsonObject &config);
 

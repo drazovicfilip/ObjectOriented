@@ -1,6 +1,6 @@
 #include "stagetwofactory.h"
 
-#include "stagetwoball.h"
+#include "compositeball.h"
 #include "stagetwotable.h"
 #include "stagetwopocket.h"
 #include <float.h>
@@ -26,8 +26,8 @@ Ball *StageTwoFactory::makeBall(const QJsonObject &config)
 {
     //we kind of use a builder style setx, sety, etc, here but just because
     //it is easier than setting all the stuff in the constructor
-    //this means we don't need any of the common stuff cluttering the stageTwoBall class
-    StageTwoBall * ball = new StageTwoBall();
+    //this means we don't need any of the common stuff cluttering the CompositeBall class
+    CompositeBall * ball = new CompositeBall();
 
     ball->setVelocity(QJsonValueToVector2D(config["velocity"]));
     ball->setRadius(config["radius"].toDouble(10));

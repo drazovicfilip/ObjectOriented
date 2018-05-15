@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <balldecorator.h>
-#include <stagetwoball.h>
+#include <compositeball.h>
 
 void PoolGame::linkQWidgetParentToCueBall(QWidget* parent)
 {
@@ -83,15 +83,15 @@ void PoolGame::collision(Ball &b1, Pocket &p1)
 
 float PoolGame::ballStrength(Ball &b)
 {
-    StageTwoBall* stagetwoball = (dynamic_cast<StageTwoBall*>(&b));
+    CompositeBall* compositeball = (dynamic_cast<CompositeBall*>(&b));
     BallDecorator* decoratorball = (dynamic_cast<BallDecorator*>(&b));
-    if (stagetwoball == nullptr)
+    if (compositeball == nullptr)
     {
         return decoratorball->strength();
     }
     else
     {
-        return stagetwoball->strength();
+        return compositeball->strength();
     }
 }
 
@@ -172,11 +172,7 @@ void PoolGame::collision(Ball &b1, Ball &b2)
              {
                  deleteBall(b2);
              }
-
          }
-
-
-
     }
 }
 
@@ -200,36 +196,16 @@ void PoolGame::collision(Table &t, Ball &b)
 
     if (collided == true && m_stage == 2)
     {
-        StageTwoBall* stagetwoball = (dynamic_cast<StageTwoBall*>(&b));
-        BallDecorator* decoratorball = (dynamic_cast<BallDecorator*>(&b));
-        float ballStrength;
-        if (stagetwoball == nullptr)
-        {
-            ballStrength = decoratorball->strength();
-        }
-        else
-        {
-            ballStrength = stagetwoball->strength();
-        }
+        float ballstrength = ballStrength(b);
 
         float velocityInitial = sqrt ( pow(b.velocity().x(),2) + pow(b.velocity().y(),2) );
         float velocityFinal = velocityInitial * -1.0;
         float kineticEnergy = b.mass() * pow(velocityInitial - velocityFinal, 2);
 
         // If the ball should break
-        if (kineticEnergy >= ballStrength)
+        if (kineticEnergy >= ballstrength)
         {
-
-            // Find the ball in the array of balls. If we found it, delete it
-            for (size_t i = 0; i < m_balls.size(); ++i)
-            {
-                if (m_balls[i] == &b){
-                    m_balls.erase(m_balls.begin() + i);
-                    return;
-                }
-            }
-
+            deleteBall(b);
         }
-
     }
 }

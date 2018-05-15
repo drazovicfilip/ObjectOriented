@@ -1,9 +1,9 @@
-#include "stageoneball.h"
+#include "simpleball.h"
 
-StageOneBall::StageOneBall()
+SimpleBall::SimpleBall()
 {}
 
-void StageOneBall::draw(QPainter &p)
+void SimpleBall::draw(QPainter &p)
 {
     p.setPen(Qt::black);
     p.setBrush(QBrush(m_colour));
