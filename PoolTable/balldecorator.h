@@ -8,10 +8,11 @@
 #include <QColor>
 
 #include "ball.h"
+#include "stagetwoball.h"
 
 class BallDecorator : public Ball, public QWidget
 {
-    std::unique_ptr<Ball> m_ball;
+    Ball* m_ball;
 
 public:
     virtual ~BallDecorator(){
@@ -41,6 +42,9 @@ public:
     void changeVelocity(const QVector2D &deltaV){ m_ball->changeVelocity(deltaV); }
 
     void move(float timestep){ m_ball->move(timestep); }
+
+    void setStrength(float strength){ (dynamic_cast<StageTwoBall*>(m_ball))->setStrength(strength); }
+    float strength(){ return (dynamic_cast<StageTwoBall*>(m_ball))->strength(); }
 
 private:
     bool mousePressed;

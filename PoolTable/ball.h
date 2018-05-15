@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QVector2D>
 #include <QColor>
+#include "float.h"
 
 /**
  * @brief The Ball class containes the logic and member variables of a circle representing a ball
@@ -12,7 +13,8 @@
 class Ball
 {
 public:
-    Ball(){}
+    Ball()
+    {}
     virtual ~Ball(){}
 
     virtual const QVector2D &position()const{return m_position;}

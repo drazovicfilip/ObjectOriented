@@ -45,7 +45,6 @@ Ball *StageTwoFactory::makeBall(const QJsonObject &config)
        ball->setStrength(config["strength"].toDouble(1.0));
     }
 
-
     return ball;
 }
 

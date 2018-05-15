@@ -22,7 +22,9 @@ public:
      * @param painter to use to draw the ball
      */
     void draw(QPainter &p);
-    void setStrength(float strength){ m_strength = strength; }
+
+    virtual void setStrength(float strength){ m_strength = strength; }
+    virtual float strength(){ return m_strength; }
 
 private:
     float m_strength;

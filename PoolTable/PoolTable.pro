@@ -6,7 +6,6 @@
 
 QT       += core gui
 CONFIG += console
-QMAKE_CFLAGS += -v
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

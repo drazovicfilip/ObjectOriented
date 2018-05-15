@@ -1,9 +1,7 @@
 #include "stageoneball.h"
 
 StageOneBall::StageOneBall()
-{
-
-}
+{}
 
 void StageOneBall::draw(QPainter &p)
 {

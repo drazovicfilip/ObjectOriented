@@ -92,6 +92,7 @@ void PoolGame::collision(Ball &b1, Pocket &p1)
 
 void PoolGame::collision(Ball &b1, Ball &b2)
 {
+
     //check if the distance between their centers is less than the sum of their radii
     if((b1.position()-b2.position()).length()<b1.radius()+b2.radius())
     {
@@ -127,21 +128,73 @@ void PoolGame::collision(Ball &b1, Ball &b2)
            root = (-b - discriminant)/(2 * a);
          }
 
+         //QVector2D oldVelocityB1 = (b1.velocity().x(), b1.velocity().y());
+         //QVector2D oldVelocityB2 = (b2.velocity().x(), b2.velocity().y());
+
          //The resulting changes in velocity for ball A and B
          b1.changeVelocity(mR * (vB - root) * collisionVector);
          b2.changeVelocity((root - vB) * collisionVector);
+
+         //QVector2D newVelocityB1 = (b1.velocity().x(), b1.velocity().y());
+         //QVector2D newVelocityB2 = (b2.velocity().x(), b2.velocity().y());
+
+
     }
 }
 
 void PoolGame::collision(Table &t, Ball &b)
 {
+    bool collided = false;
     //are we outside the bounds horizontally and getting further away?
     //if so reverse x velocity
     if((b.position().x()<b.radius() && b.velocity().x()<0) || (b.position().x()>t.width()-b.radius() && b.velocity().x()>0))
+    {
         b.changeVelocity(QVector2D(-b.velocity().x()*2,0));
+        collided = true;
+    }
 
     //same but vertical
     if((b.position().y()<b.radius() && b.velocity().y()<0) || (b.position().y()>t.height()-b.radius() && b.velocity().y()>0))
+    {
         b.changeVelocity(QVector2D(0,-b.velocity().y()*2));
+        collided = true;
+    }
 
+    if (collided == true && m_stage == 2)
+    {
+        StageTwoBall* stagetwoball = (dynamic_cast<StageTwoBall*>(&b));
+        BallDecorator* decoratorball = (dynamic_cast<BallDecorator*>(&b));
+        float ballStrength;
+        if (stagetwoball == nullptr)
+        {
+            ballStrength = decoratorball->strength();
+            std::cout << "strength: " << decoratorball->strength() << std::endl;
+        }
+        else
+        {
+            ballStrength = stagetwoball->strength();
+            std::cout << "strength: " << stagetwoball->strength() << std::endl;
+        }
+
+        float velocityInitial = sqrt ( pow(b.velocity().x(),2) + pow(b.velocity().y(),2) );
+        float velocityFinal = velocityInitial * -1.0;
+        float kineticEnergy = b.mass() * pow(velocityInitial - velocityFinal, 2);
+        std::cout << "KE: " << kineticEnergy << std::endl;
+
+        // If the ball should break
+        if (kineticEnergy >= ballStrength)
+        {
+
+            // Find the ball in the array of balls. If we found it, delete it
+            for (size_t i = 0; i < m_balls.size(); ++i)
+            {
+                if (m_balls[i] == &b){
+                    m_balls.erase(m_balls.begin() + i);
+                    return;
+                }
+            }
+
+        }
+
+    }
 }
