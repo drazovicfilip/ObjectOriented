@@ -77,16 +77,33 @@ void PoolGame::collision(Ball &b1, Pocket &p1)
 
     // The pocket has fully engulfed the ball
     if (distance + b1.radius() <= p1.radius()){
+        deleteBall(b1);
+    }
+}
 
-        // Find the ball in the array of balls. If we found it, delete it
-        for (size_t i = 0; i < m_balls.size(); ++i)
-        {
-            if (m_balls[i] == &b1){
-                m_balls.erase(m_balls.begin() + i);
-                return;
-            }
+float PoolGame::ballStrength(Ball &b)
+{
+    StageTwoBall* stagetwoball = (dynamic_cast<StageTwoBall*>(&b));
+    BallDecorator* decoratorball = (dynamic_cast<BallDecorator*>(&b));
+    if (stagetwoball == nullptr)
+    {
+        return decoratorball->strength();
+    }
+    else
+    {
+        return stagetwoball->strength();
+    }
+}
+
+void PoolGame::deleteBall(Ball &b)
+{
+    // Find the ball in the array of balls. If we found it, delete it
+    for (size_t i = 0; i < m_balls.size(); ++i)
+    {
+        if (m_balls[i] == &b){
+            m_balls.erase(m_balls.begin() + i);
+            return;
         }
-
     }
 }
 
@@ -128,15 +145,36 @@ void PoolGame::collision(Ball &b1, Ball &b2)
            root = (-b - discriminant)/(2 * a);
          }
 
-         //QVector2D oldVelocityB1 = (b1.velocity().x(), b1.velocity().y());
-         //QVector2D oldVelocityB2 = (b2.velocity().x(), b2.velocity().y());
+         float oldVelocityB1 = sqrt(pow(b1.velocity().x(),2) + pow(b1.velocity().y(),2));
+         float oldVelocityB2 = sqrt(pow(b2.velocity().x(),2) + pow(b2.velocity().y(),2));
 
          //The resulting changes in velocity for ball A and B
          b1.changeVelocity(mR * (vB - root) * collisionVector);
          b2.changeVelocity((root - vB) * collisionVector);
 
-         //QVector2D newVelocityB1 = (b1.velocity().x(), b1.velocity().y());
-         //QVector2D newVelocityB2 = (b2.velocity().x(), b2.velocity().y());
+         float newVelocityB1 = sqrt(pow(b1.velocity().x(),2) + pow(b1.velocity().y(),2));
+         float newVelocityB2 = sqrt(pow(b2.velocity().x(),2) + pow(b2.velocity().y(),2));
+
+         float kineticEnergyB1 = b1.mass() * pow((newVelocityB1 - oldVelocityB1),2);
+         float kineticEnergyB2 = b2.mass() * pow((newVelocityB2 - oldVelocityB2),2);
+
+         if (m_stage == 2)
+         {
+             float ballStrengthB1 = ballStrength(b1);
+             float ballStrengthB2 = ballStrength(b2);
+
+             if (kineticEnergyB1 >= ballStrengthB1)
+             {
+                 deleteBall(b1);
+             }
+
+             if (kineticEnergyB2 >= ballStrengthB2)
+             {
+                 deleteBall(b2);
+             }
+
+         }
+
 
 
     }
@@ -168,18 +206,15 @@ void PoolGame::collision(Table &t, Ball &b)
         if (stagetwoball == nullptr)
         {
             ballStrength = decoratorball->strength();
-            std::cout << "strength: " << decoratorball->strength() << std::endl;
         }
         else
         {
             ballStrength = stagetwoball->strength();
-            std::cout << "strength: " << stagetwoball->strength() << std::endl;
         }
 
         float velocityInitial = sqrt ( pow(b.velocity().x(),2) + pow(b.velocity().y(),2) );
         float velocityFinal = velocityInitial * -1.0;
         float kineticEnergy = b.mass() * pow(velocityInitial - velocityFinal, 2);
-        std::cout << "KE: " << kineticEnergy << std::endl;
 
         // If the ball should break
         if (kineticEnergy >= ballStrength)
