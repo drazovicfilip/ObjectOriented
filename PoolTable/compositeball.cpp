@@ -3,12 +3,17 @@
 #include "float.h"
 
 CompositeBall::CompositeBall()
-    : m_parent(nullptr)
 {}
 
-CompositeBall::CompositeBall(Ball* parent)
-    : m_parent(parent)
-{}
+float CompositeBall::mass() const
+{
+    float mass = m_mass;
+    for (size_t i = 0; i < m_balls.size(); i++)
+    {
+        mass = mass + m_balls[i]->mass();
+    }
+    return mass;
+}
 
 void CompositeBall::setVelocity(const QVector2D &newVelocity)
 {

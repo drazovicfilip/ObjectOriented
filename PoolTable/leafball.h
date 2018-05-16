@@ -15,11 +15,7 @@ public:
 
 public:
     void draw(QPainter &p);
-
-    void setParent(Ball* ball){ m_parent = ball; }
-
 private:
-    Ball* m_parent;
 };
 
 #endif // LEAFBALL_H

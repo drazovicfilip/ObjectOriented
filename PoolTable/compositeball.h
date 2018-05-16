@@ -28,15 +28,13 @@ public:
     void setVelocity(const QVector2D &newVelocity);
     void changePosition(const QVector2D &deltaX);
     void changeVelocity(const QVector2D &deltaV);
+    float mass()const;
 
     void addBall(Ball* b){ m_balls.push_back(b); }
     std::vector<Ball*> getBalls(){ return m_balls; }
 
-    void setParent(Ball* ball){ m_parent = ball; }
-    Ball* getParent(){ return m_parent; }
 
 private:
-    Ball* m_parent;
     std::vector<Ball*> m_balls;
 };
 

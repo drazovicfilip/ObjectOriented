@@ -3,7 +3,7 @@
 #include "float.h"
 
 LeafBall::LeafBall()
-    : m_parent(nullptr)
+
 {}
 
 void LeafBall::draw(QPainter &p)

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <balldecorator.h>
+#include <leafball.h>
 #include <compositeball.h>
 
 void PoolGame::linkQWidgetParentToCueBall(QWidget* parent)
@@ -65,6 +66,7 @@ void PoolGame::draw(QPainter &p)
 
     for(Ball * b: m_balls)
     {
+        //std::cout << "Drawing M" << b->mass() << " at (" << b->position().x() << ", " << b->position().y() << ") with velocity (" << b->velocity().x() << ", " << b->velocity().y() << ") and radius " << b->radius() << std::endl;
         b->draw(p);
     }
 
@@ -87,6 +89,16 @@ void PoolGame::deleteBall(Ball &b)
     for (size_t i = 0; i < m_balls.size(); ++i)
     {
         if (m_balls[i] == &b){
+
+            CompositeBall * compositeball = dynamic_cast<CompositeBall*>(&b);
+            // If the ball we're dealing with is composite, we have to deal with its children. The cue ball (decorator) can never have children
+            if (compositeball != nullptr)
+            {
+                for (size_t j = 0; j < compositeball->getBalls().size(); j++)
+                {
+                    m_balls.push_back(compositeball->getBalls()[j]);
+                }
+            }
             m_balls.erase(m_balls.begin() + i);
             return;
         }
@@ -131,28 +143,64 @@ void PoolGame::collision(Ball &b1, Ball &b2)
            root = (-b - discriminant)/(2 * a);
          }
 
+         QVector2D preCollisionVelocityB1 = b1.velocity();
+         QVector2D preCollisionVelocityB2 = b2.velocity();
+         QVector2D velocityChangeB1 = mR * (vB - root) * collisionVector;
+         QVector2D velocityChangeB2 = (root - vB) * collisionVector;
+
          //The resulting changes in velocity for ball A and B
-         b1.changeVelocity(mR * (vB - root) * collisionVector);
-         b2.changeVelocity((root - vB) * collisionVector);
+         b1.changeVelocity(velocityChangeB1);
+         b2.changeVelocity(velocityChangeB2);
 
          if (m_stage == 2)
          {
+             float kineticEnergyB1 = b1.mass() * velocityChangeB1.lengthSquared();
+             float kineticEnergyB2 = b2.mass() * velocityChangeB2.lengthSquared();
 
-             float velocityChangeB1 = sqrt(pow((mR * (vB - root) * collisionVector).x(),2) + pow((mR * (vB - root) * collisionVector).y(),2));
-             float velocityChangeB2 = sqrt(pow(((root - vB) * collisionVector).x(),2) + pow(((root - vB) * collisionVector).y(),2));
-             float kineticEnergyB1 = b1.mass() * pow(velocityChangeB1, 2);
-             float kineticEnergyB2 = b2.mass() * pow(velocityChangeB2,2);
+             size_t numComponentBallsB1 = 0;
+             size_t numComponentBallsB2 = 0;
+
+             CompositeBall* compositeball1 = dynamic_cast<CompositeBall*>(&b1);
+             CompositeBall* compositeball2 = dynamic_cast<CompositeBall*>(&b2);
+
+             if (compositeball1 != nullptr)
+             {
+                 numComponentBallsB1 = compositeball1->getBalls().size();
+             }
+             if (compositeball2 != nullptr)
+             {
+                 numComponentBallsB2 = compositeball2->getBalls().size();
+             }
 
              if (kineticEnergyB1 >= b1.strength())
              {
-                 std::cout << "About to delete1" << std::endl;
+                 float radius = b1.radius();
+                 QVector2D position = b1.position();
                  deleteBall(b1);
+
+                 for (size_t i = 0; i < numComponentBallsB1; i++)
+                 {
+                     float energyPerBall = kineticEnergyB1/numComponentBallsB1;
+                     QVector2D pointOfCollision((-velocityChangeB1.normalized())*radius);
+                     //for each component ball
+                     QVector2D componentBallVelocity = preCollisionVelocityB1 + sqrt(energyPerBall/(compositeball1->getBalls()[i]->mass()))*((compositeball1->getBalls()[i]->position() + position)-pointOfCollision).normalized();
+                     (compositeball1->getBalls()[i])->setVelocity(componentBallVelocity);
+                }
              }
 
              if (kineticEnergyB2 >= b2.strength())
              {
-                 std::cout << "About to delete2" << std::endl;
+                 float radius = b2.radius();
+                 QVector2D position = b2.position();
                  deleteBall(b2);
+                 for (size_t i = 0; i < numComponentBallsB2; i++)
+                 {
+                     float energyPerBall = kineticEnergyB2/numComponentBallsB2;
+                     QVector2D pointOfCollision((-velocityChangeB2.normalized())*radius);
+                     //for each component ball
+                     QVector2D componentBallVelocity = preCollisionVelocityB2 + sqrt(energyPerBall/(compositeball2->getBalls()[i]->mass()))*((compositeball2->getBalls()[i]->position() + position)-pointOfCollision).normalized();
+                     compositeball2->getBalls()[i]->setVelocity(componentBallVelocity);
+                 }
              }
          }
     }
@@ -163,9 +211,13 @@ void PoolGame::collision(Table &t, Ball &b)
     bool collided = false;
     //are we outside the bounds horizontally and getting further away?
     //if so reverse x velocity
+
+    float velocityChange = 0;
+
     if((b.position().x()<b.radius() && b.velocity().x()<0) || (b.position().x()>t.width()-b.radius() && b.velocity().x()>0))
     {
         b.changeVelocity(QVector2D(-b.velocity().x()*2,0));
+        velocityChange = -b.velocity().x()*2;
         collided = true;
     }
 
@@ -173,20 +225,19 @@ void PoolGame::collision(Table &t, Ball &b)
     if((b.position().y()<b.radius() && b.velocity().y()<0) || (b.position().y()>t.height()-b.radius() && b.velocity().y()>0))
     {
         b.changeVelocity(QVector2D(0,-b.velocity().y()*2));
+        velocityChange = -b.velocity().y()*2;
         collided = true;
     }
 
     if (collided == true && m_stage == 2)
     {
+        float kineticEnergy = b.mass() * pow(velocityChange, 2);
 
-        float velocityInitial = sqrt ( pow(b.velocity().x(),2) + pow(b.velocity().y(),2) );
-        float velocityFinal = velocityInitial * -1.0;
-        float kineticEnergy = b.mass() * pow(velocityInitial - velocityFinal, 2);
+        std::cout << b.strength() << ", " << kineticEnergy << std::endl;
 
         // If the ball should break
         if (kineticEnergy >= b.strength())
         {
-            std::cout << "About to delete" << std::endl;
             deleteBall(b);
         }
     }

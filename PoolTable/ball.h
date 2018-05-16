@@ -32,7 +32,6 @@ public:
     virtual void setVelocity(const QVector2D &newVelocity){m_velocity = newVelocity;}
     virtual void setRadius(float newRadius){m_radius = newRadius;}
     virtual void setMass(float newMass){m_mass = newMass;}
-
     virtual void changePosition(const QVector2D &deltaX){m_position += deltaX;}
     virtual void changeVelocity(const QVector2D &deltaV){m_velocity += deltaV;}
 
