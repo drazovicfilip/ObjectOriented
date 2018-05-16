@@ -3,12 +3,43 @@
 #include "float.h"
 
 CompositeBall::CompositeBall()
-    : m_hasParent(false)
+    : m_parent(nullptr)
 {}
 
-CompositeBall::CompositeBall(bool hasParent)
-    : m_hasParent(hasParent)
+CompositeBall::CompositeBall(Ball* parent)
+    : m_parent(parent)
 {}
+
+void CompositeBall::setVelocity(const QVector2D &newVelocity)
+{
+    m_velocity = newVelocity;
+    std::vector<Ball*> b = getBalls();
+    for (int i = 0; i < b.size() ; i++)
+    {
+        b[i]->setVelocity(newVelocity);
+    }
+}
+
+void CompositeBall::changePosition(const QVector2D &deltaX)
+{
+    m_position += deltaX;
+    std::vector<Ball*> b = getBalls();
+    for (int i = 0; i < b.size() ; i++)
+    {
+        b[i]->changePosition(deltaX);
+    }
+
+}
+
+void CompositeBall::changeVelocity(const QVector2D &deltaV)
+{
+    m_velocity += deltaV;
+    std::vector<Ball*> b = getBalls();
+    for (int i = 0; i < b.size() ; i++)
+    {
+        b[i]->changeVelocity(deltaV);
+    }
+}
 
 void CompositeBall::draw(QPainter &p)
 {

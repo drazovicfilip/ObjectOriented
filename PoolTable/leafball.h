@@ -16,10 +16,10 @@ public:
 public:
     void draw(QPainter &p);
 
-    void setParent(bool value){ m_hasParent = value; }
+    void setParent(Ball* ball){ m_parent = ball; }
 
 private:
-    bool m_hasParent;
+    Ball* m_parent;
 };
 
 #endif // LEAFBALL_H

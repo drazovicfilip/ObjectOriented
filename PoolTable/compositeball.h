@@ -15,7 +15,7 @@ class CompositeBall : public Ball
 {
 public:
     CompositeBall();
-    CompositeBall(bool hasParent);
+    CompositeBall(Ball* parent);
 
     // Ball interface
 public:
@@ -25,13 +25,18 @@ public:
      */
     void draw(QPainter &p);
 
+    void setVelocity(const QVector2D &newVelocity);
+    void changePosition(const QVector2D &deltaX);
+    void changeVelocity(const QVector2D &deltaV);
+
     void addBall(Ball* b){ m_balls.push_back(b); }
     std::vector<Ball*> getBalls(){ return m_balls; }
 
-    void setParent(bool value){ m_hasParent = value; }
+    void setParent(Ball* ball){ m_parent = ball; }
+    Ball* getParent(){ return m_parent; }
 
 private:
-    bool m_hasParent;
+    Ball* m_parent;
     std::vector<Ball*> m_balls;
 };
 

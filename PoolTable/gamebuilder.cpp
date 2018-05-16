@@ -1,6 +1,8 @@
 #include "gamebuilder.h"
 #include "stagetwofactory.h"
 #include "leafball.h"
+
+#include <math.h>
 #include <iostream>
 #include <QJsonArray>
 
@@ -33,14 +35,31 @@ Ball* GameBuilder::recursiveAddBall(Ball* ball, const QJsonObject &ballJSon)
             QJsonArray innerballs = ballJSon["balls"].toArray();
             for (int b = 0; b < innerballs.size(); b++)
             {
+                float ballRadius = innerballs[b].toObject()["radius"].toDouble(10.0);
+                float parentRadius = ballJSon["radius"].toDouble(10.0);
+                float ballPositionX = innerballs[b].toObject()["position"].toObject()["x"].toDouble(0.0);
+                float ballPositionY = innerballs[b].toObject()["position"].toObject()["y"].toDouble(0.0);
+                float parentPositionX = ballJSon["position"].toObject()["x"].toDouble(0.0);
+                float parentPositionY = ballJSon["position"].toObject()["x"].toDouble(0.0);
 
-                // TODO: their radius+distance from center must not be greater than the radius of their parent
-
-                std::cout << "recurse" << std::endl;
-                CompositeBall* newball = dynamic_cast<CompositeBall*>(m_factory->makeBall((innerballs[b]).toObject()));
-                compositeball->addBall(newball);
-                newball->setParent(true);
-                recursiveAddBall(newball, (innerballs[b]).toObject());
+                std::cout << "Ball at (" << ballPositionX << "," << ballPositionY << ") with radius " << ballRadius << std::endl;
+                std::cout << "Parent at (" << parentPositionX << "," << parentPositionY << ") with radius " << parentRadius << std::endl;
+                // Their radius+distance from center must not be greater than the radius of their parent
+                if (ballRadius + sqrt(pow(ballPositionX, 2) + pow(ballPositionY, 2)) > parentRadius)
+                {
+                    std::cerr << "Ball outside parent, ignoring it." << std::endl;
+                }
+                else
+                {
+                    std::cout << "recurse" << std::endl;
+                    CompositeBall* newball = dynamic_cast<CompositeBall*>(m_factory->makeBall((innerballs[b]).toObject()));
+                    compositeball->addBall(newball);
+                    newball->setParent(ball);
+                    newball->setVelocity(newball->getParent()->velocity());
+                    newball->setPosition(newball->getParent()->position() + QVector2D(ballPositionX, ballPositionY));
+                    newball->setColour(innerballs[b].toObject()["colour"].toString(ballJSon["colour"].toString()));
+                    recursiveAddBall(newball, (innerballs[b]).toObject());
+                }
             }
             return compositeball;
         }
