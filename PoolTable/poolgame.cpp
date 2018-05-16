@@ -177,14 +177,20 @@ void PoolGame::collision(Ball &b1, Ball &b2)
                  float radius = b1.radius();
                  QVector2D position = b1.position();
                  deleteBall(b1);
+                 std::cout << "Shatter 1! KE: " << kineticEnergyB1 << ", position1: (" << position.x() << "," << position.y() << "), number of children: " << numComponentBallsB1 << std::endl;
 
                  for (size_t i = 0; i < numComponentBallsB1; i++)
                  {
+
                      float energyPerBall = kineticEnergyB1/numComponentBallsB1;
                      QVector2D pointOfCollision((-velocityChangeB1.normalized())*radius);
+                     std::cout << "Shatter 1 B" << i << ", point of collision: (" << pointOfCollision.x() << "," << pointOfCollision.y() << ") pre collision V: (" << preCollisionVelocityB1.x() << "," << preCollisionVelocityB1.y() << ")" << std::endl;
+                     std::cout << "Child mass: " << (compositeball1->getBalls()[i]->mass()) << ", child position: (" << compositeball1->getBalls()[i]->position().x() << "," << compositeball1->getBalls()[i]->position().y() << ")" << std::endl;
+
+
                      //for each component ball
-                     QVector2D componentBallVelocity = preCollisionVelocityB1 + sqrt(energyPerBall/(compositeball1->getBalls()[i]->mass()))*((compositeball1->getBalls()[i]->position() + position)-pointOfCollision).normalized();
-                     (compositeball1->getBalls()[i])->setVelocity(componentBallVelocity);
+                     QVector2D componentBallVelocity = preCollisionVelocityB1 + sqrt(energyPerBall/(compositeball1->getBalls()[i]->mass()))*((compositeball1->getBalls()[i]->position() - position)-pointOfCollision).normalized();
+                     (compositeball1->getBalls()[i])->changeVelocity(componentBallVelocity);
                 }
              }
 
@@ -193,13 +199,18 @@ void PoolGame::collision(Ball &b1, Ball &b2)
                  float radius = b2.radius();
                  QVector2D position = b2.position();
                  deleteBall(b2);
+                 std::cout << "Shatter 2! KE: " << kineticEnergyB2 << ", position2: (" << position.x() << "," << position.y() << "), number of children: " << numComponentBallsB2 << std::endl;
+
                  for (size_t i = 0; i < numComponentBallsB2; i++)
                  {
                      float energyPerBall = kineticEnergyB2/numComponentBallsB2;
                      QVector2D pointOfCollision((-velocityChangeB2.normalized())*radius);
+                     std::cout << "Shatter 2 B" << i << ", point of collision: (" << pointOfCollision.x() << "," << pointOfCollision.y() << ") pre collision V: (" << preCollisionVelocityB2.x() << "," << preCollisionVelocityB2.y() << ")" << std::endl;
+                     std::cout << "Child mass: " << (compositeball2->getBalls()[i]->mass()) << ", child position: (" << compositeball2->getBalls()[i]->position().x() << "," << compositeball2->getBalls()[i]->position().y() << ")" << std::endl;
+
                      //for each component ball
-                     QVector2D componentBallVelocity = preCollisionVelocityB2 + sqrt(energyPerBall/(compositeball2->getBalls()[i]->mass()))*((compositeball2->getBalls()[i]->position() + position)-pointOfCollision).normalized();
-                     compositeball2->getBalls()[i]->setVelocity(componentBallVelocity);
+                     QVector2D componentBallVelocity = preCollisionVelocityB2 + sqrt(energyPerBall/(compositeball2->getBalls()[i]->mass()))*((compositeball2->getBalls()[i]->position() - position)-pointOfCollision).normalized();
+                     compositeball2->getBalls()[i]->changeVelocity(componentBallVelocity);
                  }
              }
          }

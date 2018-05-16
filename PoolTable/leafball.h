@@ -15,7 +15,6 @@ public:
 
 public:
     void draw(QPainter &p);
-private:
 };
 
 #endif // LEAFBALL_H

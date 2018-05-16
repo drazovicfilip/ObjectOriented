@@ -33,7 +33,6 @@ public:
     void addBall(Ball* b){ m_balls.push_back(b); }
     std::vector<Ball*> getBalls(){ return m_balls; }
 
-
 private:
     std::vector<Ball*> m_balls;
 };

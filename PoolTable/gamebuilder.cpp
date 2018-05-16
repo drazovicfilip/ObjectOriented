@@ -29,17 +29,18 @@ Ball* GameBuilder::recursiveAddBall(Ball* ball, const QJsonObject &ballJSon)
 
     for (int i = 0; i < ballJSon.size(); i++)
     {
+        // If the ball we're about to make will have any sub-balls, make sure it is the right type (CompositeBall)
         if (ballJSon.contains("balls"))
         {
             QJsonArray innerballs = ballJSon["balls"].toArray();
             for (int b = 0; b < innerballs.size(); b++)
             {
                 float ballRadius = innerballs[b].toObject()["radius"].toDouble(10.0);
-                float parentRadius = ballJSon["radius"].toDouble(10.0);
+                float parentRadius = compositeball->radius();
                 float ballPositionX = innerballs[b].toObject()["position"].toObject()["x"].toDouble(0.0);
                 float ballPositionY = innerballs[b].toObject()["position"].toObject()["y"].toDouble(0.0);
-                float parentPositionX = ballJSon["position"].toObject()["x"].toDouble(0.0);
-                float parentPositionY = ballJSon["position"].toObject()["x"].toDouble(0.0);
+                float parentPositionX = compositeball->position().x();
+                float parentPositionY = compositeball->position().y();
 
                 std::cout << "Ball at (" << ballPositionX << "," << ballPositionY << ") with radius " << ballRadius << std::endl;
                 std::cout << "Parent at (" << parentPositionX << "," << parentPositionY << ") with radius " << parentRadius << std::endl;
@@ -53,17 +54,19 @@ Ball* GameBuilder::recursiveAddBall(Ball* ball, const QJsonObject &ballJSon)
                     CompositeBall* newball = dynamic_cast<CompositeBall*>(m_factory->makeBall((innerballs[b]).toObject()));
                     compositeball->addBall(newball);
 
+                    // Make sure that strength is properly inherited from the parent
                     if (innerballs[b].toObject().contains("strength"))
                     {
                         newball->setStrength(innerballs[b].toObject()["strength"].toDouble());
                     }
                     else
                     {
-                        newball->setStrength(ballJSon["strength"].toDouble(1.0));
+                        newball->setStrength(compositeball->strength());
                     }
 
-                    newball->setVelocity(QVector2D(ballJSon["velocity"].toObject()["x"].toDouble(0.0), ballJSon["velocity"].toObject()["y"].toDouble(0.0)));
-                    newball->setPosition(QVector2D(parentPositionX, parentPositionY) + QVector2D(ballPositionX, ballPositionY));
+                    newball->setVelocity(QVector2D(compositeball->velocity().x(), compositeball->velocity().y()));
+                    newball->setPosition(QVector2D(compositeball->position().x(), compositeball->position().y()) + QVector2D(ballPositionX, ballPositionY));
+                    std::cout << "Setting position of ball " << newball->mass() << " to be " << newball->position().x() << ", " << newball->position().y() << std::endl;
                     newball->setColour(innerballs[b].toObject()["colour"].toString(ballJSon["colour"].toString()));
                     recursiveAddBall(newball, (innerballs[b]).toObject());
                 }
