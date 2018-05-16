@@ -118,22 +118,7 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
 
         for(int i = 0; i < balls.size();++i)
         {
-
-            if (stage == 2)
-            {
-                if (balls[i].toObject().contains("balls"))
-                {
-                    builder.addCompositeBall(balls[i].toObject(), stage);
-                }
-                else
-                {
-                    builder.addLeafBall(balls[i].toObject(), stage);
-                }
-            }
-            else
-            {
-                builder.addBall(balls[i].toObject(), stage);
-            }
+              builder.addBall(balls[i].toObject(), stage);
         }
 
         // Move cue ball to the end of the list

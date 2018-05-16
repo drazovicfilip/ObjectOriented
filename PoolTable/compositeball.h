@@ -1,5 +1,5 @@
-#ifndef CompositeBall_H
-#define CompositeBall_H
+#ifndef COMPOSITEBALL_H
+#define COMPOSITEBALL_H
 
 #include <QColor>
 #include <QPainter>
@@ -15,6 +15,7 @@ class CompositeBall : public Ball
 {
 public:
     CompositeBall();
+    CompositeBall(bool hasParent);
 
     // Ball interface
 public:
@@ -24,15 +25,14 @@ public:
      */
     void draw(QPainter &p);
 
-    virtual void setStrength(float strength){ m_strength = strength; }
-    virtual float strength(){ return m_strength; }
-
     void addBall(Ball* b){ m_balls.push_back(b); }
     std::vector<Ball*> getBalls(){ return m_balls; }
 
+    void setParent(bool value){ m_hasParent = value; }
+
 private:
-    float m_strength;
+    bool m_hasParent;
     std::vector<Ball*> m_balls;
 };
 
-#endif // CompositeBall_H
+#endif // COMPOSITEBALL_H

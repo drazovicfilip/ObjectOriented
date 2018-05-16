@@ -1,5 +1,6 @@
 #include "gamebuilder.h"
 #include "stagetwofactory.h"
+#include "leafball.h"
 #include <iostream>
 
 GameBuilder::GameBuilder(AbstractFactory *factory)
@@ -17,16 +18,6 @@ GameBuilder::~GameBuilder()
     {
         delete b;
     }
-}
-
-void GameBuilder::addCompositeBall(const QJsonObject &ballJSon, size_t stage)
-{
-
-}
-
-void GameBuilder::addLeafBall(const QJsonObject &ballJSon, size_t stage)
-{
-
 }
 
 void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage)
@@ -53,22 +44,32 @@ void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage)
             Ball* ball = m_factory->makeBall(ballJSon);
             m_balls.push_back(ball);
         }
+
+
+        // TODO FIX THIS TO USE COMP AND LEAF BALLS AND THEN CAST AS BALLDECORATOR IF NEEDED
         else{
+
+            Ball * ball;
+
+            if (ballJSon.contains("balls"))
+            {
+                ball = m_factory->makeBall(ballJSon);
+            }
+            else{
+                ball = (dynamic_cast<StageTwoFactory*>(m_factory))->makeLeafBall(ballJSon);
+            }
+
             if ((ballJSon["colour"].toString() == "white") && (hasCue() == false))
             {
-                Ball* cue = new BallDecorator(m_factory->makeBall(ballJSon));
+                Ball* cue = new BallDecorator(ball);
                 m_balls.insert(m_balls.begin(), std::move(cue));
             }
             else
             {
-                Ball* ball = m_factory->makeBall(ballJSon);
                 m_balls.push_back(ball);
             }
         }
-
-
     }
-
 }
 
 void GameBuilder::buildTable(const QJsonObject &tableJSon)

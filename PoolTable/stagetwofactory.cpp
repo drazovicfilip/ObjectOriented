@@ -1,6 +1,7 @@
 #include "stagetwofactory.h"
 
 #include "compositeball.h"
+#include "leafball.h"
 #include "stagetwotable.h"
 #include "stagetwopocket.h"
 #include <float.h>
@@ -22,6 +23,33 @@ QVector2D StageTwoFactory::QJsonValueToVector2D(const QJsonValue &v, float defau
     return QVector2D(v.toObject()["x"].toDouble(defaultX),v.toObject()["y"].toDouble(defaultY));
 }
 
+Ball *StageTwoFactory::makeLeafBall(const QJsonObject &config)
+{
+    //we kind of use a builder style setx, sety, etc, here but just because
+    //it is easier than setting all the stuff in the constructor
+    //this means we don't need any of the common stuff cluttering the CompositeBall class
+    LeafBall * ball = new LeafBall();
+
+    ball->setVelocity(QJsonValueToVector2D(config["velocity"]));
+    ball->setRadius(config["radius"].toDouble(10));
+
+    ball->setPosition(QJsonValueToVector2D(config["position"],ball->radius(),ball->radius()));
+    ball->setMass(config["mass"].toDouble(1.0));
+    ball->setColour(config["colour"].toString());
+
+    if (config["strength"].toString() == "infinity")
+    {
+        ball->setStrength(FLT_MAX);
+    }
+    else
+    {
+       ball->setStrength(config["strength"].toDouble(1.0));
+    }
+
+    return ball;
+}
+
+// Composite ball
 Ball *StageTwoFactory::makeBall(const QJsonObject &config)
 {
     //we kind of use a builder style setx, sety, etc, here but just because

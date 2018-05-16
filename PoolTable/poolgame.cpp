@@ -81,20 +81,6 @@ void PoolGame::collision(Ball &b1, Pocket &p1)
     }
 }
 
-float PoolGame::ballStrength(Ball &b)
-{
-    CompositeBall* compositeball = (dynamic_cast<CompositeBall*>(&b));
-    BallDecorator* decoratorball = (dynamic_cast<BallDecorator*>(&b));
-    if (compositeball == nullptr)
-    {
-        return decoratorball->strength();
-    }
-    else
-    {
-        return compositeball->strength();
-    }
-}
-
 void PoolGame::deleteBall(Ball &b)
 {
     // Find the ball in the array of balls. If we found it, delete it
@@ -156,16 +142,16 @@ void PoolGame::collision(Ball &b1, Ball &b2)
              float velocityChangeB2 = sqrt(pow(((root - vB) * collisionVector).x(),2) + pow(((root - vB) * collisionVector).y(),2));
              float kineticEnergyB1 = b1.mass() * pow(velocityChangeB1, 2);
              float kineticEnergyB2 = b2.mass() * pow(velocityChangeB2,2);
-             float ballStrengthB1 = ballStrength(b1);
-             float ballStrengthB2 = ballStrength(b2);
 
-             if (kineticEnergyB1 >= ballStrengthB1)
+             if (kineticEnergyB1 >= b1.strength())
              {
+                 std::cout << "About to delete1" << std::endl;
                  deleteBall(b1);
              }
 
-             if (kineticEnergyB2 >= ballStrengthB2)
+             if (kineticEnergyB2 >= b2.strength())
              {
+                 std::cout << "About to delete2" << std::endl;
                  deleteBall(b2);
              }
          }
@@ -192,15 +178,20 @@ void PoolGame::collision(Table &t, Ball &b)
 
     if (collided == true && m_stage == 2)
     {
-        float ballstrength = ballStrength(b);
 
         float velocityInitial = sqrt ( pow(b.velocity().x(),2) + pow(b.velocity().y(),2) );
         float velocityFinal = velocityInitial * -1.0;
         float kineticEnergy = b.mass() * pow(velocityInitial - velocityFinal, 2);
 
         // If the ball should break
-        if (kineticEnergy >= ballstrength)
+
+        std::cout << "str" << std::endl;
+        std::cout << b.strength() << std::endl;
+        std::cout << "ength" << std::endl;
+
+        if (kineticEnergy >= b.strength())
         {
+            std::cout << "About to delete" << std::endl;
             deleteBall(b);
         }
     }

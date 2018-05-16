@@ -47,6 +47,8 @@ public:
      * @param timestep is the ammount of time it should move for
      */
     virtual void move(float timestep){changePosition(m_velocity*timestep);}
+    virtual float strength(){ return m_strength; }
+    virtual void setStrength(float strength){ m_strength = strength; }
 
     virtual QColor & colour(){ return m_colour; }
     virtual void setColour(const QColor &newColour){m_colour = newColour;}
@@ -56,6 +58,7 @@ protected:
     QVector2D m_velocity;
     float m_radius;
     float m_mass;
+    float m_strength = FLT_MAX;
     QColor m_colour;
 };
 #endif // BALL_H

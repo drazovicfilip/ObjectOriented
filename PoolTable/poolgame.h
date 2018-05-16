@@ -52,7 +52,6 @@ public:
     QSize size(){return QSize(m_table->width(),m_table->height());}
 
     size_t stage(){ return m_stage; }
-    float ballStrength(Ball &b);
     void deleteBall(Ball &b);
 
 private:

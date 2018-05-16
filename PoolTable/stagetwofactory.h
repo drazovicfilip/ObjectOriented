@@ -26,6 +26,8 @@ public:
      */
     Ball *makeBall(const QJsonObject &config);
 
+    Ball *makeLeafBall(const QJsonObject &config);
+
     /**
      * @brief makes and returns a stageTwoTable
      * @param config is the configuration for the table in json format
