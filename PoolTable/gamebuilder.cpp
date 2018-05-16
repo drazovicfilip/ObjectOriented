@@ -33,20 +33,21 @@ Ball* GameBuilder::recursiveAddBall(Ball* ball, const QJsonObject &ballJSon)
             QJsonArray innerballs = ballJSon["balls"].toArray();
             for (int b = 0; b < innerballs.size(); b++)
             {
+
+                // TODO: their radius+distance from center must not be greater than the radius of their parent
+
                 std::cout << "recurse" << std::endl;
                 CompositeBall* newball = dynamic_cast<CompositeBall*>(m_factory->makeBall((innerballs[b]).toObject()));
                 compositeball->addBall(newball);
                 newball->setParent(true);
                 recursiveAddBall(newball, (innerballs[b]).toObject());
-                return compositeball;
             }
-
+            return compositeball;
         }
         else
         {
             std::cout << "base case" << std::endl;
             return ((dynamic_cast<StageTwoFactory*>(m_factory))->makeLeafBall(ballJSon));
-
         }
     }
 }
@@ -75,7 +76,6 @@ void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage)
             Ball* ball = m_factory->makeBall(ballJSon);
             m_balls.push_back(ball);
         }
-
 
         else{
 
