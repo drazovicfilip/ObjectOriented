@@ -184,11 +184,6 @@ void PoolGame::collision(Table &t, Ball &b)
         float kineticEnergy = b.mass() * pow(velocityInitial - velocityFinal, 2);
 
         // If the ball should break
-
-        std::cout << "str" << std::endl;
-        std::cout << b.strength() << std::endl;
-        std::cout << "ength" << std::endl;
-
         if (kineticEnergy >= b.strength())
         {
             std::cout << "About to delete" << std::endl;

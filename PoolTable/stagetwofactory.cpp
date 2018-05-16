@@ -58,11 +58,11 @@ Ball *StageTwoFactory::makeBall(const QJsonObject &config)
     CompositeBall * ball = new CompositeBall();
 
     ball->setVelocity(QJsonValueToVector2D(config["velocity"]));
-    ball->setRadius(config["radius"].toDouble(10));
+    ball->setRadius(config["radius"].toDouble(10.0));
 
-    ball->setPosition(QJsonValueToVector2D(config["position"],ball->radius(),ball->radius()));
+    ball->setPosition(QJsonValueToVector2D(config["position"], 100, 100));
     ball->setMass(config["mass"].toDouble(1.0));
-    ball->setColour(config["colour"].toString());
+    ball->setColour(config["colour"].toString("red"));
 
     if (config["strength"].toString() == "infinity")
     {

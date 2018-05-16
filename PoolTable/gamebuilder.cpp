@@ -2,6 +2,7 @@
 #include "stagetwofactory.h"
 #include "leafball.h"
 #include <iostream>
+#include <QJsonArray>
 
 GameBuilder::GameBuilder(AbstractFactory *factory)
     :m_balls(),m_table(nullptr),m_factory(factory),m_hasCue(false)
@@ -17,6 +18,36 @@ GameBuilder::~GameBuilder()
     for(Ball * b: m_balls)
     {
         delete b;
+    }
+}
+
+Ball* GameBuilder::recursiveAddBall(Ball* ball, const QJsonObject &ballJSon)
+{
+    std::cout << "calling recursiveaddball on " << ballJSon["colour"].toString().toStdString() << std::endl;
+    CompositeBall* compositeball = dynamic_cast<CompositeBall*>(ball);
+
+    for (int i = 0; i < ballJSon.size(); i++)
+    {
+        if (ballJSon.contains("balls"))
+        {
+            QJsonArray innerballs = ballJSon["balls"].toArray();
+            for (int b = 0; b < innerballs.size(); b++)
+            {
+                std::cout << "recurse" << std::endl;
+                CompositeBall* newball = dynamic_cast<CompositeBall*>(m_factory->makeBall((innerballs[b]).toObject()));
+                compositeball->addBall(newball);
+                newball->setParent(true);
+                recursiveAddBall(newball, (innerballs[b]).toObject());
+                return compositeball;
+            }
+
+        }
+        else
+        {
+            std::cout << "base case" << std::endl;
+            return ((dynamic_cast<StageTwoFactory*>(m_factory))->makeLeafBall(ballJSon));
+
+        }
     }
 }
 
@@ -46,18 +77,11 @@ void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage)
         }
 
 
-        // TODO FIX THIS TO USE COMP AND LEAF BALLS AND THEN CAST AS BALLDECORATOR IF NEEDED
         else{
 
             Ball * ball;
 
-            if (ballJSon.contains("balls"))
-            {
-                ball = m_factory->makeBall(ballJSon);
-            }
-            else{
-                ball = (dynamic_cast<StageTwoFactory*>(m_factory))->makeLeafBall(ballJSon);
-            }
+            ball = recursiveAddBall(m_factory->makeBall(ballJSon), ballJSon);
 
             if ((ballJSon["colour"].toString() == "white") && (hasCue() == false))
             {

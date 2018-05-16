@@ -30,6 +30,8 @@ public:
      * @param ballJSon is the json configuration for the ball
      */
     void addBall(const QJsonObject &ballJSon, size_t stage);
+    Ball* recursiveAddBall(Ball* ball, const QJsonObject &ballJSon);
+
     /**
      * @brief builds the table for the game, this overwrites any previous calls to build table
      * @param tableJSon is the json configuration for the ball
