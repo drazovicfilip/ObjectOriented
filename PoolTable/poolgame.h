@@ -28,7 +28,7 @@ public:
         :m_table(m_table),m_balls(balls),m_pockets(pockets)
     {}
     PoolGame(Table * m_table, std::vector<Ball*> balls, std::vector<Pocket*> pockets, size_t stage)
-        :m_table(m_table),m_balls(balls),m_pockets(pockets),m_stage(stage)
+        :m_table(m_table),m_balls(balls),m_stage(stage),m_pockets(pockets)
     {}
 
     void linkQWidgetParentToCueBall(QWidget* parent);

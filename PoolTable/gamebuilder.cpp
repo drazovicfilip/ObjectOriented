@@ -7,7 +7,7 @@
 #include <QJsonArray>
 
 GameBuilder::GameBuilder(AbstractFactory *factory)
-    :m_balls(),m_table(nullptr),m_factory(factory),m_hasCue(false)
+    :m_balls(),m_table(nullptr),m_hasCue(false),m_factory(factory)
 {
 
 }
@@ -79,6 +79,7 @@ Ball* GameBuilder::recursiveAddBall(Ball* ball, const QJsonObject &ballJSon, boo
             return ((dynamic_cast<StageTwoFactory*>(m_factory))->makeLeafBall(ballJSon));
         }
     }
+    return compositeball;
 }
 
 void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage, bool childrenVisible)
