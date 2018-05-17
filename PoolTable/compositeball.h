@@ -75,7 +75,7 @@ public:
     /**
      * @brief toggleChildrenVisible will toggle visibility, used by the space bar (detected by the Dialog QWidget)
      */
-    void toggleChildrenVisible(){ m_childrenVisible = !m_childrenVisible; }
+    void toggleChildrenVisible();
 
 private:
     std::vector<Ball*> m_balls;

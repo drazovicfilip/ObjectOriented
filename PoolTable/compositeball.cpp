@@ -46,6 +46,20 @@ void CompositeBall::changeVelocity(const QVector2D &deltaV){
     }
 }
 
+void CompositeBall::toggleChildrenVisible(){
+    m_childrenVisible = !m_childrenVisible;
+
+    // Don't only display the current ball's children, but every child (recursively)
+    for (Ball * b : m_balls){
+
+        // If the current ball is a CompositeBall, toggle its children's visibility flag
+        CompositeBall* compositeball = (dynamic_cast<CompositeBall*>(b));
+        if (compositeball != nullptr){
+            compositeball->toggleChildrenVisible();
+        }
+    }
+}
+
 void CompositeBall::draw(QPainter &p){
     p.setPen(Qt::black);
     p.setBrush(QBrush(m_colour));
