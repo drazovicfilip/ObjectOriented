@@ -35,7 +35,7 @@ Ball *StageTwoFactory::makeLeafBall(const QJsonObject &config)
 
     ball->setPosition(QJsonValueToVector2D(config["position"],ball->radius(),ball->radius()));
     ball->setMass(config["mass"].toDouble(1.0));
-    ball->setColour(config["colour"].toString());
+    ball->setColour(config["colour"].toString("white"));
 
     if (config["strength"].toString() == "infinity")
     {
@@ -43,7 +43,7 @@ Ball *StageTwoFactory::makeLeafBall(const QJsonObject &config)
     }
     else
     {
-       ball->setStrength(config["strength"].toDouble(1.0));
+       ball->setStrength(config["strength"].toDouble(FLT_MAX));
     }
 
     return ball;
@@ -62,7 +62,7 @@ Ball *StageTwoFactory::makeBall(const QJsonObject &config)
 
     ball->setPosition(QJsonValueToVector2D(config["position"], 100, 100));
     ball->setMass(config["mass"].toDouble(1.0));
-    ball->setColour(config["colour"].toString("red"));
+    ball->setColour(config["colour"].toString("white"));
 
     if (config["strength"].toString() == "infinity")
     {
@@ -70,7 +70,7 @@ Ball *StageTwoFactory::makeBall(const QJsonObject &config)
     }
     else
     {
-       ball->setStrength(config["strength"].toDouble(1.0));
+       ball->setStrength(config["strength"].toDouble(FLT_MAX));
     }
 
     return ball;

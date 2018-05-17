@@ -119,10 +119,12 @@ void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage, bool childr
                 ball = recursiveAddBall((dynamic_cast<StageTwoFactory*>(m_factory))->makeLeafBall(ballJSon), ballJSon, childrenVisible);
             }
 
-            if ((ballJSon["colour"].toString() == "white") && (hasCue() == false))
+            if ((ball->colour().name().toStdString() == "#ffffff") && (hasCue() == false))
             {
+                std::cout << "making new cueball" << std::endl;
                 Ball* cue = new BallDecorator(ball);
                 m_balls.insert(m_balls.begin(), std::move(cue));
+                setCue(true);
             }
             else
             {

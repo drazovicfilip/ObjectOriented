@@ -12,7 +12,7 @@
 /**
  * @brief converts a value that is an object of the form {"x":float,"y":float} into a QVector2D with the appropriate values
  * @param v is the QJsonValue to convert
- * @return the QVector2D that is encoded in the JSon
+
  */
 QVector2D StageOneFactory::QJsonValueToVector2D(const QJsonValue &v, float defaultX = 0, float defaultY = 0) const
 {

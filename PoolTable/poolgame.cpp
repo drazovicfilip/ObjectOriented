@@ -8,12 +8,11 @@
 
 void PoolGame::linkQWidgetParentToCueBall(QWidget* parent)
 {
-    for (Ball * b: m_balls)
+    for (auto b = m_balls.rbegin(); b != m_balls.rend(); ++b)
     {
-        if (b->colour() == QColor(Qt::white))
+        if ((*b)->colour() == QColor(Qt::white))
         {
-            // Should this be dynamic_cast-ed?
-            (dynamic_cast<BallDecorator*>(b))->setParent(parent);
+            (dynamic_cast<BallDecorator*>(*b))->setParent(parent);
             return;
         }
     }

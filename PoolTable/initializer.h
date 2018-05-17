@@ -21,7 +21,6 @@ public:
      * @return returns a pointer to a created PoolGame, if the PoolGame failed to be created for any reason nullptr is returned instead
      */
     PoolGame *createPoolgame(const std::string &configFilePath);
-    void addCompositeBalls(QJsonArray& balls, GameBuilder& builder, size_t stage);
 
 };
 

@@ -33,31 +33,6 @@ QJsonObject jsonFromFile(const std::string &configFilePath)
     return jsonDocConfig.object();
 }
 
-void Initializer::addCompositeBalls(QJsonArray& balls, GameBuilder& builder, size_t stage)
-{
-
-
-
-    /*
-    for(int i = 0; i < balls.size(); ++i)
-    {
-        if (balls[i].isArray())
-        {
-            std::cout << "composite" << std::endl;
-        }
-        else{
-
-            std::cout << "adding" << std::endl;
-            builder.addBall(balls[i].toObject(), stage);
-        }
-
-
-    }
-    */
-
-
-}
-
 PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
 {
     size_t stage = 1;
