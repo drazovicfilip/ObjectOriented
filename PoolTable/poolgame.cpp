@@ -99,6 +99,7 @@ void PoolGame::deleteBall(Ball &b)
                     m_balls.push_back(compositeball->getBalls()[j]);
                 }
             }
+
             m_balls.erase(m_balls.begin() + i);
             return;
         }
@@ -221,6 +222,10 @@ void PoolGame::collision(Table &t, Ball &b)
 
     if((b.position().x()<b.radius() && b.velocity().x()<0) || (b.position().x()>t.width()-b.radius() && b.velocity().x()>0))
     {
+        if (m_stage == 1)
+        {
+            b.changeVelocity(QVector2D(-b.velocity().x()*2, 0));
+        }
         velocityChange = QVector2D(-b.velocity().x()*2, 0);
         collided = true;
     }
@@ -228,6 +233,10 @@ void PoolGame::collision(Table &t, Ball &b)
     //same but vertical
     if((b.position().y()<b.radius() && b.velocity().y()<0) || (b.position().y()>t.height()-b.radius() && b.velocity().y()>0))
     {
+        if (m_stage == 1)
+        {
+            b.changeVelocity(QVector2D(0,-b.velocity().y()*2));
+        }
         velocityChange = QVector2D(0, -b.velocity().y()*2);
         collided = true;
     }
