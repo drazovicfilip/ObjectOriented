@@ -38,6 +38,7 @@ public:
     void setRadius(float newRadius){ m_radius = newRadius; }
 
     virtual void draw(QPainter &p) = 0;
+
 protected:
     QVector2D m_position;
     float m_radius;

@@ -59,13 +59,13 @@ void StageTwoFactory::setUpBall(Ball* ball, const QJsonObject &config){
     float yPos = m_defaultPosition.y();
 
     if (config.contains("position")){
-        if ((!config["position"].toObject()["x"].isDouble()) || config["position"].toObject()["x"].toDouble() <= 0){
+        if ((!config["position"].toObject()["x"].isDouble())){
             std::cerr << "Incorrect ball position X given, setting to a default value of " << m_defaultPosition.x() << std::endl;
         }
         else{
             xPos = config["position"].toObject()["x"].toDouble();
         }
-        if ((!config["position"].toObject()["y"].isDouble()) || config["position"].toObject()["y"].toDouble() <= 0){
+        if ((!config["position"].toObject()["y"].isDouble())){
             std::cerr << "Incorrect ball position Y given, setting to a default value of " << m_defaultPosition.y() << std::endl;
         }
         else{
