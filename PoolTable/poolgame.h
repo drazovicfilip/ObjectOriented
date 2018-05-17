@@ -88,6 +88,11 @@ public:
      */
     void deleteBall(Ball &b);
 
+    /**
+     * @brief toggleChildrenVisibility will loop through all balls and toggle their visibility if they are CompositeBalls
+     */
+    void toggleChildrenVisibility();
+
 private:
     /**
      * @brief collide two balls if they are in contact. This will also check if the balls will shatter due to the impact

@@ -274,3 +274,14 @@ void PoolGame::collision(Table &t, Ball &b){
         }
     }
 }
+
+void PoolGame::toggleChildrenVisibility(){
+    for (Ball* b : m_balls){
+
+        // If the current ball is a CompositeBall, toggle its children's visibility flag
+        CompositeBall* compositeball = (dynamic_cast<CompositeBall*>(b));
+        if (compositeball != nullptr){
+            compositeball->toggleChildrenVisible();
+        }
+    }
+}

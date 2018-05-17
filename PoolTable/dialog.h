@@ -32,6 +32,12 @@ public:
      * @brief draws the simulation
      */
     void paintEvent(QPaintEvent *);
+
+    /**
+     * @brief keyPressEvent detects if the spacebar has been pressed, and toggles the children visibility
+     * @param event
+     */
+    void keyPressEvent(QKeyEvent* event);
     ~Dialog();
 
 public slots:

@@ -2,6 +2,7 @@
 
 #include <QPainter>
 #include <QSize>
+#include <QKeyEvent>
 
 #include <iostream>
 
@@ -34,6 +35,12 @@ void Dialog::start(){
 void Dialog::paintEvent(QPaintEvent *){
     QPainter p(this);
     m_game->draw(p);
+}
+
+void Dialog::keyPressEvent(QKeyEvent* event){
+    if (event->key() == Qt::Key_Space){
+        m_game->toggleChildrenVisibility();
+    }
 }
 
 Dialog::~Dialog(){
