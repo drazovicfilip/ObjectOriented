@@ -72,6 +72,7 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
     //don't need any logic yet to decide which factory to use
 
     AbstractFactory *factory;
+    bool childrenVisible = config["childrenVisible"].toBool(false);
 
     if (config.contains("stage2"))
     {
@@ -114,11 +115,9 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
     if(config.contains("balls"))
     {
         QJsonArray balls = config["balls"].toArray();
-
-
         for(int i = 0; i < balls.size();++i)
         {
-              builder.addBall(balls[i].toObject(), stage);
+              builder.addBall(balls[i].toObject(), stage, childrenVisible);
         }
 
         // Move cue ball to the end of the list

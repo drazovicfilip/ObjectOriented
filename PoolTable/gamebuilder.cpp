@@ -23,7 +23,7 @@ GameBuilder::~GameBuilder()
     }
 }
 
-Ball* GameBuilder::recursiveAddBall(Ball* ball, const QJsonObject &ballJSon)
+Ball* GameBuilder::recursiveAddBall(Ball* ball, const QJsonObject &ballJSon, bool childrenVisible)
 {
     CompositeBall* compositeball = dynamic_cast<CompositeBall*>(ball);
 
@@ -53,6 +53,7 @@ Ball* GameBuilder::recursiveAddBall(Ball* ball, const QJsonObject &ballJSon)
                 {
                     CompositeBall* newball = dynamic_cast<CompositeBall*>(m_factory->makeBall((innerballs[b]).toObject()));
                     compositeball->addBall(newball);
+                    compositeball->setChildrenVisible(childrenVisible);
 
                     // Make sure that strength is properly inherited from the parent
                     if (innerballs[b].toObject().contains("strength"))
@@ -68,7 +69,7 @@ Ball* GameBuilder::recursiveAddBall(Ball* ball, const QJsonObject &ballJSon)
                     newball->setPosition(QVector2D(compositeball->position().x(), compositeball->position().y()) + QVector2D(ballPositionX, ballPositionY));
                     std::cout << "Setting position of ball " << newball->mass() << " to be " << newball->position().x() << ", " << newball->position().y() << std::endl;
                     newball->setColour(innerballs[b].toObject()["colour"].toString(ballJSon["colour"].toString()));
-                    recursiveAddBall(newball, (innerballs[b]).toObject());
+                    recursiveAddBall(newball, (innerballs[b]).toObject(), childrenVisible);
                 }
             }
             return compositeball;
@@ -80,7 +81,7 @@ Ball* GameBuilder::recursiveAddBall(Ball* ball, const QJsonObject &ballJSon)
     }
 }
 
-void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage)
+void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage, bool childrenVisible)
 {
     // If any part of a ball is placed off the table, print a warning message and ignore that ball
     float xPos = ballJSon["position"].toObject()["x"].toDouble();
@@ -111,11 +112,11 @@ void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage)
 
             if (ballJSon.contains("balls"))
             {
-                ball = recursiveAddBall(m_factory->makeBall(ballJSon), ballJSon);
+                ball = recursiveAddBall(m_factory->makeBall(ballJSon), ballJSon, childrenVisible);
             }
             else
             {
-                ball = recursiveAddBall((dynamic_cast<StageTwoFactory*>(m_factory))->makeLeafBall(ballJSon), ballJSon);
+                ball = recursiveAddBall((dynamic_cast<StageTwoFactory*>(m_factory))->makeLeafBall(ballJSon), ballJSon, childrenVisible);
             }
 
             if ((ballJSon["colour"].toString() == "white") && (hasCue() == false))

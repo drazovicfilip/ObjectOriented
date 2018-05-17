@@ -52,11 +52,14 @@ void CompositeBall::draw(QPainter &p)
     p.setBrush(QBrush(m_colour));
     p.drawEllipse(m_position.toPointF(),m_radius,m_radius);
 
-    // Draw each of the children as well
-    std::vector<Ball*> b = getBalls();
-    for (int i = 0; i < b.size() ; i++)
+    if (m_childrenVisible)
     {
-        b[i]->draw(p);
+        // Draw each of the children as well
+        std::vector<Ball*> b = getBalls();
+        for (int i = 0; i < b.size() ; i++)
+        {
+            b[i]->draw(p);
+        }
     }
 
 }

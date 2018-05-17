@@ -33,8 +33,12 @@ public:
     void addBall(Ball* b){ m_balls.push_back(b); }
     std::vector<Ball*> getBalls(){ return m_balls; }
 
+    void setChildrenVisible(bool v){ m_childrenVisible = v; }
+    bool childrenVisible(){ return m_childrenVisible; }
+
 private:
     std::vector<Ball*> m_balls;
+    bool m_childrenVisible;
 };
 
 #endif // COMPOSITEBALL_H
