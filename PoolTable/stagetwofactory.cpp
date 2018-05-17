@@ -2,7 +2,7 @@
 
 #include "compositeball.h"
 #include "leafball.h"
-#include "stagetwotable.h"
+#include "stageonetable.h"
 #include "stagetwopocket.h"
 #include <float.h>
 
@@ -83,10 +83,8 @@ Table *StageTwoFactory::makeTable(const QJsonObject &config) const
     float friction = config["friction"].toDouble();
     QColor colour = QColor(config["colour"].toString());
 
-    return new StageTwoTable(dimensions.x(),dimensions.y(),friction,colour);
-
+    return new StageOneTable(dimensions.x(),dimensions.y(),friction,colour);
 }
-
 
 Pocket *StageTwoFactory::makePocket(const QJsonObject &config) const
 {

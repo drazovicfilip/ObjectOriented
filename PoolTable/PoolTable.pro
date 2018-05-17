@@ -21,7 +21,6 @@ SOURCES += main.cpp \
     gamebuilder.cpp \
     initializer.cpp \
     stagetwofactory.cpp \
-    stagetwotable.cpp \
     stagetwopocket.cpp \
     balldecorator.cpp \
     simpleball.cpp \
@@ -38,7 +37,6 @@ HEADERS  += dialog.h \
     gamebuilder.h \
     initializer.h \
     stagetwofactory.h \
-    stagetwotable.h \
     stagetwopocket.h \
     pocket.h \
     balldecorator.h \

@@ -78,6 +78,15 @@ void PoolGame::collision(Ball &b1, Pocket &p1)
 
     // The pocket has fully engulfed the ball
     if (distance + b1.radius() <= p1.radius()){
+
+        // If the cue ball is the one that was potted, just reset it to the middle instead of deleting it
+        BallDecorator* b = dynamic_cast<BallDecorator*>(&b1);
+        if (b != nullptr)
+        {
+            b->setPosition(QVector2D(m_table->width()/2, m_table->height()/2));
+            b->setVelocity(QVector2D(0,0));
+            return;
+        }
         deleteBall(b1);
     }
 }

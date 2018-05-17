@@ -123,6 +123,9 @@ void GameBuilder::addBall(const QJsonObject &ballJSon, size_t stage, bool childr
             {
                 std::cout << "making new cueball" << std::endl;
                 Ball* cue = new BallDecorator(ball);
+
+                // The cue ball should have max strength no matter what
+                cue->setStrength(FLT_MAX);
                 m_balls.insert(m_balls.begin(), std::move(cue));
                 setCue(true);
             }
