@@ -9,7 +9,7 @@ int main(int argc, char *argv[]){
 
     PoolGame* game = Initializer().createPoolgame("../MacOS/config.json");
 
-    //if the returned game is a nullptr the json file couldn't be found or was invalid
+    // If the returned game is a nullptr the json file couldn't be found or was invalid
     if(!game) return a.exec();
 
     Dialog w(game);

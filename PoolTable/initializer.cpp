@@ -37,14 +37,10 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath){
     if(config.isEmpty())
         return nullptr;
 
-    //here the correct factory for the builder to use is selected
-    //there aren't explicit subclasses of builder, rather a state variable (the factory) is used
-    //to provide different behavior for different stages, additional design patterns amirite?
-    //don't need any logic yet to decide which factory to use
-
     AbstractFactory *factory;
     bool childrenVisible = config["childrenVisible"].toBool(false);
 
+    // Assign the factory depending on the stage that is given in the JSON
     if (config.contains("stage2")){
         if (config["stage2"].toBool()){
             stage = 2;
@@ -60,8 +56,11 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath){
 
     GameBuilder builder(factory);
 
+    // Check if a table is given in the JSON, and build it
     if(config.contains("table")){
         builder.buildTable(config["table"].toObject());
+
+        // Check if pockets are given in the JSON, and build them
         if (stage == 2){
             if (config["table"].toObject().contains("pockets")){
                 QJsonArray pockets = (config["table"].toObject()["pockets"].toArray());
@@ -76,13 +75,14 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath){
         return nullptr;
     }
 
+    // Check if balls are given in the JSON, and build them
     if(config.contains("balls")){
         QJsonArray balls = config["balls"].toArray();
         for(size_t i = 0; i < (size_t)balls.size();++i){
               builder.addBall(balls[i].toObject(), stage, childrenVisible);
         }
 
-        // Move cue ball to the end of the list
+        // Move cue ball to the end of the list so that the cue renders on top of everything else
         builder.reverseBalls();
 
     }

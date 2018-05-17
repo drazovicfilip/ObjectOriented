@@ -7,11 +7,12 @@
 #include "pocket.h"
 
 /**
- * @brief The StageTwoFactory class creates concrete objects for stage two
+ * @brief The StageTwoFactory class creates concrete objects for stage two of the assignment
  */
 class StageTwoFactory : public AbstractFactory
 {
 public:
+
     StageTwoFactory()
         : m_defaultRadius(10.0)
         , m_defaultMass(1.0)
@@ -25,25 +26,41 @@ public:
         , m_defaultPocketRadius(15.0)
     {}
 
-    // AbstractFactory interface
 public:
 
+    /**
+     * @brief setUpBall will apply a given JSON object full of ball properties to a given ball object. It will check every property for validity, and apply default values if required
+     * @param ball
+     * @param config
+     */
     void setUpBall(Ball* ball, const QJsonObject &config);
 
     /**
-     * @brief makes and returns a CompositeBall
+     * @brief makeBall makes and returns a CompositeBall
      * @param config is the configuration for the ball in json format
      * @return a pointer to a valid CompositeBall
      */
     Ball *makeBall(const QJsonObject &config);
+
+    /**
+     * @brief makeLeafBall makes and returns a LeafBall
+     * @param config is the configuration for the ball in json format
+     * @return a pointer to a valid LeafBall
+     */
     Ball *makeLeafBall(const QJsonObject &config);
 
     /**
-     * @brief makes and returns a StageOneTable
+     * @brief makes and returns a StageOneTable. It will check every property for validity, and apply default values if required.
      * @param config is the configuration for the table in json format
      * @return a pointer to a valid StageOneTable
      */
     Table *makeTable(const QJsonObject &config) const;
+
+    /**
+     * @brief makePocket makes and returns a Pocket. It will check every property for validity, and apply default values if required.
+     * @param config is the configuration for the pocket in json format
+     * @return a pointer to a valid pocket
+     */
     Pocket *makePocket(const QJsonObject &config) const;
 
 private:

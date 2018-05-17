@@ -14,6 +14,10 @@
 #include <iostream>
 
 void StageTwoFactory::setUpBall(Ball* ball, const QJsonObject &config){
+
+    // *************
+    // VELOCITY
+    // *************
     float xVel = m_defaultVelocity.x();
     float yVel = m_defaultVelocity.y();
     if (config.contains("velocity")){
@@ -33,8 +37,11 @@ void StageTwoFactory::setUpBall(Ball* ball, const QJsonObject &config){
     else{
         std::cerr << "No ball velocity given, setting to a default value of (" << m_defaultVelocity.x() << ", " << m_defaultVelocity.y() << ")" << std::endl;
     }
-
     ball->setVelocity(QVector2D(xVel, yVel));
+
+    // *************
+    // RADIUS
+    // *************
 
     if ((!config["radius"].isDouble()) || config["radius"].toDouble() <= 0){
         std::cerr << "Incorrect ball radius given, setting to a default value of " << m_defaultRadius << std::endl;
@@ -43,6 +50,10 @@ void StageTwoFactory::setUpBall(Ball* ball, const QJsonObject &config){
     else{
         ball->setRadius(config["radius"].toDouble());
     }
+
+    // *************
+    // POSITION
+    // *************
 
     float xPos = m_defaultPosition.x();
     float yPos = m_defaultPosition.y();
@@ -66,6 +77,10 @@ void StageTwoFactory::setUpBall(Ball* ball, const QJsonObject &config){
     }
     ball->setPosition(QVector2D(xPos, yPos));
 
+    // *************
+    // MASS
+    // *************
+
     if ((!config["mass"].isDouble()) || config["mass"].toDouble() <= 0){
         std::cerr << "Incorrect ball mass given, setting to a default value of " << m_defaultMass << std::endl;
         ball->setMass(m_defaultMass);
@@ -74,6 +89,10 @@ void StageTwoFactory::setUpBall(Ball* ball, const QJsonObject &config){
         ball->setMass(config["mass"].toDouble());
     }
 
+    // *************
+    // COLOUR
+    // *************
+
     if (!config["colour"].isString()){
         std::cerr << "Incorrect ball colour given, setting to a default value of " << m_defaultColour << std::endl;
         ball->setColour(QString::fromStdString(m_defaultColour));
@@ -81,6 +100,10 @@ void StageTwoFactory::setUpBall(Ball* ball, const QJsonObject &config){
     else{
         ball->setColour(config["colour"].toString());
     }
+
+    // *************
+    // STRENGTH
+    // *************
 
     if (config["strength"].toString() == "infinity"){
         ball->setStrength(FLT_MAX);
@@ -97,30 +120,22 @@ void StageTwoFactory::setUpBall(Ball* ball, const QJsonObject &config){
 }
 
 Ball *StageTwoFactory::makeLeafBall(const QJsonObject &config){
-    //we kind of use a builder style setx, sety, etc, here but just because
-    //it is easier than setting all the stuff in the constructor
-    //this means we don't need any of the common stuff cluttering the CompositeBall class
     Ball * ball = new LeafBall();
-
     setUpBall(ball, config);
-
     return ball;
 }
 
-// Composite ball
 Ball *StageTwoFactory::makeBall(const QJsonObject &config){
-    //we kind of use a builder style setx, sety, etc, here but just because
-    //it is easier than setting all the stuff in the constructor
-    //this means we don't need any of the common stuff cluttering the CompositeBall class
     Ball * ball = new CompositeBall();
-
     setUpBall(ball, config);
-
     return ball;
 }
 
 Table *StageTwoFactory::makeTable(const QJsonObject &config) const {
-    //not really worth doing the builder style with only 3 variables
+
+    // *************
+    // SIZE
+    // *************
 
     float x = m_defaultTableSize.x();
     float y = m_defaultTableSize.y();
@@ -143,6 +158,10 @@ Table *StageTwoFactory::makeTable(const QJsonObject &config) const {
         std::cerr << "No table size given, setting to a default value of (" << m_defaultTableSize.x() << ", " << m_defaultTableSize.y() << ")" << std::endl;
     }
 
+    // *************
+    // FRICTION
+    // *************
+
     float friction = m_defaultFriction;
 
     if ((!config["friction"].isDouble()) || config["friction"].toDouble() < 0){
@@ -151,6 +170,10 @@ Table *StageTwoFactory::makeTable(const QJsonObject &config) const {
     else{
         friction = config["friction"].toDouble();
     }
+
+    // *************
+    // COLOUR
+    // *************
 
     QColor colour = QString::fromStdString(m_defaultTableColour);
 
@@ -166,6 +189,10 @@ Table *StageTwoFactory::makeTable(const QJsonObject &config) const {
 
 Pocket *StageTwoFactory::makePocket(const QJsonObject &config) const {
     StageTwoPocket * pocket = new StageTwoPocket();
+
+    // *************
+    // POSITION
+    // *************
 
     float xPos = -1;
     float yPos = -1;
@@ -186,11 +213,13 @@ Pocket *StageTwoFactory::makePocket(const QJsonObject &config) const {
     else{
         std::cerr << "No pocket position given, ignoring it." << std::endl;
     }
-
     if (!(xPos == -1 || yPos == -1)){
         pocket->setPosition(QVector2D(xPos, yPos));
     }
 
+    // *************
+    // RADIUS
+    // *************
 
     if ((!config["radius"].isDouble()) || config["radius"].toDouble() <= 0){
         std::cerr << "Incorrect pocket radius given, setting to a default value of " << m_defaultPocketRadius << std::endl;

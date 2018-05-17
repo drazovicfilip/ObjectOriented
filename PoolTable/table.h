@@ -17,7 +17,16 @@ public:
     {}
     virtual ~Table(){}
 
+    /**
+     * @brief width returns the width of the table
+     * @return
+     */
     float width()const{ return m_width; }
+
+    /**
+     * @brief height returns the height of the table
+     * @return
+     */
     float height()const{ return m_height; }
 
     /**

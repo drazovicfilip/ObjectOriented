@@ -7,7 +7,7 @@
 #include "table.h"
 
 /**
- * @brief The StageOneTable class is a concrete version of the Table class specific to stage one of the assignment
+ * @brief The StageOneTable class is a concrete version of the Table class specific to stage one of the assignment. It is also used for stage two.
  */
 class StageOneTable : public Table
 {

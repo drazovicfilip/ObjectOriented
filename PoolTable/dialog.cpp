@@ -17,6 +17,7 @@ Dialog::Dialog(PoolGame *game, QWidget *parent)
         this->setMinimumSize(m_game->size());
         this->resize(m_game->size());
 
+        // Set the BallDecorator class to be a child of Dialog in order for it to be able to handle mouse events
         if (game->stage() == 2){
             game->linkQWidgetParentToCueBall(this);
     }

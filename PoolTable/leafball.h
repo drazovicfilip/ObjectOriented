@@ -8,6 +8,10 @@
 #include "ball.h"
 #include <vector>
 
+
+/**
+ * @brief The LeafBall class is part of the Composite design method. It does not have any children, and can be contained in a CompositeBall.
+ */
 class LeafBall : public Ball
 {
 public:

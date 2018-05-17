@@ -21,12 +21,6 @@ public:
      * @param painter to use to draw the ball
      */
     void draw(QPainter &p);
-
-    virtual void setStrength(float strength){ m_strength = strength; }
-    virtual float strength(){ return m_strength; }
-
-private:
-    float m_strength;
 };
 
 #endif // SIMPLEBALL_H
