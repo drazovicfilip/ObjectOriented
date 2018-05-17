@@ -14,13 +14,11 @@
  * @param v is the QJsonValue to convert
 
  */
-QVector2D StageOneFactory::QJsonValueToVector2D(const QJsonValue &v, float defaultX = 0, float defaultY = 0) const
-{
+QVector2D StageOneFactory::QJsonValueToVector2D(const QJsonValue &v, float defaultX = 0, float defaultY = 0) const {
     return QVector2D(v.toObject()["x"].toDouble(defaultX),v.toObject()["y"].toDouble(defaultY));
 }
 
-Ball *StageOneFactory::makeBall(const QJsonObject &config)
-{
+Ball *StageOneFactory::makeBall(const QJsonObject &config){
     //we kind of use a builder style setx, sety, etc, here but just because
     //it is easier than setting all the stuff in the constructor
     //this means we don't need any of the common stuff cluttering the SimpleBall class
@@ -35,14 +33,12 @@ Ball *StageOneFactory::makeBall(const QJsonObject &config)
     return ball;
 }
 
-Table *StageOneFactory::makeTable(const QJsonObject &config) const
-{
+Table *StageOneFactory::makeTable(const QJsonObject &config) const {
     //not really worth doing the builder style with only 3 variables
     QVector2D dimensions = QJsonValueToVector2D(config["size"],300,600);
     float friction = config["friction"].toDouble();
     QColor colour = QColor(config["colour"].toString());
 
     return new StageOneTable(dimensions.x(),dimensions.y(),friction,colour);
-
 }
 

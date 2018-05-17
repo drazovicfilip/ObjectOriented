@@ -48,7 +48,6 @@ public:
 
 private:
     bool mousePressed;
-    bool mouseReleased;
     QVector2D mousePosition;
 };
 

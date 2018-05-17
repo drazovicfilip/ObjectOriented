@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QVector2D>
 #include <QColor>
+
 #include "float.h"
 
 /**
@@ -17,23 +18,22 @@ public:
     {}
     virtual ~Ball(){}
 
-    virtual const QVector2D &position()const{return m_position;}
-    virtual const QVector2D &velocity()const{return m_velocity;}
-    virtual float radius()const{return m_radius;}
-    virtual float mass()const{return m_mass;}
-
-    virtual void setPosition(const QVector2D &newPosition){m_position = newPosition;}
+    virtual const QVector2D &position()const{ return m_position; }
+    virtual const QVector2D &velocity()const{ return m_velocity; }
+    virtual float radius()const{ return m_radius; }
+    virtual float mass()const{ return m_mass; }
+    virtual void setPosition(const QVector2D &newPosition){ m_position = newPosition; }
     /**
      * @brief setVelocity sets the velocity manually to a value.
      * This should only be used to initialize the balls starting velocity
      * and set it to zero if it is small enough, otherwise use changeVelocity
      * @param newVelocity
      */
-    virtual void setVelocity(const QVector2D &newVelocity){m_velocity = newVelocity;}
-    virtual void setRadius(float newRadius){m_radius = newRadius;}
-    virtual void setMass(float newMass){m_mass = newMass;}
-    virtual void changePosition(const QVector2D &deltaX){m_position += deltaX;}
-    virtual void changeVelocity(const QVector2D &deltaV){m_velocity += deltaV;}
+    virtual void setVelocity(const QVector2D &newVelocity){ m_velocity = newVelocity; }
+    virtual void setRadius(float newRadius){ m_radius = newRadius; }
+    virtual void setMass(float newMass){ m_mass = newMass; }
+    virtual void changePosition(const QVector2D &deltaX){ m_position += deltaX; }
+    virtual void changeVelocity(const QVector2D &deltaV){ m_velocity += deltaV; }
 
     /**
      * @brief draws the ball using the provided painter
@@ -45,12 +45,12 @@ public:
      * @brief moves the ball based on its current velocity
      * @param timestep is the ammount of time it should move for
      */
-    virtual void move(float timestep){changePosition(m_velocity*timestep);}
+    virtual void move(float timestep){ changePosition(m_velocity*timestep); }
     virtual float strength(){ return m_strength; }
     virtual void setStrength(float strength){ m_strength = strength; }
 
     virtual QColor & colour(){ return m_colour; }
-    virtual void setColour(const QColor &newColour){m_colour = newColour;}
+    virtual void setColour(const QColor &newColour){ m_colour = newColour; }
 
 protected:
     QVector2D m_position;

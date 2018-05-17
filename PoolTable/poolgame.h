@@ -22,13 +22,19 @@ public:
      * @param balls a vector of pointers to balls, Poolgame takes ownership of all the contained pointers
      */
     PoolGame(Table * m_table,std::vector<Ball*> balls)
-        :m_table(m_table),m_balls(balls)
+        : m_table(m_table)
+        , m_balls(balls)
     {}
     PoolGame(Table * m_table, std::vector<Ball*> balls, std::vector<Pocket*> pockets)
-        :m_table(m_table),m_balls(balls),m_pockets(pockets)
+        : m_table(m_table)
+        , m_balls(balls)
+        , m_pockets(pockets)
     {}
     PoolGame(Table * m_table, std::vector<Ball*> balls, std::vector<Pocket*> pockets, size_t stage)
-        :m_table(m_table),m_balls(balls),m_stage(stage),m_pockets(pockets)
+        : m_table(m_table)
+        , m_stage(stage)
+        , m_balls(balls)
+        , m_pockets(pockets)
     {}
 
     void linkQWidgetParentToCueBall(QWidget* parent);
@@ -49,7 +55,7 @@ public:
      * @brief size
      * @return the size of the game
      */
-    QSize size(){return QSize(m_table->width(),m_table->height());}
+    QSize size(){ return QSize(m_table->width(), m_table->height()); }
 
     size_t stage(){ return m_stage; }
     void deleteBall(Ball &b);

@@ -13,7 +13,8 @@ class StageOneTable : public Table
 {
 public:
     StageOneTable(float width, float height,float friction, const QColor &colour)
-        :Table(width,height,friction),m_colour(colour)
+        : Table(width, height, friction)
+        , m_colour(colour)
     {}
 
     // Table interface

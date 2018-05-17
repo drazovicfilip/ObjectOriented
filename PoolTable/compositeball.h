@@ -24,7 +24,6 @@ public:
      * @param painter to use to draw the ball
      */
     void draw(QPainter &p);
-
     void setVelocity(const QVector2D &newVelocity);
     void changePosition(const QVector2D &deltaX);
     void changeVelocity(const QVector2D &deltaV);

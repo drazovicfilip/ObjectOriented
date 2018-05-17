@@ -11,19 +11,21 @@ class Table
 {
 public:
     Table(float width, float height,float friction)
-        :m_width(width), m_height(height), m_friction(friction){}
+        : m_width(width)
+        , m_height(height)
+        , m_friction(friction)
+    {}
     virtual ~Table(){}
 
-
-    float width()const{return m_width;}
-    float height()const{return m_height;}
+    float width()const{ return m_width; }
+    float height()const{ return m_height; }
 
     /**
      * @brief get the coefficient of friction for the table
      * this is the proportion of velocity lost each second by object moving on the table
      * @return the friction coefficient
      */
-    float friction()const{return m_friction;}
+    float friction()const{ return m_friction; }
 
     /**
      * @brief draws a table

@@ -20,7 +20,7 @@ public:
         , m_defaultPosition(QVector2D(0,0))
         , m_defaultVelocity(QVector2D(0,0))
         , m_defaultTableColour("green")
-        , m_defaultFriction(0.1)
+        , m_defaultFriction(0.01)
         , m_defaultTableSize(QVector2D(600.0,300.0))
         , m_defaultPocketRadius(15.0)
     {}
@@ -36,7 +36,6 @@ public:
      * @return a pointer to a valid CompositeBall
      */
     Ball *makeBall(const QJsonObject &config);
-
     Ball *makeLeafBall(const QJsonObject &config);
 
     /**
@@ -45,7 +44,6 @@ public:
      * @return a pointer to a valid StageOneTable
      */
     Table *makeTable(const QJsonObject &config) const;
-
     Pocket *makePocket(const QJsonObject &config) const;
 
 private:

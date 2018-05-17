@@ -11,11 +11,9 @@
 #include "stageonefactory.h"
 #include "stagetwofactory.h"
 
-QJsonObject jsonFromFile(const std::string &configFilePath)
-{
+QJsonObject jsonFromFile(const std::string &configFilePath){
     std::ifstream configFile(configFilePath);
-    if(!configFile.good())
-    {
+    if(!configFile.good()){
         std::cerr << "could not open \"" << configFilePath <<"\"" <<std::endl;
         return QJsonObject();
     }
@@ -25,16 +23,14 @@ QJsonObject jsonFromFile(const std::string &configFilePath)
     ss << configFile.rdbuf();
     std::string s = ss.str();
     QJsonDocument jsonDocConfig = QJsonDocument::fromJson(QByteArray::fromStdString(ss.str()));
-    if(jsonDocConfig.isNull())
-    {
+    if(jsonDocConfig.isNull()){
         std::cerr << configFilePath <<" is not valid Json" << std::endl;
         return QJsonObject();
     }
     return jsonDocConfig.object();
 }
 
-PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
-{
+PoolGame *Initializer::createPoolgame(const std::string &configFilePath){
     size_t stage = 1;
 
     QJsonObject config = jsonFromFile(configFilePath);
@@ -49,10 +45,8 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
     AbstractFactory *factory;
     bool childrenVisible = config["childrenVisible"].toBool(false);
 
-    if (config.contains("stage2"))
-    {
-        if (config["stage2"].toBool())
-        {
+    if (config.contains("stage2")){
+        if (config["stage2"].toBool()){
             stage = 2;
             factory = new StageTwoFactory();
         }
@@ -66,32 +60,25 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
 
     GameBuilder builder(factory);
 
-    if(config.contains("table"))
-    {
+    if(config.contains("table")){
         builder.buildTable(config["table"].toObject());
-        if (stage == 2)
-        {
-            if (config["table"].toObject().contains("pockets"))
-            {
+        if (stage == 2){
+            if (config["table"].toObject().contains("pockets")){
                 QJsonArray pockets = (config["table"].toObject()["pockets"].toArray());
-                for (int i = 0; i < pockets.size(); ++i)
-                {
+                for (size_t i = 0; i < (size_t)pockets.size(); ++i){
                     builder.addPocket(pockets[i].toObject());
                 }
             }
         }
     }
-    else
-    {
+    else{
         std::cerr << "no \"table\" key found" <<std::endl;
         return nullptr;
     }
 
-    if(config.contains("balls"))
-    {
+    if(config.contains("balls")){
         QJsonArray balls = config["balls"].toArray();
-        for(int i = 0; i < balls.size();++i)
-        {
+        for(size_t i = 0; i < (size_t)balls.size();++i){
               builder.addBall(balls[i].toObject(), stage, childrenVisible);
         }
 
@@ -99,8 +86,7 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath)
         builder.reverseBalls();
 
     }
-    else
-    {
+    else{
         std::cerr << "no \"ball\" key found" <<std::endl;
         return nullptr;
     }
