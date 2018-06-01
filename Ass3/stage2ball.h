@@ -1,6 +1,7 @@
 #ifndef STAGE2BALL_H
 #define STAGE2BALL_H
 #include <vector>
+#include <iostream>
 
 #include "ball.h"
 #include "changeinpoolgame.h"
@@ -13,6 +14,8 @@ class Stage2Ball : public Ball
 {
 public:
     Stage2Ball(){}
+    Stage2Ball* clone(){ return new Stage2Ball(*this); }
+
     void setStrength(float strength){m_strength = strength;}
     // Ball interface
 public:

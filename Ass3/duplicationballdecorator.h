@@ -9,8 +9,9 @@ class DuplicationBallDecorator: public BallDecorator
 {
 public:
     DuplicationBallDecorator(Ball *b)
-        :BallDecorator(b)
+        : BallDecorator(b)
     {}
+    DuplicationBallDecorator* clone(){ return new DuplicationBallDecorator(m_ball); }
     /**
      * @brief changeVelocity this acts like the regular function but can also duplicate the ball whilst decreasing its size
      * @param deltaV

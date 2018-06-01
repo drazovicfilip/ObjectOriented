@@ -12,7 +12,6 @@ public:
     {
         delete m_ball;
     }
-
 protected:
     Ball *m_ball;
 
@@ -42,6 +41,8 @@ public:
     const QColor &colour() {return m_ball->colour();}
     void setColour(const QColor &newColour) {return m_ball->setColour(newColour);}
     bool collidesWith(Ball *other) {return m_ball->collidesWith(other);}
+    Ball* ball(){ return m_ball; }
+
 };
 
 #endif // BALLDECORATOR_H

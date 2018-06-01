@@ -34,6 +34,12 @@ void Dialog::keyPressEvent(QKeyEvent* event){
     if (event->key() == Qt::Key_Space){
         emit spacePressed(event);
     }
+    if (event->key() == Qt::Key_P){
+        m_game->saveBalls();
+    }
+    if (event->key() == Qt::Key_R){
+        m_game->restoreBalls();
+    }
 }
 
 void Dialog::mousePressEvent(QMouseEvent *event)

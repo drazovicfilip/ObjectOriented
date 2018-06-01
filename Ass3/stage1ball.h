@@ -14,6 +14,7 @@ class Stage1Ball : public Ball
 public:
     Stage1Ball();
 
+    Stage1Ball* clone(){ return new Stage1Ball(*this); }
     // Ball interface
 public:
     /**

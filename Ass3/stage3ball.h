@@ -1,6 +1,7 @@
 #ifndef STAGE3BALL_H
 #define STAGE3BALL_H
 #include <vector>
+#include <iostream>
 
 #include "ball.h"
 #include "QKeyEvent"
@@ -14,7 +15,15 @@ class Stage3Ball : public Ball, public QObject
 {
 public:
     Stage3Ball(){}
+
+    Stage3Ball(QVector2D position, QVector2D velocity, float radius, float mass, QColor colour, float strength)
+        : Ball(position, velocity, radius, mass, colour)
+        , m_strength(strength)
+    {}
+
     void setStrength(float strength){m_strength = strength;}
+
+    float strength() const{ return m_strength; }
     // Ball interface
 public:
     void draw(QPainter &p);
@@ -30,6 +39,16 @@ protected:
 class CompositeStage3Ball : public Stage3Ball
 {
 public:
+
+    CompositeStage3Ball(CompositeStage3Ball const &ball)
+        : Stage3Ball(ball.position(), ball.velocity(), ball.radius(), ball.mass(), ball.colour(), ball.strength())
+        , m_containedBalls(ball.containedBalls())
+        , m_containedMass(ball.containedMass())
+        , drawChildren(ball.getDrawChildren())
+    {}
+
+    CompositeStage3Ball* clone();
+
     CompositeStage3Ball():m_containedMass(0)
     {
         Ball::setRadius(-1);
@@ -72,6 +91,12 @@ public:
      */
     void setRadius(float newRadius);
 
+    std::vector<Ball*> containedBalls() const{ return m_containedBalls; }
+    float containedMass() const{ return m_containedMass; }
+    bool getDrawChildren() const{ return drawChildren; }
+    bool setDrawChildren(bool v){ drawChildren = v; }
+    void eraseChildren(){ m_containedBalls.erase(m_containedBalls.begin(), m_containedBalls.end()); }
+
 public slots:
     void spacePressed(QKeyEvent * event);
 
@@ -90,6 +115,13 @@ class SimpleStage3Ball : public Stage3Ball
 {
 public:
     SimpleStage3Ball(){}
+
+    SimpleStage3Ball* clone(){ return new SimpleStage3Ball(*this); }
+
+    SimpleStage3Ball(SimpleStage3Ball const &ball)
+        : Stage3Ball(ball.position(), ball.velocity(), ball.radius(), ball.mass(), ball.colour(), ball.strength())
+    {}
+
     ChangeInPoolGame changeVelocity(const QVector2D &deltaV);
 
 };

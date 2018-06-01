@@ -15,6 +15,15 @@ class Ball
 {
 public:
     Ball(){}
+
+    Ball(QVector2D position, QVector2D velocity, float radius, float mass, QColor colour)
+        : m_position(position)
+        , m_velocity(velocity)
+        , m_radius(radius)
+        , m_mass(mass)
+        , m_colour(colour)
+    {}
+
     virtual ~Ball(){}
 
     virtual const QVector2D &position()const{return m_position;}
@@ -32,7 +41,7 @@ public:
     virtual void setVelocity(const QVector2D &newVelocity){m_velocity = newVelocity;}
     virtual void setRadius(float newRadius){m_radius = newRadius;}
     virtual void setMass(float newMass){m_mass = newMass;}
-    virtual const QColor & colour(){return m_colour;}
+    virtual const QColor& colour() const{return m_colour;}
 
     virtual void changePosition(const QVector2D &deltaX){m_position += deltaX;}
     virtual ChangeInPoolGame changeVelocity(const QVector2D &deltaV){m_velocity += deltaV; return ChangeInPoolGame();}
@@ -42,6 +51,8 @@ public:
      * @param p is the painter that is used to draw the object
      */
     virtual void draw(QPainter & p) = 0;
+
+    virtual Ball* clone() = 0;
 
     /**
      * @brief moves the ball based on its current velocity

@@ -33,7 +33,9 @@ SOURCES += main.cpp \
     duplicationballdecorator.cpp \
     stage3factory.cpp \
     stage3table.cpp \
-    stage3ball.cpp
+    stage3ball.cpp \
+    memento.cpp \
+    originator.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -56,5 +58,7 @@ HEADERS  += dialog.h \
     duplicationballdecorator.h \
     stage3factory.h \
     stage3table.h \
-    stage3ball.h
+    stage3ball.h \
+    memento.h \
+    originator.h
 

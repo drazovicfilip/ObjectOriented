@@ -8,6 +8,7 @@ void Stage3Ball::draw(QPainter &p)
     p.drawEllipse(m_position.toPointF(),m_radius,m_radius);
 }
 
+
 CompositeStage3Ball::~CompositeStage3Ball()
 {
     for(Ball * b: m_containedBalls)
@@ -40,6 +41,21 @@ ChangeInPoolGame CompositeStage3Ball::changeVelocity(const QVector2D &deltaV)
 float CompositeStage3Ball::mass() const
 {
     return m_mass+m_containedMass;
+}
+
+CompositeStage3Ball* CompositeStage3Ball::clone(){
+
+    CompositeStage3Ball* newball = new CompositeStage3Ball(*this);
+    CompositeStage3Ball* tempball = new CompositeStage3Ball(*this);
+    newball->eraseChildren();
+
+    for (Ball *b : tempball->containedBalls()){
+        newball->addBall(b->clone());
+    }
+
+    newball->setDrawChildren(getDrawChildren());
+
+    return newball;
 }
 
 void CompositeStage3Ball::draw(QPainter &p)
@@ -78,7 +94,7 @@ void CompositeStage3Ball::setRadius(float newRadius)
 }
 
 void CompositeStage3Ball::spacePressed(QKeyEvent *event){
-    //drawChildren = !drawChildren;
+    drawChildren = !drawChildren;
 }
 
 ChangeInPoolGame SimpleStage3Ball::changeVelocity(const QVector2D &deltaV)

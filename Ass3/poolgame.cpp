@@ -1,7 +1,8 @@
 #include "poolgame.h"
 #include "stage2ball.h"
+#include "stage3ball.h"
+#include "cueballdecorator.h"
 #include <cmath>
-
 
 PoolGame::~PoolGame()
 {
@@ -10,6 +11,32 @@ PoolGame::~PoolGame()
         delete b;
     }
     delete m_table;
+}
+
+std::vector<Ball*> PoolGame::copyBalls(std::vector<Ball*> balls){
+    std::vector<Ball*> newballs;
+    for (Ball* b : balls){
+        Ball* temp = b->clone();
+        newballs.push_back(temp);
+    }
+    return newballs;
+}
+
+void PoolGame::saveBalls(){
+    originator.set(copyBalls(m_balls));
+    savedState.push_back(originator.saveToMemento());
+    std::cout << "saved with " << originator.state().size() << " balls" << std::endl;
+}
+
+void PoolGame::restoreBalls(){
+    originator.restoreFromMemento(*(savedState.back()));
+
+    // Remove the state we just restored, but be careful not to remove the starting state
+    if (savedState.size() > 1){
+        savedState.pop_back();
+    }
+    m_balls = copyBalls(originator.state());
+    std::cout << "restored with " << m_balls.size() << " balls" << std::endl;
 }
 
 void PoolGame::simulateTimeStep(float timeStep)
@@ -61,6 +88,16 @@ void PoolGame::draw(QPainter &p)
     for(Ball * b: m_balls)
     {
         b->draw(p);
+        CueBallDecorator* cue = dynamic_cast<CueBallDecorator*>(b);
+        if (cue != nullptr){
+            if (cue->velocity().x() == 0 && cue->velocity().y() == 0 && cueballstopped == 0){
+                saveBalls();
+                cueballstopped = 1;
+            }
+            else if (cue->velocity().x() != 0 && cue->velocity().y() != 0){
+                cueballstopped = 0;
+            }
+        }
     }
 }
 

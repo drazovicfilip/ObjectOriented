@@ -20,7 +20,9 @@ public:
      * @param parent is the parent Dialog, this is used to connect to the signals it emits
      */
     CueBallDecorator(Ball * b, Dialog * parent);
+    CueBallDecorator* clone();
     void draw(QPainter &p);
+
 public slots:
     void mousePressed(QMouseEvent * event);
     void mouseMoved(QMouseEvent * event);
@@ -28,6 +30,7 @@ public slots:
 
 private:
     QVector2D endpoint;
+    Dialog* m_parent;
     QVector2D mousePos;
     bool clicked;
 };

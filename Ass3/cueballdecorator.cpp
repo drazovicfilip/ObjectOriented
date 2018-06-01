@@ -1,11 +1,17 @@
 #include "cueballdecorator.h"
 CueBallDecorator::CueBallDecorator(Ball *b, Dialog *parent)
-    :BallDecorator(b),clicked(false)
+    :BallDecorator(b),clicked(false),m_parent(parent),mousePos(QVector2D(0,0))
 {
     //connect dialog signals to cueball slots so that this class is notified when the mouse is used
     connect(parent,&Dialog::mousePressed,this,&CueBallDecorator::mousePressed);
     connect(parent,&Dialog::mouseMoved,this,&CueBallDecorator::mouseMoved);
     connect(parent,&Dialog::mouseReleased,this,&CueBallDecorator::mouseReleased);
+}
+
+CueBallDecorator* CueBallDecorator::clone(){
+    CueBallDecorator* newball = new CueBallDecorator(this->ball()->clone(), m_parent);
+    newball->setVelocity(QVector2D(0,0));
+    return newball;
 }
 
 void CueBallDecorator::draw(QPainter &p)

@@ -7,6 +7,8 @@
 
 #include "table.h"
 #include "ball.h"
+#include "memento.h"
+#include "originator.h"
 
 #include "changeinpoolgame.h"
 
@@ -26,7 +28,16 @@ public:
         :m_table(m_table),m_balls(balls)
     {}
 
+    PoolGame()
+        : m_table()
+        , m_balls()
+    {}
+
     ~PoolGame();
+
+    std::vector<Ball*> copyBalls(std::vector<Ball*> balls);
+    void saveBalls();
+    void restoreBalls();
 
     /**
      * @brief simulate one timestep of the game
@@ -46,6 +57,9 @@ public:
      */
     QSize size(){return QSize(m_table->width(),m_table->height());}
 
+    int ballsLength(){ return m_balls.size(); }
+    void setCueBallStopped(int v){ cueballstopped = v; }
+
 private:
     /**
      * @brief collide two balls if they are in contact
@@ -54,9 +68,10 @@ private:
      * @return the change in the pool game after the collision
      */
     ChangeInPoolGame collide(Ball *b1, Ball *b2);
-
-
+    std::vector<Memento*> savedState;
+    Originator originator;
     Table * m_table;
+    int cueballstopped = 0;
     std::vector<Ball*> m_balls;
 };
 
