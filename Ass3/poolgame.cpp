@@ -29,6 +29,17 @@ void PoolGame::saveBalls(){
 }
 
 void PoolGame::restoreBalls(){
+    // If the cue ball is currently stopped, pressing 'r' should revert back two states - skipping the current state which is just a copy of itself
+
+    for(Ball * b: m_balls){
+        CueBallDecorator* cue = dynamic_cast<CueBallDecorator*>(b);
+        if (cue != nullptr){
+            if (cue->velocity().x() == 0 && cue->velocity().y() == 0 && savedState.size() > 1){
+                savedState.pop_back();
+            }
+        }
+    }
+
     originator.restoreFromMemento(*(savedState.back()));
 
     // Remove the state we just restored, but be careful not to remove the starting state
