@@ -38,7 +38,7 @@ QJsonObject jsonFromFile(const std::string &configFilePath)
 
 PoolGame *Initializer::createPoolgame(const std::string &configFilePath, Dialog *parent)
 {
-
+    int stage = 1;
     QJsonObject config = jsonFromFile(configFilePath);
     if(config.isEmpty())
         return nullptr;
@@ -48,18 +48,22 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath, Dialog 
     if (config["stage3"].toBool() && config["stage2"].toBool()){
         std::cerr << "Can't have both stage 2 and 3. Defaulting to stage 3" << std::endl;
         factory = new Stage3Factory(parent);
+        stage = 3;
     }
     else if(config["stage3"].toBool())
     {
         factory = new Stage3Factory(parent);
+        stage = 3;
     }
     else if (config["stage2"].toBool())
     {
         factory = new Stage2Factory(parent);
+        stage = 2;
     }
     else
     {
         factory = new Stage1Factory();
+        stage = 1;
     }
 
     GameBuilder builder(factory);
@@ -84,12 +88,11 @@ PoolGame *Initializer::createPoolgame(const std::string &configFilePath, Dialog 
     }
     else
     {
-        if(config["stage2"].toBool())
-        {
-
-        }
         std::cout << "no \"ball\" key found" <<std::endl;
         return nullptr;
     }
-    return builder.getGame();
+
+    PoolGame* game = builder.getGame();
+    game->setStage(stage);
+    return game;
 }

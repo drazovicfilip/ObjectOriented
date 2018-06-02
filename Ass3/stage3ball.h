@@ -97,9 +97,6 @@ public:
     bool setDrawChildren(bool v){ drawChildren = v; }
     void eraseChildren(){ m_containedBalls.erase(m_containedBalls.begin(), m_containedBalls.end()); }
 
-public slots:
-    void spacePressed(QKeyEvent * event);
-
 protected:
     std::vector<Ball*> m_containedBalls;
     float m_containedMass;

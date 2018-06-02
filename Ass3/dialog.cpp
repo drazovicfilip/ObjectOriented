@@ -32,10 +32,10 @@ void Dialog::paintEvent(QPaintEvent *)
 
 void Dialog::keyPressEvent(QKeyEvent* event){
     if (event->key() == Qt::Key_Space){
-        emit spacePressed(event);
+        m_game->toggleBallVisibility();
     }
 
-    if (event->key() == Qt::Key_R){
+    if (event->key() == Qt::Key_R && m_game->stage() == 3){
         m_game->restoreBalls();
     }
 }

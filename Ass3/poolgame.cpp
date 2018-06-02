@@ -112,6 +112,15 @@ void PoolGame::draw(QPainter &p)
     }
 }
 
+void PoolGame::toggleBallVisibility(){
+    for (Ball* b : m_balls){
+        CompositeStage3Ball* ball = dynamic_cast<CompositeStage3Ball*>(b);
+        if (ball != nullptr){
+            ball->setDrawChildren(!ball->getDrawChildren());
+        }
+    }
+}
+
 ChangeInPoolGame PoolGame::collide(Ball *b1, Ball *b2)
 {
     //using the code provided for the collision mechanics

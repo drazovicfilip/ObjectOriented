@@ -57,9 +57,12 @@ public:
      */
     QSize size(){return QSize(m_table->width(),m_table->height());}
 
+    void toggleBallVisibility();
+
     int ballsLength(){ return m_balls.size(); }
     void setCueBallStopped(int v){ cueballstopped = v; }
-
+    void setStage(int v){ m_stage = v; }
+    const int stage(){ return m_stage; }
 private:
     /**
      * @brief collide two balls if they are in contact
@@ -69,6 +72,7 @@ private:
      */
     ChangeInPoolGame collide(Ball *b1, Ball *b2);
     std::vector<Memento*> savedState;
+    int m_stage;
     Originator originator;
     Table * m_table;
     int cueballstopped = 0;

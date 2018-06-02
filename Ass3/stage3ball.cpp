@@ -93,10 +93,6 @@ void CompositeStage3Ball::setRadius(float newRadius)
     }
 }
 
-void CompositeStage3Ball::spacePressed(QKeyEvent *event){
-    drawChildren = !drawChildren;
-}
-
 ChangeInPoolGame SimpleStage3Ball::changeVelocity(const QVector2D &deltaV)
 {
     if(mass()*deltaV.lengthSquared()>m_strength)
