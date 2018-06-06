@@ -6,6 +6,7 @@ CueBallDecorator::CueBallDecorator(Ball *b, Dialog *parent)
     connect(parent,&Dialog::mousePressed,this,&CueBallDecorator::mousePressed);
     connect(parent,&Dialog::mouseMoved,this,&CueBallDecorator::mouseMoved);
     connect(parent,&Dialog::mouseReleased,this,&CueBallDecorator::mouseReleased);
+    connect(parent,&Dialog::enterPressed,this,&CueBallDecorator::enterPressed);
 }
 
 CueBallDecorator* CueBallDecorator::clone(){
@@ -18,7 +19,7 @@ void CueBallDecorator::draw(QPainter &p)
 {
     m_ball->draw(p);
     if(clicked)
-        p.drawLine(mousePos.toPointF(),m_ball->position().toPointF());
+        m_currentState->draw(p, mousePos, m_ball);
 }
 
 void CueBallDecorator::mousePressed(QMouseEvent *event)
@@ -46,4 +47,8 @@ void CueBallDecorator::mouseReleased(QMouseEvent *event)
         clicked = false;
         setVelocity(4*(m_ball->position()-mousePos));
     }
+}
+
+void CueBallDecorator::enterPressed(QKeyEvent* event){
+    std::swap<CursorState *> (m_currentState, m_passiveState);
 }

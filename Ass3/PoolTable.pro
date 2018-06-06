@@ -35,7 +35,9 @@ SOURCES += main.cpp \
     stage3table.cpp \
     stage3ball.cpp \
     memento.cpp \
-    originator.cpp
+    originator.cpp \
+    standardcursorstate.cpp \
+    powercursorstate.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -60,5 +62,8 @@ HEADERS  += dialog.h \
     stage3table.h \
     stage3ball.h \
     memento.h \
-    originator.h
+    originator.h \
+    cursorstate.h \
+    standardcursorstate.h \
+    powercursorstate.h
 

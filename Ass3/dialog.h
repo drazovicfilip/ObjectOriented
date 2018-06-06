@@ -56,6 +56,7 @@ public:
 
 signals:
     void spacePressed(QKeyEvent* event);
+    void enterPressed(QKeyEvent* event);
     void mousePressed(QMouseEvent * event);
     void mouseMoved(QMouseEvent * event);
     void mouseReleased(QMouseEvent * event);

@@ -38,7 +38,12 @@ void Dialog::keyPressEvent(QKeyEvent* event){
     if (event->key() == Qt::Key_R && m_game->stage() == 3){
         m_game->restoreBalls();
     }
+
+    if ((event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) && m_game->stage() == 3){
+        emit enterPressed(event);
+    }
 }
+
 
 void Dialog::mousePressEvent(QMouseEvent *event)
 {

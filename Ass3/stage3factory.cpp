@@ -9,6 +9,8 @@
 #include "stage3table.h"
 #include "cueballdecorator.h"
 #include "duplicationballdecorator.h"
+#include "standardcursorstate.h"
+#include "powercursorstate.h"
 
 void setIntrinsicBallProperties(const QJsonObject &config, Stage3Ball * ball, Ball* parent)
 {
@@ -92,8 +94,13 @@ Ball *Stage3Factory::makeBall(const QJsonObject &config)
     Ball * ball = makeBallBasedOnParent(config);
     if(!cueBallSet && ball->colour()==QColor("white"))
     {
-        ball = new CueBallDecorator(ball,dialog);
+        CueBallDecorator* ball2 = new CueBallDecorator(ball,dialog);
+        StandardCursorState* standardcursor = new StandardCursorState();
+        ball2->setDefaultState(standardcursor);
+        PowerCursorState* powercursor = new PowerCursorState();
+        ball2->setPassiveState(powercursor);
         cueBallSet = true;
+        ball = ball2;
     }
     return ball;
 }
