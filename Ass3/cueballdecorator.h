@@ -25,7 +25,6 @@ public:
     void setDefaultState(CursorState *defaultState){ m_currentState = defaultState; }
     void setPassiveState(CursorState *passiveState){ m_passiveState = passiveState; }
     void draw(QPainter &p);
-    friend class CursorState;
 
 public slots:
     void mousePressed(QMouseEvent * event);

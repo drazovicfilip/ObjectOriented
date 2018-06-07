@@ -12,32 +12,25 @@ CueBallDecorator::CueBallDecorator(Ball *b, Dialog *parent)
 CueBallDecorator* CueBallDecorator::clone(){
     CueBallDecorator* newball = new CueBallDecorator(this->ball()->clone(), m_parent);
     newball->setVelocity(QVector2D(0,0));
+    newball->setDefaultState(m_currentState);
+    newball->setPassiveState(m_passiveState);
     return newball;
 }
 
 void CueBallDecorator::draw(QPainter &p)
 {
     m_ball->draw(p);
-    if(clicked)
-        m_currentState->draw(p, mousePos, m_ball);
+    m_currentState->draw(p, mousePos, this, clicked);
 }
 
 void CueBallDecorator::mousePressed(QMouseEvent *event)
 {
-    if(velocity().lengthSquared()<0.001 && (QVector2D(event->pos())-position()).length() < radius())
-    {
-        clicked = true;
-        mousePos = QVector2D(event->pos());
-    }
+    m_currentState->processClickEvent(event, &mousePos, this, &clicked);
 }
 
 void CueBallDecorator::mouseMoved(QMouseEvent *event)
 {
-    if(clicked)
-    {
-        mousePos = QVector2D(event->pos());
-    }
-
+    mousePos = QVector2D(event->pos());
 }
 
 void CueBallDecorator::mouseReleased(QMouseEvent *event)

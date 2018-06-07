@@ -9,7 +9,7 @@ constexpr float timeStep = 0.01;
 Dialog::Dialog(QWidget *parent)
     :QDialog(parent),m_game(nullptr),m_framerateTimer(new QTimer()),m_timestepTimer(new QTimer())
 {
-
+    this->setMouseTracking(true);
 
 }
 

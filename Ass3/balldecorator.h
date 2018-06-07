@@ -4,6 +4,9 @@
 
 class BallDecorator : public Ball
 {
+
+    friend class CursorState;
+
 public:
     BallDecorator(Ball *b)
         :m_ball(b)
@@ -12,6 +15,7 @@ public:
     {
         delete m_ball;
     }
+
 protected:
     Ball *m_ball;
 

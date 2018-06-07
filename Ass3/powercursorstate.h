@@ -7,10 +7,10 @@ class PowerCursorState : public CursorState
 public:
     PowerCursorState();
     virtual ~PowerCursorState(){}
-    void processClickEvent(QMouseEvent *event){}
+    void processClickEvent(QMouseEvent *event, QVector2D* mousePos, BallDecorator* dec, bool* clicked){}
     void processReleaseEvent(QMouseEvent *event){}
 
-    void draw(QPainter &p, QVector2D mousePos, Ball* m_ball);
+    void draw(QPainter &p, QVector2D mousePos, BallDecorator* dec, bool clicked);
 };
 
 #endif // POWERCURSORSTATE_H
