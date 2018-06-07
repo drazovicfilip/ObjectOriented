@@ -39,7 +39,7 @@ public:
     std::vector<Ball*> copyBalls(std::vector<Ball*> balls);
     void saveBalls();
     void restoreBalls();
-    void addBall();
+    void rockTable(int direction);
 
     /**
      * @brief simulate one timestep of the game

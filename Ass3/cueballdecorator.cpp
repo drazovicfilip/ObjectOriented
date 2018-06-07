@@ -12,11 +12,7 @@ CueBallDecorator::CueBallDecorator(Ball *b, Dialog *parent, PoolGame* game)
 CueBallDecorator* CueBallDecorator::clone(){
     CueBallDecorator* newball = new CueBallDecorator(this->ball()->clone(), m_parent, m_game);
     newball->setVelocity(QVector2D(0,0));
-    for (CursorState* state : m_states){
-        state->setGame(m_game);
-    }
-    newball->setPassiveState(m_states[1]);
-    newball->setDefaultState(m_states[1]);
+    newball->setStates(m_states);
     return newball;
 }
 

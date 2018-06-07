@@ -42,6 +42,18 @@ void Dialog::keyPressEvent(QKeyEvent* event){
     if ((event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter) && m_game->stage() == 3){
         emit enterPressed(event);
     }
+    if (event->key() == Qt::Key_Right){
+        m_game->rockTable(0);
+    }
+    else if (event->key() == Qt::Key_Down){
+        m_game->rockTable(1);
+    }
+    else if (event->key() == Qt::Key_Left){
+        m_game->rockTable(2);
+    }
+    else if (event->key() == Qt::Key_Up){
+        m_game->rockTable(3);
+    }
 }
 
 

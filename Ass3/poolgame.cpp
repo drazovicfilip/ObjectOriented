@@ -50,8 +50,22 @@ void PoolGame::restoreBalls(){
     std::cout << "restored with " << m_balls.size() << " balls" << std::endl;
 }
 
-void addBall(){
-    std::cout << "add ball" << std::endl;
+void PoolGame::rockTable(int direction){
+    for (Ball* b : m_balls){
+        if (direction == 0){ // right
+            b->changeVelocity(QVector2D(10, 0));
+        }
+        if (direction == 1){ // down
+            b->changeVelocity(QVector2D(0, 10));
+        }
+        if (direction == 2){ // left
+            b->changeVelocity(QVector2D(-10, 0));
+        }
+        if (direction == 3){ // up
+            b->changeVelocity(QVector2D(0, -10));
+
+        }
+    }
 }
 
 void PoolGame::simulateTimeStep(float timeStep)

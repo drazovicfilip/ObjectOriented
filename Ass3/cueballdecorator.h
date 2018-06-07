@@ -25,6 +25,7 @@ public:
     CueBallDecorator* clone();
     void setDefaultState(CursorState *defaultState){ m_states.insert(m_states.begin(), defaultState); }
     void setPassiveState(CursorState *passiveState){ m_states.push_back(passiveState); }
+    void setStates(std::vector<CursorState*> states){ m_states = states; }
     void draw(QPainter &p);
     void setGame(PoolGame* game){
         for (CursorState *state : m_states){
