@@ -37,7 +37,8 @@ SOURCES += main.cpp \
     memento.cpp \
     originator.cpp \
     standardcursorstate.cpp \
-    powercursorstate.cpp
+    powercursorstate.cpp \
+    grabcursorstate.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -65,5 +66,6 @@ HEADERS  += dialog.h \
     originator.h \
     cursorstate.h \
     standardcursorstate.h \
-    powercursorstate.h
+    powercursorstate.h \
+    grabcursorstate.h
 

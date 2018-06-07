@@ -11,6 +11,7 @@
 #include "duplicationballdecorator.h"
 #include "standardcursorstate.h"
 #include "powercursorstate.h"
+#include "grabcursorstate.h"
 
 void setIntrinsicBallProperties(const QJsonObject &config, Stage3Ball * ball, Ball* parent)
 {
@@ -99,6 +100,8 @@ Ball *Stage3Factory::makeBall(const QJsonObject &config)
         ball2->setDefaultState(standardcursor);
         PowerCursorState* powercursor = new PowerCursorState();
         ball2->setPassiveState(powercursor);
+        GrabCursorState* grabcursor = new GrabCursorState();
+        ball2->setPassiveState(grabcursor);
         cueBallSet = true;
         ball = ball2;
     }

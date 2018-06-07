@@ -13,7 +13,7 @@ PowerCursorState::PowerCursorState()
 }
 
 void PowerCursorState::draw(QPainter &p, QVector2D mousePos, BallDecorator* dec, bool clicked){
-
+    QApplication::setOverrideCursor(Qt::ArrowCursor);
     if (clicked){
         QPen pen;
         pen.setWidth(3);
@@ -50,7 +50,7 @@ void PowerCursorState::processClickEvent(QMouseEvent *event, QVector2D *mousePos
 }
 
 void PowerCursorState::processReleaseEvent(QMouseEvent *event, QVector2D* mousePos, Ball* m_ball){
-    m_ball->setVelocity(10*(m_ball->position()-*mousePos));
+    m_ball->setVelocity(20*(m_ball->position()-*mousePos));
 }
 
 

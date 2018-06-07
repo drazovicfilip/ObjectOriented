@@ -1,16 +1,16 @@
-#ifndef POWERCURSORSTATE_H
-#define POWERCURSORSTATE_H
+#ifndef GRABCURSORSTATE_H
+#define GRABCURSORSTATE_H
 #include "cursorstate.h"
 #include "vector"
 
-class PowerCursorState : public CursorState
+class GrabCursorState : public CursorState
 {
 public:
-    PowerCursorState();
-    virtual ~PowerCursorState(){}
+    GrabCursorState();
+    virtual ~GrabCursorState(){}
     void processClickEvent(QMouseEvent *event, QVector2D* mousePos, BallDecorator* dec, bool* clicked);
     void processReleaseEvent(QMouseEvent *event, QVector2D* mousePos, Ball* m_ball);
-    void processMoveEvent(QMouseEvent *event, QVector2D* mousePos, Ball* m_ball){}
+    void processMoveEvent(QMouseEvent *event, QVector2D* mousePos, Ball* m_ball);
 
     void draw(QPainter &p, QVector2D mousePos, BallDecorator* dec, bool clicked);
 
@@ -23,7 +23,7 @@ public:
 private:
     size_t frame;
     bool framedirection;
-    std::vector<QColor> colours;
 };
 
-#endif // POWERCURSORSTATE_H
+#endif // GRABCURSORSTATE_H
+

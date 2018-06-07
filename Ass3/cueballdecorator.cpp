@@ -12,27 +12,30 @@ CueBallDecorator::CueBallDecorator(Ball *b, Dialog *parent, PoolGame* game)
 CueBallDecorator* CueBallDecorator::clone(){
     CueBallDecorator* newball = new CueBallDecorator(this->ball()->clone(), m_parent, m_game);
     newball->setVelocity(QVector2D(0,0));
-    m_currentState->setGame(m_game);
-    newball->setDefaultState(m_currentState);
-    m_passiveState->setGame(m_game);
-    newball->setPassiveState(m_passiveState);
+    for (CursorState* state : m_states){
+        state->setGame(m_game);
+    }
+    newball->setPassiveState(m_states[1]);
+    newball->setDefaultState(m_states[1]);
     return newball;
 }
 
 void CueBallDecorator::draw(QPainter &p)
 {
     m_ball->draw(p);
-    m_currentState->draw(p, mousePos, this, clicked);
+    m_states.front()->draw(p, mousePos, this, clicked);
 }
 
 void CueBallDecorator::mousePressed(QMouseEvent *event)
 {
-    m_currentState->processClickEvent(event, &mousePos, this, &clicked);
+    m_states.front()->processClickEvent(event, &mousePos, this, &clicked);
 }
 
 void CueBallDecorator::mouseMoved(QMouseEvent *event)
 {
     mousePos = QVector2D(event->pos());
+    if (clicked)
+        m_states.front()->processMoveEvent(event, &mousePos, this);
 }
 
 void CueBallDecorator::mouseReleased(QMouseEvent *event)
@@ -40,10 +43,10 @@ void CueBallDecorator::mouseReleased(QMouseEvent *event)
     if(clicked)
     {
         clicked = false;
-        m_currentState->processReleaseEvent(event, &mousePos, m_ball);
+        m_states.front()->processReleaseEvent(event, &mousePos, m_ball);
     }
 }
 
 void CueBallDecorator::enterPressed(QKeyEvent* event){
-    std::swap<CursorState *> (m_currentState, m_passiveState);
+    std::rotate(m_states.begin(), m_states.end()-1, m_states.end());
 }

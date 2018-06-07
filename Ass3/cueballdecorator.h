@@ -23,12 +23,13 @@ public:
      */
     CueBallDecorator(Ball * b, Dialog * parent, PoolGame* game);
     CueBallDecorator* clone();
-    void setDefaultState(CursorState *defaultState){ m_currentState = defaultState; }
-    void setPassiveState(CursorState *passiveState){ m_passiveState = passiveState; }
+    void setDefaultState(CursorState *defaultState){ m_states.insert(m_states.begin(), defaultState); }
+    void setPassiveState(CursorState *passiveState){ m_states.push_back(passiveState); }
     void draw(QPainter &p);
     void setGame(PoolGame* game){
-        m_currentState->setGame(game);
-        m_passiveState->setGame(game);
+        for (CursorState *state : m_states){
+            state->setGame(game);
+        }
     }
 
 public slots:
@@ -44,6 +45,7 @@ private:
     QVector2D mousePos;
     CursorState *m_currentState;
     CursorState *m_passiveState;
+    std::vector<CursorState*> m_states;
     bool clicked;
 };
 

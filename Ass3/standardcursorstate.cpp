@@ -5,6 +5,7 @@ StandardCursorState::StandardCursorState()
 {}
 
 void StandardCursorState::draw(QPainter &p, QVector2D mousePos, BallDecorator* dec, bool clicked){
+    QApplication::setOverrideCursor(Qt::ArrowCursor);
     if (clicked)
         p.drawLine(mousePos.toPointF(), dec->position().toPointF());
 }
