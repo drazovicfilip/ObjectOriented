@@ -1,6 +1,6 @@
 #include "cueballdecorator.h"
-CueBallDecorator::CueBallDecorator(Ball *b, Dialog *parent)
-    :BallDecorator(b),clicked(false),m_parent(parent),mousePos(QVector2D(0,0))
+CueBallDecorator::CueBallDecorator(Ball *b, Dialog *parent, PoolGame* game)
+    :BallDecorator(b),clicked(false),m_parent(parent),mousePos(QVector2D(0,0)),m_game(game)
 {
     //connect dialog signals to cueball slots so that this class is notified when the mouse is used
     connect(parent,&Dialog::mousePressed,this,&CueBallDecorator::mousePressed);
@@ -10,9 +10,11 @@ CueBallDecorator::CueBallDecorator(Ball *b, Dialog *parent)
 }
 
 CueBallDecorator* CueBallDecorator::clone(){
-    CueBallDecorator* newball = new CueBallDecorator(this->ball()->clone(), m_parent);
+    CueBallDecorator* newball = new CueBallDecorator(this->ball()->clone(), m_parent, m_game);
     newball->setVelocity(QVector2D(0,0));
+    m_currentState->setGame(m_game);
     newball->setDefaultState(m_currentState);
+    m_passiveState->setGame(m_game);
     newball->setPassiveState(m_passiveState);
     return newball;
 }
@@ -38,7 +40,7 @@ void CueBallDecorator::mouseReleased(QMouseEvent *event)
     if(clicked)
     {
         clicked = false;
-        setVelocity(4*(m_ball->position()-mousePos));
+        m_currentState->processReleaseEvent(event, &mousePos, m_ball);
     }
 }
 

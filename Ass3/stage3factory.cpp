@@ -94,7 +94,7 @@ Ball *Stage3Factory::makeBall(const QJsonObject &config)
     Ball * ball = makeBallBasedOnParent(config);
     if(!cueBallSet && ball->colour()==QColor("white"))
     {
-        CueBallDecorator* ball2 = new CueBallDecorator(ball,dialog);
+        CueBallDecorator* ball2 = new CueBallDecorator(ball, dialog, nullptr);
         StandardCursorState* standardcursor = new StandardCursorState();
         ball2->setDefaultState(standardcursor);
         PowerCursorState* powercursor = new PowerCursorState();

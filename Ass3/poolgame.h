@@ -26,7 +26,8 @@ public:
      */
     PoolGame(Table * m_table,std::vector<Ball*> balls)
         :m_table(m_table),m_balls(balls)
-    {}
+    {
+    }
 
     PoolGame()
         : m_table()
@@ -38,6 +39,7 @@ public:
     std::vector<Ball*> copyBalls(std::vector<Ball*> balls);
     void saveBalls();
     void restoreBalls();
+    void addBall();
 
     /**
      * @brief simulate one timestep of the game
@@ -63,6 +65,7 @@ public:
     void setCueBallStopped(int v){ cueballstopped = v; }
     void setStage(int v){ m_stage = v; }
     const int stage(){ return m_stage; }
+
 private:
     /**
      * @brief collide two balls if they are in contact

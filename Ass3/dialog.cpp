@@ -60,6 +60,10 @@ void Dialog::mouseReleaseEvent(QMouseEvent *event)
     emit mouseReleased(event);
 }
 
+void Dialog::makeBall(QVector2D position, size_t radius){
+    std::cout << "make ball" << std::endl;
+}
+
 
 Dialog::~Dialog()
 {

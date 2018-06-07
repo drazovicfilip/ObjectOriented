@@ -92,7 +92,7 @@ Ball *Stage2Factory::makeBall(const QJsonObject &config)
     Ball * ball = makeBallBasedOnParent(config);
     if(!cueBallSet && ball->colour()==QColor("white"))
     {
-        ball = new CueBallDecorator(ball,dialog);
+        ball = new CueBallDecorator(ball,dialog,nullptr);
         cueBallSet = true;
     }
     return ball;

@@ -63,6 +63,7 @@ signals:
 
 public slots:
     void runSimulationStep();
+    void makeBall(QVector2D position, size_t radius);
 private:
     PoolGame * m_game;
     QTimer * m_framerateTimer;

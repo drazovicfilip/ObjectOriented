@@ -50,6 +50,10 @@ void PoolGame::restoreBalls(){
     std::cout << "restored with " << m_balls.size() << " balls" << std::endl;
 }
 
+void addBall(){
+    std::cout << "add ball" << std::endl;
+}
+
 void PoolGame::simulateTimeStep(float timeStep)
 {
     ChangeInPoolGame totalChange;

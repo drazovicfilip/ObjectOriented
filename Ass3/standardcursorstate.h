@@ -9,7 +9,7 @@ public:
     virtual ~StandardCursorState(){}
 
     void processClickEvent(QMouseEvent *event, QVector2D* mousePos, BallDecorator* dec, bool* clicked);
-    void processReleaseEvent(QMouseEvent *event){}
+    void processReleaseEvent(QMouseEvent *event, QVector2D* mousePos, Ball* m_ball);
 
     void draw(QPainter &p, QVector2D mousePos, BallDecorator* dec, bool clicked);
 };

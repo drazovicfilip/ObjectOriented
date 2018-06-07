@@ -1,9 +1,8 @@
 #include "standardcursorstate.h"
 
 StandardCursorState::StandardCursorState()
-{
-
-}
+    :CursorState()
+{}
 
 void StandardCursorState::draw(QPainter &p, QVector2D mousePos, BallDecorator* dec, bool clicked){
     if (clicked)
@@ -16,4 +15,8 @@ void StandardCursorState::processClickEvent(QMouseEvent *event, QVector2D* mouse
         *clicked = true;
         *mousePos = QVector2D(event->pos());
     }
+}
+
+void StandardCursorState::processReleaseEvent(QMouseEvent *event, QVector2D* mousePos, Ball* m_ball){
+    m_ball->setVelocity(2*(m_ball->position()-*mousePos));
 }
