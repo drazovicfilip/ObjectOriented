@@ -40,6 +40,7 @@ public:
     void saveBalls();
     void restoreBalls();
     void rockTable(int direction);
+    void explode();
 
     /**
      * @brief simulate one timestep of the game

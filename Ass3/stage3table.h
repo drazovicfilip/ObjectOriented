@@ -14,6 +14,8 @@ class Stage3Table : public Table
 public:
     Stage3Table(float width, float height,float friction, const QColor &colour, std::vector<Pocket*> pockets)
         :Table(width,height,friction),m_colour(colour),m_pockets(pockets)
+        , shakeframes(0)
+        , prevShake(QVector2D(0,0))
     {}
 
     // Table interface
@@ -24,9 +26,12 @@ public:
      * @param p the painter used to draw the table
      */
     void draw(QPainter &p);
+    void shake(){ shakeframes += 30; }
 
 private:
     QColor m_colour;
+    int shakeframes;
+    QVector2D prevShake;
     std::vector<Pocket*> m_pockets;
 
     // Table interface

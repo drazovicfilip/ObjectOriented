@@ -1,16 +1,36 @@
 #include "stage3table.h"
 #include "ball.h"
+#include <iostream>
 
 void Stage3Table::draw(QPainter &p)
 {
     p.setPen(Qt::black);
     p.setBrush(QBrush(m_colour));
-    p.drawRect(0,0,m_width,m_height);
+    if (shakeframes > 0){
+        int movementX = rand()%(shakeframes+1) - shakeframes/2;
+        int movementY = rand()%(shakeframes+1) - shakeframes/2;
+        for(Pocket * pocket: m_pockets)
+        {
+            pocket->changePosition(-prevShake);
+            pocket->changePosition(QVector2D(movementX, movementY));
+        }
+        prevShake = QVector2D(movementX, movementY);
+        std::cout << movementX << ", " << movementY << std::endl;
+        p.drawRect(movementX, movementY, m_width + movementX, m_height + movementY);
+
+
+        shakeframes--;
+    }
+    else{
+        p.drawRect(0,0,m_width,m_height);
+    }
 
     for(Pocket * pocket: m_pockets)
     {
         pocket->draw(p);
     }
+
+
 }
 
 ChangeInPoolGame Stage3Table::ballCollision(Ball *b)

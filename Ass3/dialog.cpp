@@ -54,6 +54,9 @@ void Dialog::keyPressEvent(QKeyEvent* event){
     else if (event->key() == Qt::Key_Up){
         m_game->rockTable(3);
     }
+    if (event->key() == Qt::Key_E){
+        m_game->explode();
+    }
 }
 
 

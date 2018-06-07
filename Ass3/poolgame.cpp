@@ -1,6 +1,7 @@
 #include "poolgame.h"
 #include "stage2ball.h"
 #include "stage3ball.h"
+#include "stage3table.h"
 #include "cueballdecorator.h"
 #include <cmath>
 
@@ -65,6 +66,33 @@ void PoolGame::rockTable(int direction){
             b->changeVelocity(QVector2D(0, -10));
 
         }
+    }
+}
+
+void PoolGame::explode(){
+    if (stage() == 3){
+
+        // Shake the table
+        Stage3Table* table = dynamic_cast<Stage3Table*>(m_table);
+        table->shake();
+
+        // Explode balls
+        for (Ball * b: m_balls){
+            CompositeStage3Ball* compball = dynamic_cast<CompositeStage3Ball*>(b);
+            if (compball != nullptr){
+                for (Ball * child : compball->containedBalls()){
+                    child->setPosition(compball->position() + child->position());
+                    m_balls.push_back(child);
+                }
+                m_balls.erase(std::find(m_balls.begin(), m_balls.end(), compball));
+            }
+        }
+
+        // Give random velocities
+        for (Ball * b: m_balls){
+            b->changeVelocity(QVector2D(rand()%1001 - 500, rand()%1001 - 500));
+        }
+
     }
 }
 

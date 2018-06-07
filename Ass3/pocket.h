@@ -18,6 +18,7 @@ public:
     {
         return (circleCentre-m_position).length() + r < m_radius;
     }
+    void changePosition(QVector2D change){ m_position += change; }
 
 private:
     QVector2D m_position;
